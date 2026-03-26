@@ -1,4 +1,4 @@
-# Module 1: Cybersecurity Fundamentals
+# Module 1: Introduction To Cybersecurity
 
 This module introduces the core principles of cybersecurity, focusing on protecting systems, data, and identities from modern digital threats. It highlights both technical concepts and real-world security practices.
 
