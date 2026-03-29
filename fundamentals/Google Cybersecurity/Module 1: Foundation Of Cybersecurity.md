@@ -89,6 +89,11 @@
 
 ---
 
+## Reflection
+
+This module has given me a solid foundation in cybersecurity principles, tools, and professional practices. I have gained a clear understanding of the CIA triad, the role of a security analyst, and the importance of safeguarding PII and SPII in real-world environments. Learning about the evolution of cyber threats, from historical attacks like the Morris Worm to modern phishing and ransomware techniques, has strengthened my awareness of how both technology and human behavior influence security risks. I now appreciate the value of ethical decision-making, compliance, and risk frameworks like NIST CSF and ISO standards in guiding professional conduct. Hands-on experience with SIEM dashboards, packet analysis tools, and Python scripting has allowed me to apply theory in practice, preparing me to identify vulnerabilities, monitor systems effectively, and document incidents responsibly. Overall, this module has enhanced my technical skills, ethical mindset, and problem-solving abilities, providing a strong starting point for a career in cybersecurity.
+
+
 <!--
 ### ✅ Notes / Tips for Employers
 - This portfolio highlights my **technical proficiency, ethical awareness, and hands-on experience**.  
