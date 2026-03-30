@@ -1,58 +1,21 @@
 # Lab Module 3: Apply OS Hardening Technique
 
-## 1. Overview
-This lab simulates a real-world cybersecurity incident where a production website, yummyrecipesforme.com, was compromised by a malicious actor.
+## Overview
+In this lab, you assume the role of a cybersecurity analyst investigating a security incident for **yummyrecipesforme.com**, a website hosting recipes and cookbooks. Visitors experienced a security issue when accessing the main webpage. The objective of this lab is to:
 
-As a cybersecurity analyst, I investigated the incident using network traffic analysis techniques, identified the attack vector, and provided remediation recommendations to prevent similar incidents.
+1. Identify the network protocol involved in the incident.
+2. Document the incident in detail.
+3. Recommend a security measure to prevent future attacks.
 
----
-
-## 2. Objectives
-1. Analyze network traffic using tcpdump  
-2. Identify network protocols involved in the attack  
-3. Investigate and document a security incident  
-4. Recommend mitigation strategies against brute force attacks  
+A former employee executed a brute force attack to gain administrative access and modified the website to distribute malware. Visitors were redirected to a malicious website, **greatrecipesforme.com**, after downloading a disguised executable file.
 
 ---
 
-## 3. Network Protocol Identified
+## Section 1: Identify the Network Protocol
 
-**Protocol:** Hypertext Transfer Protocol (HTTP)
+The primary protocol identified during the investigation is the **Hypertext Transfer Protocol (HTTP)**. HTTP is used to request and receive web content, including the malicious file downloaded by users. Additionally, the **Domain Name System (DNS)** protocol is observed in the logs, which resolves website URLs to IP addresses.
 
-### 3.1 Justification
-- The interaction between the user and the website occurred over HTTP  
-- Packet capture logs showed HTTP requests when accessing the web server  
-- The malicious file was delivered through HTTP responses  
-- Redirection to a malicious domain also occurred via HTTP  
-
-### 3.2 Supporting Evidence
-- DNS queries resolved domain names into IP addresses  
-- HTTP was used to:
-  - Load the legitimate website  
-  - Deliver the malicious executable file  
-  - Redirect users to the malicious domain (greatrecipesforme.com)  
-
----
-
-## 4. Incident Documentation
-
-### 4.1 Initial Report
-Multiple users reported that:
-- They were prompted to download a file when visiting the website  
-- Their systems slowed down after executing the file  
-- They were redirected to a different and suspicious domain  
-
-Additionally, the website administrator was unable to access the admin panel.
-
----
-
-### 4.2 Investigation Process
-To safely analyze the issue:
-1. A sandbox environment was created  
-2. Network traffic was captured using tcpdump  
-3. The website was accessed in a controlled environment
-
-Sample tcpdump logs:
+**Evidence from tcpdump logs:**
 ```bash
 12:34:56 IP 192.168.1.2.54321 > 8.8.8.8.53: DNS query A yummyrecipesforme.com
 12:34:56 IP 8.8.8.8.53 > 192.168.1.2.54321: DNS response A 93.184.216.34
@@ -61,94 +24,74 @@ Sample tcpdump logs:
 12:35:02 IP 192.168.1.2.54323 > 8.8.8.8.53: DNS query A greatrecipesforme.com
 12:35:02 IP 8.8.8.8.53 > 192.168.1.2.54323: DNS response A 203.0.113.45
 12:35:03 IP 192.168.1.2.54324 > 203.0.113.45.80: HTTP GET /index.html
-````
+```
+
+**Analysis:**
+
+- The browser initially queries the DNS server for **yummyrecipesforme.com**, receives the IP address, and initiates an HTTP request to access the website.  
+- The user is prompted to download an executable file via HTTP.  
+- After execution, the browser queries the DNS server for **greatrecipesforme.com** and connects via HTTP, indicating redirection to a malicious site.  
 
 ---
 
-### 4.3 Observed Behavior
-1. A DNS request resolved yummyrecipesforme.com  
-2. An HTTP request loaded the website  
-3. A download prompt appeared for an executable file  
-4. The file was executed  
-5. A DNS request resolved greatrecipesforme.com  
-6. The browser redirected to the malicious website via HTTP  
+## Section 2: Incident Documentation
+
+**Summary of the Incident:**
+
+- Multiple customers reported that visiting **yummyrecipesforme.com** prompted them to download an executable file claiming to provide free recipes.  
+- The downloaded file caused their computers to slow down and redirected their browsers to **greatrecipesforme.com**.  
+- The website owner was locked out of the admin panel and contacted the hosting provider.  
+
+**Investigation Steps:**
+
+1. A sandbox environment was created to safely interact with the suspicious website.  
+2. The analyst ran **tcpdump** to capture network traffic while visiting the website.  
+3. The executable file was downloaded and executed in the sandbox, confirming malicious redirection.  
+4. DNS and HTTP logs indicated requests to **yummyrecipesforme.com** and subsequent redirection to **greatrecipesforme.com**.  
+5. Source code inspection revealed embedded JavaScript that prompted file downloads.  
+
+**Analysis and Findings:**
+
+- The attacker performed a **brute force attack** on the administrative account, exploiting a default password and absence of login attempt controls.  
+- Malicious JavaScript modified the website to deliver an executable file that redirected users to a fake website.  
+- The security incident compromised end users’ computers and the integrity of the web server.
+
+**Sources of Evidence:**
+
+- TCP/IP traffic captured via **tcpdump**  
+- Website source code analysis  
+- Customer reports and hosting provider feedback  
 
 ---
 
-### 4.4 Root Cause Analysis
-- The web server was compromised through a brute force attack  
-- The attacker exploited a default administrator password  
-- After gaining access:
-  - Malicious JavaScript was injected into the website  
-  - Users were prompted to download malware  
-  - Administrator credentials were modified  
+## Section 3: Recommended Security Measure
+
+**Recommendation:** Implement **Two-Factor Authentication (2FA)** for all administrative accounts.  
+
+**Rationale:**
+
+- The brute force attack succeeded because the admin password was predictable and no additional verification was required.  
+- 2FA adds a second layer of authentication, requiring a one-time passcode (OTP) sent to the user’s phone or email.  
+- Even if a password is compromised, an attacker cannot access the account without the OTP.  
+
+**Additional Recommendations (supportive):**
+
+- Enforce strong, non-default passwords  
+- Require regular password updates  
+- Limit login attempts to mitigate brute force attacks  
+
+Implementing these measures will significantly reduce the likelihood of unauthorized administrative access and protect both the website and its users.
 
 ---
 
-### 4.5 Network Traffic Analysis Summary
+## Conclusion
 
-The following sequence represents the interpreted network activity observed during packet analysis:
-
-1. The browser initiates a DNS request to resolve the IP address of yummyrecipesforme.com  
-2. The DNS server responds with the corresponding IP address  
-3. The browser sends an HTTP request to access the website  
-4. The website prompts the download of a malicious executable file  
-5. The browser initiates a DNS request for greatrecipesforme.com  
-6. The DNS server responds with the IP address for the malicious domain  
-7. The browser sends an HTTP request and is redirected to the malicious website
+This lab reinforced the importance of **network protocol analysis**, **incident documentation**, and **preventive security measures**. Proper investigation and reporting allow cybersecurity analysts to identify the root cause, mitigate threats, and implement safeguards to prevent future incidents.  
 
 ---
 
-## 5. Impact Assessment
-1. End users executed malicious software unknowingly  
-2. Systems experienced performance degradation  
-3. Website integrity was compromised  
-4. Unauthorized administrative access occurred  
+## References
 
----
-
-## 6. Recommendation
-
-### 6.1 Implement Two-Factor Authentication (2FA)
-
-Two-factor authentication adds an additional layer of security beyond passwords. Even if an attacker successfully obtains login credentials, access cannot be granted without the second authentication factor.
-
-### 6.2 Effectiveness
-1. Prevents unauthorized access using stolen credentials  
-2. Reduces the success rate of brute force attacks  
-3. Strengthens administrative account security  
-4. Aligns with industry security best practices  
-
----
-
-## 7. Skills Demonstrated
-1. Network traffic analysis using tcpdump  
-2. Understanding of TCP/IP model and protocols (DNS, HTTP)  
-3. Security incident investigation and documentation  
-4. Threat identification and root cause analysis  
-5. Security control recommendation  
-
----
-
-## 8. Tools and Concepts
-1. tcpdump  
-2. DNS (Domain Name System)  
-3. HTTP (Hypertext Transfer Protocol)  
-4. Sandbox environment analysis  
-5. Brute force attack techniques  
-6. Malware behavior analysis  
-
----
-
-## 9. Conclusion
-This lab demonstrates the importance of secure authentication practices, network monitoring, and layered security controls.
-
-The investigation highlights how weak password policies and lack of access control mechanisms can lead to full system compromise.
-
----
-
-## 10. Future Improvements
-1. Implement login attempt rate limiting  
-2. Enforce strong password policies  
-3. Monitor and alert on suspicious login attempts  
-4. Conduct regular security audits
+- TCP/IP Model and Network Protocols  
+- How to interpret **tcpdump** logs  
+- Best practices for **web server hardening** and **brute force attack mitigation**  
