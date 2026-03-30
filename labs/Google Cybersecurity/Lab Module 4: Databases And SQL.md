@@ -10,7 +10,6 @@ This lab covers querying, filtering, and joining data from a database using Mari
 3. [Activity 3: Apply more filters in SQL](#activity-3-apply-more-filters-in-sql)
 4. [Activity 4: Filter with AND, OR, and NOT](#activity-4-filter-with-and-or-and-not)
 5. [Activity 5: Complete a join](#activity-5-complete-a-join)
-6. [Reflection and Conclusion](#reflection-and-conclusion)
 
 ---
 
