@@ -1,4 +1,4 @@
-# Security Incident Report – Web Compromise and Malware Redirection
+# Lab Module 3: Apply OS Hardening Technique
 
 ## 1. Overview
 This lab simulates a real-world cybersecurity incident where a production website, yummyrecipesforme.com, was compromised by a malicious actor.
