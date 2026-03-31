@@ -91,6 +91,26 @@ This activity highlighted the importance of hashing for ensuring data integrity.
 **Objective:**  
 Analyze an access control incident and recommend improvements.
 
+**Relevant Employee Record:**
+
+| Name              | Role            | Status     | Authorization | IP Address       | End Date   |
+|-------------------|----------------|------------|---------------|------------------|------------|
+| Robert Taylor Jr. | Legal attorney | Contractor | Admin         | 152.207.255.255  | 12/27/2019 |
+
+**Relevant Log Evidence:**
+
+```plaintext
+Event Type: Information  
+Date: 10/03/2023  
+Time: 8:29:57 AM  
+User: Legal\Administrator  
+IP Address: 152.207.255.255  
+Action: Payroll event added (FAUX_BANK)
+```
+
+**Analysis:**  
+The log shows that a user with administrative privileges accessed the system and performed a payroll-related action. The IP address matches a contractor account (Robert Taylor Jr.), whose contract ended in 2019, indicating unauthorized or unmanaged access.
+
 **Notes (Investigation Findings):**
 - Event occurred on 10/03/2023 using IP address 152.207.255.255
 - User identified as Legal/Administrator (Robert Taylor Jr.)
