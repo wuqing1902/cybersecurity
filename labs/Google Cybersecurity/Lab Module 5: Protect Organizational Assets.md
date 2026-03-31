@@ -109,7 +109,7 @@ Action: Payroll event added (FAUX_BANK)
 ```
 
 **Analysis:**  
-The log shows that a user with administrative privileges accessed the system and performed a payroll-related action. The IP address matches a contractor account (Robert Taylor Jr.), whose contract ended in 2019, indicating unauthorized or unmanaged access.
+The event log indicates that a user with administrative privileges performed a payroll-related action. Cross-referencing the IP address with the employee directory shows that the account belongs to a former contractor, Robert Taylor Jr., whose contract ended in 2019. This suggests unauthorized or unmanaged access to critical systems.
 
 **Notes (Investigation Findings):**
 - Event occurred on 10/03/2023 using IP address 152.207.255.255
@@ -125,7 +125,7 @@ The log shows that a user with administrative privileges accessed the system and
 - Enable multi-factor authentication (MFA)
 
 **Reflection:**  
-This activity emphasized the importance of proper access control management. Poor account lifecycle management and excessive privileges can lead to serious security incidents. Implementing stricter authentication and authorization controls reduces the risk of unauthorized access.
+This activity highlights the importance of proper account lifecycle management and access control enforcement. Retaining active accounts for former employees and granting excessive privileges significantly increases security risks. Strengthening authentication and authorization controls can effectively reduce the likelihood of similar incidents.
 
 ---
 
