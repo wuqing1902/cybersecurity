@@ -38,12 +38,62 @@ In this activity, I used Wireshark to open and analyze a packet capture (.pcap) 
 - `tcp.port == 80`
 - `tcp contains "curl"`
 
+### Sample Packet Evidence
+
+Below are examples of different types of network traffic observed in Wireshark:
+
+**1. DNS Query (Domain Resolution)**
+- Source IP: 172.21.224.2  
+- Destination IP: DNS Server  
+- Protocol: UDP  
+- Destination Port: 53  
+- Query: opensource.google.com  
+
+This shows the system resolving a domain name into an IP address.
+
+**2. TCP Communication (Web Traffic)**
+- Source IP: 172.21.224.2  
+- Destination IP: 142.250.1.139  
+- Protocol: TCP  
+- Destination Port: 80 (HTTP)  
+
+This indicates web communication between the local system and an external server.
+
+**3. ICMP Packet (Connectivity Check)**
+- Source IP: 172.21.224.2  
+- Destination IP: 142.250.1.139  
+- Protocol: ICMP (Echo Request/Reply)  
+
+This reflects basic network connectivity testing between hosts.
+
+### Packet Structure Analysis
+A selected TCP packet was analyzed across multiple layers:
+- **Frame Layer:** Displays overall packet size and capture details  
+- **Ethernet II Layer:** Contains source and destination MAC addresses  
+- **IP Layer (IPv4):** Shows source (172.21.224.2) and destination (142.250.1.139) IP addresses  
+- **TCP Layer:** Includes source port (49652), destination port (80), and flags used in communication  
+This layered analysis demonstrates how data is encapsulated and transmitted across a network.
+
 ### Key Findings
 - Identified communication between local system and external IP (142.250.1.139)  
 - Observed ICMP (ping), DNS queries, and HTTP traffic  
 - DNS queries revealed domain resolution for `opensource.google.com`  
 - TCP traffic showed web requests and responses over port 80  
 - Packet inspection revealed protocol layering (Ethernet → IP → TCP/UDP → Application)
+
+### Traffic Interpretation
+The captured traffic indicates normal web browsing behavior:
+- DNS queries resolve domain names (opensource.google.com) into IP addresses  
+- TCP connections are established over port 80 for HTTP communication  
+- ICMP packets (ping) show connectivity checks between hosts  
+No obvious malicious activity was observed in this traffic sample.
+
+### Security Relevance
+Understanding packet-level data allows security analysts to:
+- Detect abnormal traffic patterns  
+- Identify potential intrusions or malware communication  
+- Investigate incidents using network evidence  
+This skill is essential in Security Operations Center (SOC) environments.
 
 ---
 
@@ -53,9 +103,55 @@ In this activity, I used Wireshark to open and analyze a packet capture (.pcap) 
 In this activity, I captured live network traffic using tcpdump in a Linux environment. I also saved and analyzed captured packets for further inspection.
 
 ### Key Tasks Performed
-- Identified network interfaces using:
-  - `ifconfig`
-  - `tcpdump -D`
+#### 1. **Identify Network Interfaces**  
+Verified available interfaces using:
+```bash
+ifconfig
+sudo tcpdump -D
+```
+- Selected eth0 as the primary Ethernet interface for packet capture.
+
+#### 2. **Capture Live Traffic**
+Captured a small sample of packets for analysis:
+```bash
+sudo tcpdump -i eth0 -v -c5
+```
+- -i eth0: Capture packets from eth0 interface.
+- -v: Display verbose packet information.
+- -c5: Capture 5 packets and exit.
+
+#### 3. **Capture and Save Specific Traffic**
+Captured HTTP traffic (TCP port 80) to a file:
+```bash
+sudo tcpdump -i eth0 -nn -c9 port 80 -w capture.pcap &
+```
+- -nn: Disable IP and port name resolution for security.
+- port 80: Filter only HTTP traffic.
+- -w capture.pcap: Save packets to a .pcap file.
+- &: Run tcpdump in the background to allow simultaneous traffic generation.
+
+Generated traffic using:
+```bash
+curl opensource.google.com
+```
+
+#### 4. **Analyze Saved Packets**
+##### Verbose inspection:
+```bash
+sudo tcpdump -nn -r capture.pcap -v
+```
+##### Hexadecimal and ASCII inspection:
+```bash
+sudo tcpdump -nn -r capture.pcap -X
+```
+
+#### 5. **Verify Capture File**
+```bash
+ls -l capture.pcap
+```
+
+
+<!--
 - Captured live traffic:
   - `sudo tcpdump -i eth0 -v -c5`
 - Captured and saved packets:
@@ -65,7 +161,7 @@ In this activity, I captured live network traffic using tcpdump in a Linux envir
 - Analyzed saved packets:
   - `sudo tcpdump -nn -r capture.pcap -v`
   - `sudo tcpdump -nn -r capture.pcap -X`
-
+-->
 ### Key Findings
 - Successfully captured HTTP traffic over port 80  
 - Observed TCP handshake behavior (SYN, SYN-ACK, ACK)  
@@ -73,12 +169,17 @@ In this activity, I captured live network traffic using tcpdump in a Linux envir
 - Verified captured data using `.pcap` file analysis  
 - Learned importance of disabling name resolution (`-nn`) for security  
 
+### Reflection
+
+This activity highlighted the practical use of tcpdump as a lightweight, command-line network analyzer. By capturing and analyzing packets in real-time, I gained a deeper understanding of TCP/IP behavior, HTTP traffic, and how to efficiently filter and save network traffic for forensic or monitoring purposes. Disabling name resolution and filtering traffic are critical practices for maintaining security during network analysis.
+
 ---
 
 ## Activity 3: Research Network Protocol Analyzers
 
 ### Description
 This activity involved researching and comparing two widely used network protocol analyzers: Wireshark and tcpdump.
+The goal was to understand the differences and similarities between graphical and command-line tools, and evaluate their suitability for cybersecurity tasks.
 
 ### Differences
 
@@ -92,10 +193,22 @@ This activity involved researching and comparing two widely used network protoco
 
 - Both are **network protocol analyzers (packet sniffers)**  
 - Both are **open-source and free to use**  
-- Both support **packet capturing and filtering by protocol**  
+- Both support **packet capturing and filtering by protocol**
+- Both allow **filtering by protocol, port, and IP address**, helping analysts focus on relevant traffic.  
+
+**Limitations:**  
+- **Wireshark:** Requires GUI access and higher system resources.  
+- **tcpdump:** CLI-only, requires proficiency with command-line filters to interpret captures effectively.
+
+**Typical Use Cases:**  
+- **Wireshark:** Ideal for visual analysis, troubleshooting complex network flows, and analyzing large capture files.  
+- **tcpdump:** Preferred for lightweight, automated, or scriptable packet captures on servers or low-resource systems.
 
 ### Analysis
 Wireshark is more suitable for detailed analysis and beginners due to its visual interface, while tcpdump is ideal for quick captures, remote systems, and low-resource environments.
+
+### Reflection
+Comparing Wireshark and tcpdump highlighted how both tools complement each other: Wireshark provides detailed, visual insights, while tcpdump enables efficient, low-overhead captures. Mastering both tools enhances a security analyst’s ability to monitor, troubleshoot, and investigate network traffic effectively.
 
 ---
 
@@ -110,7 +223,7 @@ Wireshark is more suitable for detailed analysis and beginners due to its visual
 
 ---
 
-## Reflection
+## Lesson Learned
 
 This lab significantly improved my understanding of how network traffic operates and how security analysts investigate it. Initially, analyzing packet data was overwhelming due to the complexity of protocols and raw data.
 
