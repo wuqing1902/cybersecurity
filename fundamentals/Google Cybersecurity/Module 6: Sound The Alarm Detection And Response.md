@@ -6,7 +6,7 @@ Detection and Incident Response is a critical aspect of cybersecurity that focus
 
 ---
 
-## Module 1: Introduction to Detection and Incident Response
+## Section 1: Introduction to Detection and Incident Response
 
 ### Key Concepts
 Detection and incident response involves understanding **events**, which are observable occurrences on systems or networks, and **incidents**, which are events that compromise confidentiality, integrity, or availability (CIA) or violate security policies. Effective incident management relies on documenting the **5 W’s**: Who (attacker), What (event), When (time), Where (location), and Why (motivation).  
@@ -30,7 +30,7 @@ In lab exercises, I document security events, practice triage and prioritization
 
 ---
 
-## Module 2: Network Monitoring and Analysis
+## Section 2: Network Monitoring and Analysis
 
 ### Key Concepts
 Network monitoring involves understanding **network traffic** and establishing **baselines** for normal behavior. Packet structures include **headers** (routing info), **payloads** (data), and **trailers** (error checking). IPv4 and IPv6 headers contain fields essential for traffic analysis, such as TTL, Flags, and Flow Label.  
@@ -48,7 +48,7 @@ I practice capturing and analyzing network traffic in lab environments, identify
 
 ---
 
-## Module 3: Incident Investigation and Response
+## Section 3: Incident Investigation and Response
 
 ### Key Concepts
 Proactive **threat hunting** and **threat intelligence** help identify hidden threats. The **Pyramid of Pain** illustrates that blocking higher-level indicators of compromise (IoCs) is more disruptive to attackers.  
@@ -68,7 +68,7 @@ I simulate phishing incidents and pipeline anomalies in labs, document triage pr
 
 ---
 
-## Module 4: Network Traffic and Logs using IDS and SIEM Tools
+## Section 4: Network Traffic and Logs using IDS and SIEM Tools
 
 ### Key Concepts
 **Log management** involves capturing network, system, application, security, and authentication logs, detailing date, time, location, action, and author. Logs may be formatted as JSON, Syslog, XML, CSV, or CEF.  
