@@ -1,4 +1,4 @@
-# Mdoule 7: Automate Cybersecuirty Tasks With Pyhton
+# Module 7: Automate Cybersecuirty Tasks With Pyhton
 ## Overview
 
 Python is a versatile programming language widely used in cybersecurity to automate repetitive tasks, analyze data, and enhance operational efficiency. Its flexibility allows professionals to work with logs, parse files, manipulate strings and lists, and develop tools for network monitoring, malware analysis, and threat detection. By learning Python fundamentals, control flow, functions, modules, and file operations, I gained both the theoretical knowledge and practical skills necessary to develop reliable scripts. Additionally, Python’s integration with DevSecOps pipelines demonstrates its value in automating security checks and ensuring compliance across modern software development workflows. 
@@ -7,7 +7,7 @@ This module summarizes my learning and practical application of **Python program
 
 ---
 
-## Module 1: Introduction to Python
+## Section 1: Introduction to Python
 
 ### Key Concepts
 Python is a **general-purpose programming language** frequently used in cybersecurity to automate repetitive tasks, including log analysis, malware investigation, and network scanning. Python can be executed in multiple environments:  
@@ -20,7 +20,7 @@ Basic Python syntax includes **comments**, `print()` statements, and **data type
 
 ---
 
-## Module 2: Writing Effective Python Code
+## Section 2: Writing Effective Python Code
 
 ### Key Concepts
 Functions in Python allow **reusable code blocks**, defined with `def`, using **parameters** and **arguments**, and optionally returning values with `return`. Understanding **variable scope**—global versus local—is crucial for program correctness.  
@@ -29,7 +29,7 @@ Python includes many **built-in functions** such as `type()`, `max()`, `min()`, 
 
 ---
 
-## Module 3: Working with Strings and Lists
+## Section 3: Working with Strings and Lists
 
 ### Key Concepts
 String and list manipulation is central to Python programming:  
@@ -41,7 +41,7 @@ String and list manipulation is central to Python programming:
 
 ---
 
-## Module 4: Python in Practice
+## Section 4: Python in Practice
 
 ### Key Concepts
 Python enables **file operations**, such as reading (`"r"`), writing (`"w"`), and appending (`"a"`) files using `with open()`, which automatically closes the file. Strings can be converted to lists using `.split()` and back to strings with `.join()`.  
