@@ -1925,18 +1925,22 @@ discord or IRC.
 bandit14@bandit:~$ ls
 bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
 MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
-bandit14@bandit:~$ exit
-logout
-Connection to bandit.labs.overthewire.org closed.
-
 ```
+(continue to the Bandit 14 task ...)
+
 
 ---
 
 
 ## Bandit 14
 ```bash
+bandit14@bandit:~$ nc localhost 30000
+MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
+Correct!
+8xCjnmgoKbGLhHFAZlGE5Tmu4M2tKJQo
 
+^C
+bandit14@bandit:~$ 
 ```
 
 ---
