@@ -825,6 +825,13 @@ Since manually using `cat` to open every file would be inefficient and time-cons
 
 
 ## Bandit 6
+### Level Goal
+The password for the next level is stored somewhere on the server and has all of the following properties:
+- owned by user bandit7
+- owned by group bandit6
+- 33 bytes in size
+
+### Execution Log 
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit6@bandit.labs.overthewire.org
@@ -931,10 +938,22 @@ logout
 Connection to bandit.labs.overthewire.org closed.
 ```
 
+### Commands used to solve this level
+```bash
+find / -type f -user bandit7 -group bandit6 -size 33c 2>/dev/null
+```
+
+### Note: 
+The `find / -type f -user bandit7 -group bandit6 -size 33c 2>/dev/null` command is used to search the entire filesystem starting from the root directory `/` for a file that matches all the given criteria, specifically a regular file `-type f` owned by user bandit7 `-user bandit7`, belonging to group bandit6 `-group bandit6`, and exactly 33 bytes in size `-size 33c`. Additionally, `2>/dev/null` is used to suppress permission denied errors that occur when accessing restricted directories, allowing the search results to display cleanly and making it easier to identify the correct file, which is then read using the `cat` command to obtain the password.
+
 ---
 
 
 ## Bandit 7
+### Level Goal
+The password for the next level is stored in the file data.txt next to the word millionth
+
+### Execution Log 
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit7@bandit.labs.overthewire.org
@@ -1043,10 +1062,25 @@ logout
 Connection to bandit.labs.overthewire.org closed.
 ```
 
+### Commands used to solve this level
+```bash
+grep millionth data.txt
+cat data.txt | grep millionth
+```
+
+### Note: 
+The solution can be achieved using the `grep` command, which searches for a specific keyword within a file. In this case, `grep millionth data.txt` directly scans the file and returns the line containing the word “millionth” along with the associated password, making it a quick and efficient way to locate the required information without manually reading the entire file.
+
+Alternatively, the command `cat data.txt | grep millionth` uses a pipe (|) to first output the contents of the file with `cat` and then pass it to `grep` for filtering, producing the same result. However, this method is slightly less efficient since it involves an extra step, while both approaches demonstrate how text processing and command chaining can be used to extract specific data from large files.
+
 ---
 
 
 ## Bandit 8
+### Level Goal
+The password for the next level is stored in the file data.txt and is the only line of text that occurs only once
+
+### Execution Log 
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit8@bandit.labs.overthewire.org
@@ -1153,10 +1187,24 @@ logout
 Connection to bandit.labs.overthewire.org closed.
 ```
 
+### Commands used to solve this level
+```bash
+sort data.txt | uniq -u
+```
+
+### Note: 
+The problem is solved by using `sort` and `uniq -u` together, where `sort data.txt` first arranges all lines so that identical entries are placed next to each other, allowing `uniq -u` to correctly identify and display only the line that appears once. The `uniq -u` cannot be used directly on the unsorted file because it only compares adjacent lines, meaning non-consecutive duplicates would not be detected and could lead to incorrect results, hence the need for sorting as a preprocessing step.
+
+Other useful options for the `uniq` command include `-d`, which displays only the lines that are duplicated and appear more than once, `-c`, which shows a count of how many times each line occurs, and `-i`, which ignores case differences so that lines like "Hello" and "hello" are treated as identical, allowing for flexible filtering and analysis of repeated or unique lines in text data.
+
 ---
 
 
 ## Bandit 9
+### Level Goal
+The password for the next level is stored in the file data.txt in one of the few human-readable strings, preceded by several ‘=’ characters.
+
+### Execution Log
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit9@bandit.labs.overthewire.org
@@ -1278,10 +1326,24 @@ logout
 Connection to bandit.labs.overthewire.org closed.
 ```
 
+### Commands used to solve this level
+```bash
+strings data.txt | grep "="
+```
+
+### Note: 
+The challenge is solved by using the `strings` command to extract all human-readable text from the binary or mixed-content file `data.txt`, and then piping the output to `grep "="` to filter only the lines containing the `=` character. This approach quickly isolates the readable string preceded by multiple `=` characters, allowing the password to be identified without manually inspecting the entire file.
+
+Directly using `grep "=" data.txt` does not work in this case because `data.txt` contains mostly binary or non-printable characters, and `grep` is designed to search text files. As a result, it may fail to display the human-readable strings or produce garbled output, whereas `strings` extracts only the readable text from the file first, ensuring that grep can reliably filter for lines containing the `=` character.
+
 ---
 
 
 ## Bandit 10
+### Level Goal
+The password for the next level is stored in the file data.txt, which contains base64 encoded data
+
+### Execution Log 
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit10@bandit.labs.overthewire.org
@@ -1389,6 +1451,15 @@ bandit10@bandit:~$ exit
 logout
 Connection to bandit.labs.overthewire.org closed.
 ```
+
+### Commands used to solve this level
+```bash
+base64 -d data.txt
+base64 -d data.txt | cat
+```
+
+### Note: 
+The challenge is solved by using the `base64 -d data.txt` command to decode the contents of `data.txt` from base64 into human-readable text. Decode is what the `-d` parameter stands for, instructing the command to transform the encoded data back to its original form. Displaying the output with `cat` is optional and simply shows the decoded content in the terminal. Other useful options for the base64 command include `-w` to wrap encoded lines at a specified width, `-i` to ignore non-alphabet characters during decoding, and `-e` to explicitly encode data, rather than relying on the default behavior, giving flexibility when working with different base64 formats.
 
 ---
 
