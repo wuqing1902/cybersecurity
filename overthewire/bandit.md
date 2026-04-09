@@ -370,7 +370,6 @@ MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
 ```
 
 ### Commands used to solve this level
-#### Use `\` as the escape characters 
 ```bash
 cat ./--spaces\ in\ this\ filename-- 
 ```
@@ -382,6 +381,10 @@ The filename contains spaces, which the shell interprets as separate arguments, 
 
 
 ## Bandit 3
+### Level Goal
+The password for the next level is stored in a hidden file in the inhere directory.
+
+### Execution Log
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit3@bandit.labs.overthewire.org
@@ -495,10 +498,23 @@ logout
 Connection to bandit.labs.overthewire.org closed.
 ```
 
+### Commands used to solve this level
+```bash
+ls -lia
+```
+
+### Note: 
+The challenge is solved by navigating into the inhere directory, using `ls -la` to reveal hidden files, and then reading the hidden file `...Hiding-From-You` with the cat command to obtain the required password. The default ls command is not sufficient to discover the hidden file because it does not display files that begin with a dot `.`, causing files like `...Hiding-From-You` to remain unseen. Therefore, the `ls -lia` command is used, where `-a` reveals all files including hidden ones, `-l` provides detailed information such as permissions and ownership, and `-i` displays inode numbers, allowing the hidden file to be identified and accessed.
+
+
 ---
 
 
 ## Bandit 4
+### Level Goal
+The password for the next level is stored in the only human-readable file in the inhere directory. Tip: if your terminal is messed up, try the “reset” command.
+
+### Execution Log 
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit4@bandit.labs.overthewire.org
@@ -644,10 +660,25 @@ logout
 Connection to bandit.labs.overthewire.org closed.
 ```
 
+### Commands used to solve this level
+```bash
+file ./-file*
+```
+
+### Note: 
+The `file ./-file*` command is used to determine the type of each file in the directory, allowing the identification of the only human-readable file `ASCII text` among multiple binary files. Using `file *` fails in this case because filenames beginning with `-` are interpreted by the shell as command options rather than actual filenames, causing errors, whereas prefixing them with `./` explicitly indicates that they are files in the current directory, ensuring they are correctly processed by the file command.
+
 ---
 
 
 ## Bandit 5
+### Level Goal
+The password for the next level is stored in a file somewhere under the inhere directory and has all of the following properties:
+- human-readable
+- 1033 bytes in size
+- not executable
+
+### Execution Log 
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit5@bandit.labs.overthewire.org
@@ -780,6 +811,15 @@ HWasnPhtq9AVKe0dmk45nxy20cvUa6EG
 logout
 Connection to bandit.labs.overthewire.org closed.
 ```
+
+### Commands used to solve this level
+```bash
+find . -type f -size 1033c ! -executable
+```
+
+### Note: 
+Since manually using `cat` to open every file would be inefficient and time-consuming, the `find` command is used to quickly locate the correct file by filtering based on the given requirements, specifically searching for files that are exactly 1033 bytes in size `-size 1033c`, are regular files `-type f`, and are not executable `! -executable`; this targeted approach significantly narrows down the search and allows the correct file to be identified efficiently without unnecessary manual inspection.
+
 
 ---
 
