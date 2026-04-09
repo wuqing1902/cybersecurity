@@ -1,6 +1,14 @@
 # Bandit - Unix/Linux basics
 
 ## Bandit 0 
+### Level Goal
+The password for the next level is stored in a file called readme located in the home directory. Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
+
+- TIP: Create a file for notes and passwords on your local machine!
+- Passwords for levels are not saved automatically. If you do not save them yourself, you will need to start over from bandit0.
+- Passwords also occasionally change. It is recommended to take notes on how to solve each challenge. As levels get more challenging, detailed notes are useful to return to where you left off, reference for later problems, or help others after you’ve completed the challenge.
+
+### Execution Log
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit0@bandit.labs.overthewire.org
@@ -114,10 +122,27 @@ logout
 Connection to bandit.labs.overthewire.org closed.
 ```
 
+### Commands used to solve this level
+#### ssh
+```bash
+ssh -p 2220 bandit0@bandit.labs.overthewire.org
+```
+The ssh command is used to establish a secure remote connection to the Bandit server via port 2220 using the username bandit0 and host bandit.labs.overthewire.org, allowing access to the challenge environment.
+
+#### cat
+```bash
+cat readme
+``` 
+The cat command is executed to display the contents of the readme file, which contains the information required to proceed to the next level.
+
 ---
 
 
 ## Bandit 1
+### Level Goal
+The password for the next level is stored in a file called - located in the home directory
+
+### Execution Log 
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit1@bandit.labs.overthewire.org
@@ -224,10 +249,23 @@ logout
 Connection to bandit.labs.overthewire.org closed.
 ```
 
+### Commands used to solve this level
+#### Use `cat ./-` instead of `cat -`
+```bash
+cat ./-
+```
+
+### Note: 
+If using `cat -`, in Linux/Unix, `-` is interpreted as standard input rather than a filename, so `cat -` reads from the keyboard or a pipe. However, using `cat ./-`, where `./` is referring to the current directory and explicitly tells the system to to access a file located in the current working directory.
+
 ---
 
 
 ## Bandit 2
+### Level Goal
+The password for the next level is stored in a file called --spaces in this filename-- located in the home directory
+
+### Execution Log
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit2@bandit.labs.overthewire.org
@@ -330,6 +368,15 @@ bandit2@bandit:~$ ls
 bandit2@bandit:~$ cat ./--spaces\ in\ this\ filename-- 
 MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
 ```
+
+### Commands used to solve this level
+#### Use `\` as the escape characters 
+```bash
+cat ./--spaces\ in\ this\ filename-- 
+```
+
+### Note: 
+The filename contains spaces, which the shell interprets as separate arguments, so backslashes `\` are used to escape each space, allowing the full filename to be correctly recognized as a single file when executing the cat command. If the command `cat ./-- spaces in this filename--` is used without escape characters, the shell will treat each space-separated word as a separate argument, causing the command to fail because it cannot locate the intended file.
 
 ---
 
@@ -1940,7 +1987,9 @@ Correct!
 8xCjnmgoKbGLhHFAZlGE5Tmu4M2tKJQo
 
 ^C
-bandit14@bandit:~$ 
+bandit14@bandit:~$ exit
+logout
+Connection to bandit.labs.overthewire.org closed.
 ```
 
 ---
