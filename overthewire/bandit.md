@@ -1461,10 +1461,16 @@ base64 -d data.txt | cat
 ### Note: 
 The challenge is solved by using the `base64 -d data.txt` command to decode the contents of `data.txt` from base64 into human-readable text. Decode is what the `-d` parameter stands for, instructing the command to transform the encoded data back to its original form. Displaying the output with `cat` is optional and simply shows the decoded content in the terminal. Other useful options for the base64 command include `-w` to wrap encoded lines at a specified width, `-i` to ignore non-alphabet characters during decoding, and `-e` to explicitly encode data, rather than relying on the default behavior, giving flexibility when working with different base64 formats.
 
+To determine if content is base64 encoded, first check if it contains only the valid base64 characters, which include uppercase and lowercase letters, numbers, + and /, and possibly = at the end as padding, and ensure the total length is a multiple of four characters. Decode it with `base64 -d` to see if it produces readable text or valid binary data, since failed decoding often indicates it is not base64. Base64 (unlike ROT13 or other simple ciphers) does not alter the character set outside these allowed symbols, so text containing unusual symbols or letters beyond the base64 range is likely not base64, making character set and successful decoding reliable ways to differentiate between base64 and other encodings.
+
 ---
 
 
 ## Bandit 11
+### Level Goal
+The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
+
+### Execution Log
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit11@bandit.labs.overthewire.org
@@ -1573,10 +1579,22 @@ logout
 Connection to bandit.labs.overthewire.org closed.
 ```
 
+### Commands used to solve this level
+```bash
+cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+```
+
+### Note: 
+The challenge is solved using a ROT13 cipher, which shifts each letter 13 positions in the alphabet while leaving numbers and symbols unchanged. The command `cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'` reads the contents of `data.txt` and passes it to the `tr` command, which translates all uppercase and lowercase letters according to the ROT13 mapping, effectively decoding the text to reveal the password. This approach quickly converts the encoded message back into human-readable form without altering any non-letter characters.
+
 ---
 
 
 ## Bandit 12
+### Level Goal
+The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work. Use mkdir with a hard to guess directory name. Or better, use the command “mktemp -d”. Then copy the datafile using cp, and rename it using mv (read the manpages!)
+
+### Execution Log 
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit12@bandit.labs.overthewire.org
@@ -1817,10 +1835,39 @@ logout
 Connection to bandit.labs.overthewire.org closed.
 ```
 
+### Commands used to solve this level
+```bash
+tempdir=$(mktemp -d)
+echo "Working in $tempdir"
+cp data.txt "$tempdir/"
+cd "$tempdir"
+xxd -r data.txt > data
+
+file data
+gzip → gunzip data.gz
+bzip2 → bunzip2 data.bz2
+tar archive → tar xf data.tar
+zip archive → unzip data.zip
+
+rm -r "$tempdir"
+```
+
+### Note: 
+This challenge is solved by first creating a temporary working directory using `mktemp -d`, which allows files to be manipulated safely without running into permission issues. The original data.txt contains a hexdump of a repeatedly compressed file, so `xxd -r` is used to convert the hexadecimal representation back into binary format that can be processed by standard compression and archive tools. The `file` command is then applied at each stage to identify the type of compression or archive, guiding the use of the correct decompression tool, such as `gunzip` for gzip files, `bunzip2` for bzip2 files, and `tar xf` for tar archives. This process is repeated iteratively, switching between gzip, bzip2, and tar as needed, until the final file is plain ASCII text containing the password. After retrieving the password, the temporary directory is removed with `rm -r` to clean up all intermediate files.
+
+A hexdump is a textual representation of a file’s raw binary data in hexadecimal format, often with an ASCII column for readability. You can usually identify a hexdump by looking for sequences of hexadecimal digits (0–9, a–f) alongside offsets when viewing the file with commands like `cat` or in a text editor. It is necessary to convert a hexdump back into binary using `xxd -r` because compression and archive tools require the actual binary data, not the textual hexadecimal form.
+
+Common compression and archive formats encountered in this challenge include gzip files (.gz), bzip2 files (.bz2), tar archives (.tar), and zip files (.zip). Each format requires its corresponding tool to decompress correctly, so using the wrong tool on a mismatched extension, such as attempting `gunzip` on a `.tar` file, will fail. The `rm -r` command is used to remove directories and all of their contents recursively, where the `-r` option stands for “recursive,” ensuring that every file and subdirectory inside the specified directory is deleted along with the directory itself.
+
+
 ---
 
 
 ## Bandit 13
+### Level Goal
+The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. Look at the commands that logged you into previous bandit levels, and find out how to use the key for this level.
+
+### Execution Log 
 ```bash
 ┌──(incognito㉿kali)-[~]
 └─$ ssh -p 2220 bandit13@bandit.labs.overthewire.org                 
@@ -2083,14 +2130,37 @@ discord or IRC.
 bandit14@bandit:~$ ls
 bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
 MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
+bandit14@bandit:~$ 
 ```
 (continue to the Bandit 14 task ...)
 
+### Commands used to solve this level
+`ls` – to list files in the current directory.
+`cat HINT` – to read the hint provided for the level.
+`cat sshkey.private` – to view the content of the private SSH key.
+`cat /etc/bandit_pass/bandit14` – attempted to read the next level’s password, which fails due to permissions.
+`ls -lia /etc/bandit_pass/bandit14` – to check ownership and permissions of the password file.
+`mkdir otw_test and cd otw_test` – to create and move into a local working directory for the key.
+`vi sshkey.private` – to create or save the SSH private key file locally.
+`ssh -p 2220 bandit14@bandit.labs.overthewire.org -i sshkey.private` – to attempt logging in using the private key.
+`chmod 600 sshkey.private` – to fix permissions of the private key so SSH will accept it.
+`ssh -p 2220 bandit14@bandit.labs.overthewire.org -i sshkey.private` – successfully log in with the key.
+`cat /etc/bandit_pass/bandit14` – to read the password for the next level.
+
+### Note: 
+This challenge is solved by recognizing that the next level’s password is inaccessible directly due to file permissions and that a private SSH key is provided instead. First, you save the private key locally in a safe directory and check its contents. SSH refuses to use the key if it has overly permissive file permissions, so `chmod 600` is applied to make it readable only by the owner. Then, use SSH with the `-i` option to specify the private key and `-p 2220` for the non-standard port to log in as the user bandit14. Once logged in, the password for bandit14 can be read from `/etc/bandit_pass/bandit14`, completing the challenge.
+
+This approach demonstrates how private SSH keys allow secure login to accounts without knowing the password, while also highlighting the importance of correct file permissions for security.
 
 ---
 
 
 ## Bandit 14
+### Level Goal
+The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
+
+### Execution Log 
+(continue from Bandit 13 task)
 ```bash
 bandit14@bandit:~$ nc localhost 30000
 MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
@@ -2102,6 +2172,17 @@ bandit14@bandit:~$ exit
 logout
 Connection to bandit.labs.overthewire.org closed.
 ```
+
+### Commands used to solve this level
+```bash
+nc localhost 30000
+```
+
+### Note: 
+This challenge is solved by understanding that the next level’s password is provided by a service running `locally` on the Bandit server on `port 30000`. You first log in as `bandit14` and use the `nc` (netcat) command to connect to localhost at that port: `nc localhost 30000`. Netcat establishes a simple TCP connection to the service, allowing you to submit the password of the current level directly into the session. The service then responds with “Correct!” followed by the password for the next level. This works because the service is designed to authenticate the current password and return the next one, and using netcat is a straightforward way to interact with such TCP-based services locally without needing a browser or complex client.
+
+Netcat is a versatile command-line networking tool that can read and write data across TCP or UDP connections, making it a “Swiss Army knife” for network communication. It can test connections, transfer files, listen on ports, or act as a simple server. Sometimes, `ncat` is used instead of `nc`. `ncat` is part of the Nmap suite and is a modernized version with extra features like SSL support, IPv6, and better security defaults. For simple tasks like connecting to a port and sending text, `nc` and `ncat` function almost identically, and people choose one or the other based on availability or additional features needed.
+
 
 ---
 
