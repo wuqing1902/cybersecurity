@@ -2135,17 +2135,19 @@ bandit14@bandit:~$
 (continue to the Bandit 14 task ...)
 
 ### Commands used to solve this level
-`ls` – to list files in the current directory.
-`cat HINT` – to read the hint provided for the level.
-`cat sshkey.private` – to view the content of the private SSH key.
-`cat /etc/bandit_pass/bandit14` – attempted to read the next level’s password, which fails due to permissions.
-`ls -lia /etc/bandit_pass/bandit14` – to check ownership and permissions of the password file.
-`mkdir otw_test and cd otw_test` – to create and move into a local working directory for the key.
-`vi sshkey.private` – to create or save the SSH private key file locally.
-`ssh -p 2220 bandit14@bandit.labs.overthewire.org -i sshkey.private` – to attempt logging in using the private key.
-`chmod 600 sshkey.private` – to fix permissions of the private key so SSH will accept it.
-`ssh -p 2220 bandit14@bandit.labs.overthewire.org -i sshkey.private` – successfully log in with the key.
-`cat /etc/bandit_pass/bandit14` – to read the password for the next level.
+```bash
+`ls` → to list files in the current directory.
+`cat HINT` → to read the hint provided for the level.
+`cat sshkey.private` → to view the content of the private SSH key.
+`cat /etc/bandit_pass/bandit14` → attempted to read the next level’s password, which fails due to permissions.
+`ls -lia /etc/bandit_pass/bandit14` → to check ownership and permissions of the password file.
+`mkdir otw_test and cd otw_test` → to create and move into a local working directory for the key.
+`vi sshkey.private` → to create or save the SSH private key file locally.
+`ssh -p 2220 bandit14@bandit.labs.overthewire.org -i sshkey.private` → to attempt logging in using the private key.
+`chmod 600 sshkey.private` → to fix permissions of the private key so SSH will accept it.
+`ssh -p 2220 bandit14@bandit.labs.overthewire.org -i sshkey.private` → successfully log in with the key.
+`cat /etc/bandit_pass/bandit14` → to read the password for the next level.
+```
 
 ### Note: 
 This challenge is solved by recognizing that the next level’s password is inaccessible directly due to file permissions and that a private SSH key is provided instead. First, you save the private key locally in a safe directory and check its contents. SSH refuses to use the key if it has overly permissive file permissions, so `chmod 600` is applied to make it readable only by the owner. Then, use SSH with the `-i` option to specify the private key and `-p 2220` for the non-standard port to log in as the user bandit14. Once logged in, the password for bandit14 can be read from `/etc/bandit_pass/bandit14`, completing the challenge.
@@ -3408,21 +3410,705 @@ To gain access to the next level, you should use the setuid binary in the homedi
 
 ### Execution Log 
 ```bash
+┌──(incognito㉿kali)-[~]
+└─$ ssh -p 2220 bandit19@bandit.labs.overthewire.org                                                         
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
 
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-1
+bandit19@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit19@bandit:~$ ls
+bandit20-do
+bandit19@bandit:~$ ls -lia
+total 36
+331838 drwxr-xr-x   2 root     root      4096 Apr  3 15:17 .
+  1732 drwxr-xr-x 150 root     root      4096 Apr  3 15:20 ..
+331995 -rwsr-x---   1 bandit20 bandit19 14888 Apr  3 15:17 bandit20-do
+331839 -rw-r--r--   1 root     root       220 Mar 31  2024 .bash_logout
+331840 -rw-r--r--   1 root     root      3851 Apr  3 15:10 .bashrc
+331841 -rw-r--r--   1 root     root       807 Mar 31  2024 .profile
+bandit19@bandit:~$ ./bandit20-do 
+Run a command as another user.
+  Example: ./bandit20-do whoami
+bandit19@bandit:~$ ./bandit20-do cat /etc/bandit_pass/bandit20
+0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
+bandit19@bandit:~$ exit
+logout
+Connection to bandit.labs.overthewire.org closed.
 ```
 
 ### Commands used to solve this level
 ```bash
-nc localhost 30000
+./bandit20-do cat /etc/bandit_pass/bandit20
 ```
 
 ### Note: 
+In this level, the key idea is understanding how a setuid binary works. The file `bandit20-do` has special permissions (-rwsr-x---), which means it runs with the privileges of its owner (bandit20) instead of the current user (bandit19). Normally, bandit19 does not have permission to read `/etc/bandit_pass/bandit20`, but by using this setuid program, you can execute commands as bandit20. When you ran `./bandit20-do` without arguments, it showed that it can execute a command as another user. So, you leveraged this by running `./bandit20-do cat /etc/bandit_pass/bandit20`, which executed the cat command with bandit20’s permissions, allowing access to the restricted password file. As a result, the password for bandit20 was revealed.
+
+A setuid binary is set up by assigning a special permission bit to an executable file so that it runs with the privileges of its owner instead of the user who executes it. This is done by the system administrator (or root) using a command like `chmod u+s filename`, which adds the setuid bit. In this case, the file `bandit20-do` shows permissions `-rwsr-x---`, where the `s` in place of the user’s execute bit (rws) indicates that setuid is enabled. The file is owned by bandit20, so whenever bandit19 runs this binary, it temporarily gains the permissions of bandit20 for that execution. Internally, the program is written to take a command as input and execute it (e.g., using system calls like execve()), so when you run `./bandit20-do cat /etc/bandit_pass/bandit20`, the cat command is executed with bandit20’s privileges, allowing access to files that bandit19 normally cannot read.
 
 ---
 
 
 ## Bandit 20
 ### Level Goal
+There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).
+NOTE: Try connecting to your own network daemon to see if it works as you think
+
+### Execution Log 
+#### Terminal 1
+```bash
+┌──(incognito㉿kali)-[~]
+└─$ ssh -p 2220 bandit20@bandit.labs.overthewire.org
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-1
+bandit20@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit20@bandit:~$ ls
+suconnect
+bandit20@bandit:~$ ls -lia
+total 36
+331848 drwxr-xr-x   2 root     root      4096 Apr  3 15:17 .
+  1732 drwxr-xr-x 150 root     root      4096 Apr  3 15:20 ..
+331849 -rw-r--r--   1 root     root       220 Mar 31  2024 .bash_logout
+331850 -rw-r--r--   1 root     root      3851 Apr  3 15:10 .bashrc
+331851 -rw-r--r--   1 root     root       807 Mar 31  2024 .profile
+331997 -rwsr-x---   1 bandit21 bandit20 15612 Apr  3 15:17 suconnect
+bandit20@bandit:~$ ./suconnect 
+Usage: ./suconnect <portnumber>
+This program will connect to the given port on localhost using TCP. If it receives the correct password from the other side, the next password is transmitted back.
+bandit20@bandit:~$ ./suconnect 1234
+Read: 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
+Password matches, sending next password
+bandit20@bandit:~$ exit
+logout
+Connection to bandit.labs.overthewire.org closed.
+```
+
+#### Terminal 2
+```bash
+┌──(incognito㉿kali)-[~]
+└─$ ssh -p 2220 bandit20@bandit.labs.overthewire.org
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-1
+bandit20@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit20@bandit:~$ nc -lvnp 1234
+Listening on 0.0.0.0 1234
+Connection received on 127.0.0.1 54936
+0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
+EeoULMCra2q0dSkYj561DX7s1CpBuOBt
+bandit20@bandit:~$ exit
+logout
+Connection to bandit.labs.overthewire.org closed.
+```
+
+### Commands used to solve this level
+```bash
+./suconnect <port>
+nc -lvnp <port>
+```
+
+### Note: 
+The command `nc -lvnp` uses Netcat (nc), a networking tool for creating TCP connections, commonly used to listen for or initiate connections on specific ports. The options mean: `-l` puts Netcat in listening mode (waiting for incoming connections), `-v` enables verbose output, `-n` disables DNS resolution (using raw IPs), and `-p` specifies the port number. When you run something like `nc -lvnp 1234`, your machine listens on port 1234 across all its IP addresses (e.g., 127.0.0.1, 192.168.x.x). Netcat itself does not choose who connects. Instead, another machine must initiate the connection using your IP and port. For example, if Machine 1 (IP 192.168.1.1) runs `nc -lvnp 1234`, then Machine 2 must connect using `nc 192.168.1.1 1234`. In this challenge, the concept is applied locally. You start a Netcat listener, then the setuid binary (suconnect) connects to localhost (127.0.0.1) on that port. You send the correct password through the connection, and since the binary runs with higher privileges, it verifies the password and sends back the next level’s password through the same channel.
+
+---
+
+
+## Bandit 21
+### Level Goal
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+### Execution Log 
+```bash
+┌──(incognito㉿kali)-[~]
+└─$ ssh -p 2220 bandit21@bandit.labs.overthewire.org
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-1
+bandit21@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit21@bandit:~$ cd /etc/cron.d
+bandit21@bandit:/etc/cron.d$ ls
+behemoth4_cleanup  clean_tmp  cronjob_bandit22  cronjob_bandit23  cronjob_bandit24  e2scrub_all  leviathan5_cleanup  manpage3_resetpw_job  otw-tmp-dir  sysstat
+bandit21@bandit:/etc/cron.d$ ls -lia
+total 60
+  275 drwxr-xr-x   2 root root  4096 Apr  3 15:20 .
+   42 drwxr-xr-x 128 root root 12288 Apr  3 15:20 ..
+87182 -r--r-----   1 root root    47 Apr  3 15:18 behemoth4_cleanup
+ 4963 -rw-r--r--   1 root root   123 Apr  3 15:10 clean_tmp
+80487 -rw-r--r--   1 root root   120 Apr  3 15:17 cronjob_bandit22
+87152 -rw-r--r--   1 root root   122 Apr  3 15:17 cronjob_bandit23
+87158 -rw-r--r--   1 root root   120 Apr  3 15:17 cronjob_bandit24
+  276 -rw-r--r--   1 root root   201 Apr  8  2024 e2scrub_all
+87183 -r--r-----   1 root root    48 Apr  3 15:19 leviathan5_cleanup
+87193 -rw-------   1 root root   138 Apr  3 15:19 manpage3_resetpw_job
+87210 -rwx------   1 root root    52 Apr  3 15:20 otw-tmp-dir
+  277 -rw-r--r--   1 root root   102 Mar 31  2024 .placeholder
+  278 -rw-r--r--   1 root root   396 Jan  9  2024 sysstat
+bandit21@bandit:/etc/cron.d$ cat cronjob_bandit22
+@reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+* * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+bandit21@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit22.sh
+#!/bin/bash
+chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+bandit21@bandit:/etc/cron.d$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q
+bandit21@bandit:/etc/cron.d$ exit
+logout
+Connection to bandit.labs.overthewire.org closed.
+```
+
+### Commands used to solve this level
+`cd /etc/cron.d` - Navigate to the directory where scheduled cron jobs are configured.
+`ls / ls -lia` - List cron job configuration files and inspect permissions/details.
+`cat cronjob_bandit22` - View the cron job definition for bandit22 and identify what script is being executed.
+`cat /usr/bin/cronjob_bandit22.sh` - Inspect the actual script being run by cron.
+`cat /tmp/<filename>` - Read the file where the script outputs the password.
+
+### Note: 
+This challenge is solved by investigating cron jobs, which are scheduled tasks that run automatically at fixed intervals or system events. In `/etc/cron.d`, you find configuration files that define what commands are executed and by which user. By inspecting cronjob_bandit22, you discover that a script (/usr/bin/cronjob_bandit22.sh) is being run periodically as user bandit22. When you examine this script, you see that it changes permissions on a temporary file in `/tmp` and then writes the contents of `/etc/bandit_pass/bandit22` into that file. Since cron runs this script automatically, the password is periodically stored in `/tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv`. By simply reading that file using `cat`, you retrieve the password for the next level. The key idea is that even though you cannot directly access `/etc/bandit_pass/bandit22`, the cron job temporarily exposes it in a world-readable temporary file.
+
+
+---
+
+
+## Bandit 22
+### Level Goal
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+NOTE: Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.
+
+### Execution Log 
+```bash
+┌──(incognito㉿kali)-[~]
+└─$ ssh -p 2220 bandit22@bandit.labs.overthewire.org
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-1
+bandit22@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit22@bandit:~$ cd /etc/cron.d/
+bandit22@bandit:/etc/cron.d$ ls
+behemoth4_cleanup  clean_tmp  cronjob_bandit22  cronjob_bandit23  cronjob_bandit24  e2scrub_all  leviathan5_cleanup  manpage3_resetpw_job  otw-tmp-dir  sysstat
+bandit22@bandit:/etc/cron.d$ cat cronjob_bandit23
+@reboot bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+* * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+bandit22@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit23.sh
+#!/bin/bash
+
+myname=$(whoami)
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+cat /etc/bandit_pass/$myname > /tmp/$mytarget
+bandit22@bandit:/etc/cron.d$ whoami
+bandit22
+bandit22@bandit:/etc/cron.d$ myname=$(whoami)
+bandit22@bandit:/etc/cron.d$ echo $myname
+bandit22
+bandit22@bandit:/etc/cron.d$ mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+bandit22@bandit:/etc/cron.d$ echo $mytarget
+8169b67bd894ddbb4412f91573b38db3
+bandit22@bandit:/etc/cron.d$ cat /etc/bandit_pass/$myname > /tmp/$mytarget
+bandit22@bandit:/etc/cron.d$ cat /tmp/8169b67bd894ddbb4412f91573b38db3
+tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q
+bandit22@bandit:/etc/cron.d$ mytarget=$(echo I am user bandit23 | md5sum | cut -d ' ' -f 1)
+bandit22@bandit:/etc/cron.d$ echo $mytarget
+8ca319486bfbbc3663ea0fbe81326349
+bandit22@bandit:/etc/cron.d$ cat /tmp/8ca319486bfbbc3663ea0fbe81326349
+0Zf11ioIjMVN551jX3CmStKLYqjk54Ga
+bandit22@bandit:/etc/cron.d$ exit
+logout
+Connection to bandit.labs.overthewire.org closed.
+```
+
+### Commands used to solve this level
+`cd /etc/cron.d/` - Go to the directory where scheduled cron jobs are defined.
+`ls` - List available cron job configuration files.
+`cat cronjob_bandit23` - View which script is executed by cron for bandit23.
+`cat /usr/bin/cronjob_bandit23.sh` - Inspect the actual script logic being run automatically.
+`whoami` - Identify the current user (used inside the script logic).
+`echo "I am user bandit23" | md5sum | cut -d ' ' -f 1` - Recreate the exact filename generated by the script.
+`cat /tmp/<hash>` - Read the file where the password is stored.
+
+### Note: 
+This challenge is solved by analyzing a cron job script that hides the output using a predictable hash-based filename. In `/etc/cron.d/cronjob_bandit23`, you discover that a script runs regularly as user bandit23. The script takes the current username (whoami), constructs a string like "I am user bandit23", and then generates an MD5 hash from it. This hash is used as the filename inside `/tmp/`, where the password for that user is stored. Since you are logged in as bandit22, the script itself writes the password of bandit22, but by reverse-engineering the script logic, you can predict the filename for bandit23 by manually computing `echo "I am user bandit23" | md5sum | cut -d ' ' -f 1`. Once you generate the correct hash, you can directly access `/tmp/<hash>` and retrieve the password for the next level. The key idea is that the cron job hides the password in a deterministic but non-obvious filename, which you can reconstruct by understanding the script.
+
+---
+
+
+## Bandit 23
+### Level Goal
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+NOTE: This level requires you to create your own first shell-script. This is a very big step and you should be proud of yourself when you beat this level!
+NOTE 2: Keep in mind that your shell script is removed once executed, so you may want to keep a copy around…
+
+### Execution Log 
+```bash
+
+```
+
+### Commands used to solve this level
+```bash
+nc localhost 30000
+```
+
+### Note: 
+
+---
+
+
+## Bandit 24
+### Level Goal
 The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
 Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
 
@@ -3441,97 +4127,160 @@ nc localhost 30000
 ---
 
 
-## Bandit 21
-### Level Goal
-The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
-Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
-
-### Execution Log 
-```bash
-
-```
-
----
-
-
-## Bandit 22
-### Level Goal
-The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
-Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
-
-### Execution Log 
-```bash
-
-```
-
----
-
-
-## Bandit 23
-### Level Goal
-The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
-Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
-
-### Execution Log 
-```bash
-
-```
-
----
-
-
-## Bandit 24
-```bash
-
-```
-
----
-
-
 ## Bandit 25
+### Level Goal
+The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
+Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+
+### Execution Log 
 ```bash
 
 ```
+
+### Commands used to solve this level
+```bash
+nc localhost 30000
+```
+
+### Note: 
 
 ---
 
 
 ## Bandit 26
+### Level Goal
+The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
+Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+
+### Execution Log 
 ```bash
 
 ```
+
+### Commands used to solve this level
+```bash
+nc localhost 30000
+```
+
+### Note: 
 
 ---
 
 
 ## Bandit 27
+### Level Goal
+The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
+Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+
+### Execution Log 
 ```bash
 
 ```
+
+### Commands used to solve this level
+```bash
+nc localhost 30000
+```
+
+### Note: 
 
 ---
 
 
 ## Bandit 28
+### Level Goal
+The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
+Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+
+### Execution Log 
 ```bash
 
 ```
+
+### Commands used to solve this level
+```bash
+nc localhost 30000
+```
+
+### Note: 
 
 ---
 
 
 ## Bandit 29 
+### Level Goal
+The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
+Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+
+### Execution Log 
 ```bash
 
 ```
+
+### Commands used to solve this level
+```bash
+nc localhost 30000
+```
+
+### Note: 
 
 ---
 
 
 ## Bandit 30
+### Level Goal
+The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
+Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+
+### Execution Log 
 ```bash
 
 ```
 
+### Commands used to solve this level
+```bash
+nc localhost 30000
+```
+
+### Note: 
+
 ---
 
+
+## Bandit 31
+### Level Goal
+The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
+Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+
+### Execution Log 
+```bash
+
+```
+
+### Commands used to solve this level
+```bash
+nc localhost 30000
+```
+
+### Note: 
+
+---
+
+## Bandit 32
+### Level Goal
+The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
+Helpful note: Getting “DONE”, “RENEGOTIATING” or “KEYUPDATE”? Read the “CONNECTED COMMANDS” section in the manpage.
+
+### Execution Log 
+```bash
+
+```
+
+### Commands used to solve this level
+```bash
+nc localhost 30000
+```
+
+### Note: 
+
+---
