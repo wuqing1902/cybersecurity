@@ -62,6 +62,9 @@ In the `<div></div>` content, the password is discovered, which is `<!--The pass
 This level demonstrates a basic information disclosure vulnerability, where sensitive data is exposed within the client-side source code.
 Although comments are not rendered in the browser, they are still accessible to users who inspect the page. Storing credentials in HTML comments is considered a poor security practice, as it allows attackers to easily retrieve hidden information.
 
+Thus, it is important to note that HTML comments are not secure and should not be used to hide critical data. Always inspect page source when analyzing web applications and never store sensitive information (e.g., passwords) in client-side code.
+
+
 ---
 
 ## Natas 1
