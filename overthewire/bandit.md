@@ -1,20 +1,25 @@
 # Bandit - Unix/Linux basics
 
-## Introduction 
-The Bandit wargame is aimed at absolute beginners. It will teach the basics needed to be able to play other wargames. If you notice something essential is missing or have ideas for new levels, please let us know!
+## Introduction
+The OverTheWire Bandit wargame is designed specifically for beginners who are new to cybersecurity and command-line environments. Its primary goal is to introduce foundational skills that are essential for progressing into more advanced wargames and security challenges. As an entry-level learning platform, Bandit emphasizes hands-on practice and gradual skill development through structured challenges.
 
-### Note for beginners
-This game, like most other games, is organised in levels. You start at Level 0 and try to “beat” or “finish” it. Finishing a level results in information on how to start the next level. The pages on this website for “Level <X>” contain information on how to start level X from the previous level. E.g. The page for Level 1 has information on how to gain access from Level 0 to Level 1. All levels in this game have a page on this website, and they are all linked to from the sidemenu on the left of this page.
+## Game Structure
+Bandit is organized into multiple levels, starting from Level 0. Each level presents a unique challenge that must be solved in order to progress. Upon completing a level, users are provided with the necessary credentials or information to access the next one. Each level also has a dedicated guide page that explains how to transition from the previous level, creating a clear and guided learning path throughout the game.
 
-You will encounter many situations in which you have no idea what you are supposed to do. Don’t panic! Don’t give up! The purpose of this game is for you to learn the basics. Part of learning the basics, is reading a lot of new information. If you’ve never used the command line before, a good first read is this introduction to user commands.
+## Learning Approach
+Throughout the game, learners will often encounter unfamiliar tasks or commands. This is an intentional part of the learning process. Users are encouraged to explore, research, and experiment rather than rely on direct instructions. Developing problem-solving skills and self-learning habits is a key objective of this wargame.
 
-There are several things you can try when you are unsure how to continue:
-First, if you know a command, but don’t know how to use it, try the manual (man page) by entering man <command>. For example, man ls to learn about the “ls” command. The “man” command also has a manual, try it! When using man, press q to quit (you can also use / and n and N to search).
-Second, if there is no man page, the command might be a shell built-in. In that case use the “help <X>” command. E.g. help cd
-Also, your favorite search-engine is your friend. Learn how to use it! I recommend Google.
-Lastly, if you are still stuck, you can join us via chat
-You’re ready to start! Begin with Level 0, linked at the left of this page. Good luck!
-Note for VMs: You may fail to connect to overthewire.org via SSH with a “broken pipe error” when the network adapter for the VM is configured to use NAT mode. Adding the setting IPQoS throughput to /etc/ssh/ssh_config should resolve the issue. If this does not solve your issue, the only option then is to change the adapter to Bridged mode.
+To assist with this process, several useful approaches can be applied:
+- Use manual pages (man <command>) to understand how specific commands work.
+- For shell built-in commands, use the help <command> feature.
+- Leverage search engines to find explanations and examples.
+- Engage with the community when additional guidance is needed.
+
+## Getting Started
+Players begin at Level 0 and progress sequentially through increasingly challenging levels. Each step builds upon previously learned concepts, reinforcing practical knowledge of Linux commands and system navigation. Consistency and persistence are essential for successfully completing the game.
+
+## Additional Note (VM Users)
+Users running the game within a virtual machine may encounter SSH connection issues, such as a “broken pipe” error when using NAT network configuration. This can typically be resolved by adjusting SSH settings (e.g., modifying IPQoS configuration) or switching the network adapter to Bridged mode if necessary.
 
 ---
 
