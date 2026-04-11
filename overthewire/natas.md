@@ -23,9 +23,15 @@ Learners are encouraged to explore each level carefully, inspect web elements, a
 ---
 
 ## Natas 0
+```
 URL: http://natas0.natas.labs.overthewire.org
 Username: natas0
 Password: natas0
+```
+After login, the following note is displayed: 
+```
+You can find the password for the next level on this page.
+```
 
 ### Approach
 After logging into the web application, the page does not visibly display any useful information.  
@@ -68,3 +74,336 @@ Thus, it is important to note that HTML comments are not secure and should not b
 ---
 
 ## Natas 1
+```
+URL: http://natas1.natas.labs.overthewire.org
+Username: natas1
+Password: 0nzCigAq7t2iALyvU9xcHlYN4MlkIwlq
+```
+After login, the following note is displayed: 
+```
+You can find the password for the next level on this page, but rightclicking has been blocked!
+```
+
+### Approach 
+Upon accessing the webpage, it was observed that right-click functionality was disabled, preventing the use of standard options such as **“View Page Source”** or **“Inspect”**.
+To bypass this restriction, alternative methods were used:
+- Press **F12** to open Developer Tools  
+- Press **CTRL + U** to directly view the page source  
+These shortcuts are browser-level features and cannot be disabled by client-side scripts.
+
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas1", "pass": "0nzCigAq7t2iALyvU9xcHlYN4MlkIwlq" };</script></head>
+<body oncontextmenu="javascript:alert('right clicking has been blocked!');return false;">
+<h1>natas1</h1>
+<div id="content">
+You can find the password for the
+next level on this page, but rightclicking has been blocked!
+
+<!--The password for natas2 is TguMNxKo1DSa1tujBLuZJnDUlCcUAPlI -->
+</div>
+</body>
+</html>
+```
+
+### Finding 
+After viewing the page source, a similar pattern to the previous level was identified. The password for the next level was found embedded within an HTML comment inside the `<div>` element, which is `<!--The password for natas2 is TguMNxKo1DSa1tujBLuZJnDUlCcUAPlI -->`
+
+### Analysis
+This level demonstrates that client-side restrictions, such as disabling right-click, do not provide real security. Such controls can be easily bypassed using built-in browser shortcuts or developer tools. Additionally, the application continues to expose sensitive information through HTML comments, reinforcing the concept of **information disclosure vulnerabilities** in client-side code. It is important to understand that restricting user interactions via JavaScript does not prevent access to underlying source code. Sensitive data should never be stored on the client side, regardless of any interface restrictions imposed.
+
+---
+
+## Natas 2
+```
+URL: http://natas2.natas.labs.overthewire.org
+Username: natas2
+Password: TguMNxKo1DSa1tujBLuZJnDUlCcUAPlI
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+## Natas 3
+```
+URL: http://natas3.natas.labs.overthewire.org
+Username: natas3
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+## Natas 4
+```
+URL: http://natas4.natas.labs.overthewire.org
+Username: natas4
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 5
+```
+URL: http://natas5.natas.labs.overthewire.org
+Username: natas5
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 6
+```
+URL: http://natas6.natas.labs.overthewire.org
+Username: natas6
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 7
+```
+URL: http://natas7.natas.labs.overthewire.org
+Username: natas7
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 8
+```
+URL: http://natas8.natas.labs.overthewire.org
+Username: natas8
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 9
+```
+URL: http://natas9.natas.labs.overthewire.org
+Username: natas9
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 10
+```
+URL: http://natas10.natas.labs.overthewire.org
+Username: natas10
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 11
+```
+URL: http://natas11.natas.labs.overthewire.org
+Username: natas11
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 12
+```
+URL: http://natas12.natas.labs.overthewire.org
+Username: natas12
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 13
+```
+URL: http://natas13.natas.labs.overthewire.org
+Username: natas13
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 14
+```
+URL: http://natas14.natas.labs.overthewire.org
+Username: natas14
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 15
+```
+URL: http://natas15.natas.labs.overthewire.org
+Username: natas15
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 16
+```
+URL: http://natas16.natas.labs.overthewire.org
+Username: natas16
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 17
+```
+URL: http://natas17.natas.labs.overthewire.org
+Username: natas17
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 2
+```
+URL: http://natas2.natas.labs.overthewire.org
+Username: natas2
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
