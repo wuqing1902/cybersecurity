@@ -509,15 +509,65 @@ Sensitive data such as secrets, credentials, or configuration values should neve
 ```
 URL: http://natas7.natas.labs.overthewire.org
 Username: natas7
-Password: 
+Password: bmg8SvU1LizuWjx3y7xkNERkHxGre0GS
 ```
-After login, the following note is displayed: 
+After login, two navigation links were observed: `Home` and `About`.
+After clicked the `Home`, the page navigate to `http://natas7.natas.labs.overthewire.org/index.php?page=home` and displaying `this is the front page`.
+After clicked the `About`, the page navigate to `http://natas7.natas.labs.overthewire.org/index.php?page=about` and displaying `this is the about page`. 
 
-### Approach 
+This indicates that the application dynamically loads content based on the `page` parameter in the URL.
 
 ### Finding 
+Upon inspecting the page source, the following content is discovered:
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas7", "pass": "bmg8SvU1LizuWjx3y7xkNERkHxGre0GS" };</script></head>
+<body>
+<h1>natas7</h1>
+<div id="content">
+
+<a href="index.php?page=home">Home</a>
+<a href="index.php?page=about">About</a>
+<br>
+<br>
+this is the about page
+
+<!-- hint: password for webuser natas8 is in /etc/natas_webpass/natas8 -->
+</div>
+</body>
+</html>
+```
+
+The comment `<!-- hint: password for webuser natas8 is in /etc/natas_webpass/natas8 -->` suggests that the application may allow access to local files. 
+
+
+### Approach
+Initial attempt to navigate to `http://natas7.natas.labs.overthewire.org/index.php?page=etc/natas_webpass/natas8` is made and following content is returned: 
+```
+Warning: include(etc/natas_webpass/natas8): failed to open stream: No such file or directory in /var/www/natas/natas7/index.php on line 21
+
+Warning: include(): Failed opening 'etc/natas_webpass/natas8' for inclusion (include_path='.:/usr/share/php') in /var/www/natas/natas7/index.php on line 21
+```
+This resulted in an error, indicating the file could not be found.  
+
+A second attempt using an absolute path `http://natas7.natas.labs.overthewire.org/index.php?page=/etc/natas_webpass/natas8`successfully returned the password: `xcoXLmzMkoIP9D7hlgPlh9XD7OgLAe5Q`.
+
 
 ### Analysis
+This level demonstrates a **Local File Inclusion (LFI) vulnerability**, where user input is directly used to include files on the server without proper validation.
+
+By manipulating the `page` parameter, it was possible to access sensitive files outside the intended directory. The application failed to sanitize or restrict input paths, allowing traversal to critical system files such as `/etc/natas_webpass/natas8`.
+
+This highlights the importance of validating and restricting user input in file inclusion mechanisms. Applications should enforce strict whitelisting of allowed files and avoid directly including user-controlled input to prevent unauthorized access to sensitive data.
+
 
 ---
 
@@ -526,15 +576,88 @@ After login, the following note is displayed:
 ```
 URL: http://natas8.natas.labs.overthewire.org
 Username: natas8
-Password: 
+Password: xcoXLmzMkoIP9D7hlgPlh9XD7OgLAe5Q
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed an input field labeled **“Input secret”**, along with a submit button. Initial testing with arbitrary values such as `aaa` and `bbb` returned the response: `Wrong secret`.
 
-### Approach 
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas8", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas8</h1>
+<div id="content">
+
+<?
+
+$encodedSecret = "3d3d516343746d4d6d6c315669563362";
+
+function encodeSecret($secret) {
+    return bin2hex(strrev(base64_encode($secret)));
+}
+
+if(array_key_exists("submit", $_POST)) {
+    if(encodeSecret($_POST['secret']) == $encodedSecret) {
+    print "Access granted. The password for natas9 is <censored>";
+    } else {
+    print "Wrong secret";
+    }
+}
+?>
+
+<form method=post>
+Input secret: <input name=secret><br>
+<input type=submit name=submit>
+</form>
+
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Finding 
+The source code revealed the following implementation:
+```php
+$encodedSecret = "3d3d516343746d4d6d6c315669563362";
+
+function encodeSecret($secret) {
+    return bin2hex(strrev(base64_encode($secret)));
+}
+
+This indicates that the input is transformed using the following sequence:
+1. Base64 encoding  
+2. String reversal  
+3. Conversion to hexadecimal  
+
+
+### Approach 
+To discover the original input, the cyberchef (https://gchq.github.io/CyberChef/) is used. 
+The recipe will be reverse step of the encryption, perform the following operation: 
+Encrypted Answer as Input: `3d3d516343746d4d6d6c315669563362`
+From Hex: `==QcCtmMml1ViV3b`
+Reverse: `b3ViV1lmMmtCcQ==`
+From Base64: `oubWYf2kBq` and obtain the answer. 
+
+Then, input the answer `oubWYf2kBq` into the input field and submit. Then the the message `Access granted. The password for natas9 is ZE1ck82lmdGIoErlhQgWND6j2Wzz6b6t` is returned. 
+
+
 
 ### Analysis
+This level demonstrates a **weak encoding-based security mechanism**, where sensitive validation relies on reversible transformations rather than secure hashing.
+
+Since the encoding process (Base64, reverse, hex) is fully reversible, an attacker can easily derive the original secret by applying the inverse operations. Tools like CyberChef simplify this process, making such protections ineffective.
+
+This highlights that encoding should not be used as a security control. Sensitive values should instead be protected using strong, one-way hashing algorithms and proper server-side validation mechanisms.
+
 
 ---
 
@@ -543,15 +666,101 @@ After login, the following note is displayed:
 ```
 URL: http://natas9.natas.labs.overthewire.org
 Username: natas9
-Password: 
+Password: ZE1ck82lmdGIoErlhQgWND6j2Wzz6b6t
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed an input field labeled **“Find words containing:”**, along with a search button. Initial testing with sample value such as `aa`: 
+```
+Output:
+aardvark
+aardvark's
+bazaar
+bazaar's
+bazaars
+```
+returned matching results from a dictionary file, indicating that the application performs a search operation.
+
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas9", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas9</h1>
+<div id="content">
+<form>
+Find words containing: <input name=needle><input type=submit name=submit value=Search><br><br>
+</form>
+
+
+Output:
+<pre>
+<?
+$key = "";
+
+if(array_key_exists("needle", $_REQUEST)) {
+    $key = $_REQUEST["needle"];
+}
+
+if($key != "") {
+    passthru("grep -i $key dictionary.txt");
+}
+?>
+</pre>
+
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+
+### Finding  
+The source code revealed the following implementation:
+```php
+if($key != "") {
+    passthru("grep -i $key dictionary.txt");
+}
+```
+This shows that user input ($key) is directly passed into a system command without any sanitization.
+
 
 ### Approach 
-
-### Finding 
+By supplying the payload: `; cat /etc/natas_webpass/natas10;`, the executed command become 
+`grep -i ; cat /etc/natas_webpass/natas10; dictionary.txt`. After clicking the submit button, the message `t7I5VHvpa14sJTUGV0cbEsbYfFP2dmOu` is returned. 
 
 ### Analysis
+This level demonstrates a command injection vulnerability, where user input is directly executed as part of a system command.
+
+The original command:
+```bash
+grep -i <input> dictionary.txt
+```
+is intended to search for matching words. However, since the input is not sanitized, it is possible to inject additional commands using shell metacharacters such as ;.
+
+In this case:
+- `;` = **command separator**. It tells the shell: “run another command” and is used to terminate the original command
+- cat /etc/natas_webpass/natas10 is injected to read a sensitive file
+- The final ; ensures proper command separation
+
+As result, this becomes **3 commands**:
+1. `grep -i`  
+   → incomplete, does nothing useful
+
+2. `cat /etc/natas_webpass/natas10`  
+   → THIS is the important one (reads password file)
+
+3. `dictionary.txt`  
+   → treated as a command (ignored / error)
+
+As a result, the system executes multiple commands instead of just the intended grep operation. This highlights the importance of properly sanitizing user input and avoiding direct execution of user-controlled data in system commands. Secure alternatives include input validation, escaping special characters, or using safer APIs that do not invoke the shell.
+
 
 ---
 
@@ -560,15 +769,128 @@ After login, the following note is displayed:
 ```
 URL: http://natas10.natas.labs.overthewire.org
 Username: natas10
-Password: 
+Password: t7I5VHvpa14sJTUGV0cbEsbYfFP2dmOu
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed a message `For security reasons, we now filter on certain characters` and an input field labeled **“Find words containing:”**, along with a search button. Initial testing with sample value such as `aa`: 
+```
+Output:
+aardvark
+aardvark's
+bazaar
+bazaar's
+bazaars
+```
+returned matching results from a dictionary file, indicating that the application performs a search operation.
 
-### Approach 
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas10", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas10</h1>
+<div id="content">
+
+For security reasons, we now filter on certain characters<br/><br/>
+<form>
+Find words containing: <input name=needle><input type=submit name=submit value=Search><br><br>
+</form>
+
+
+Output:
+<pre>
+<?
+$key = "";
+
+if(array_key_exists("needle", $_REQUEST)) {
+    $key = $_REQUEST["needle"];
+}
+
+if($key != "") {
+    if(preg_match('/[;|&]/',$key)) {
+        print "Input contains an illegal character!";
+    } else {
+        passthru("grep -i $key dictionary.txt");
+    }
+}
+?>
+</pre>
+
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
 
 ### Finding 
+The source code revealed the following logic:
+```php
+if(preg_match('/[;|&]/',$key)) {
+    print "Input contains an illegal character!";
+} else {
+    passthru("grep -i $key dictionary.txt");
+}
+```
+This shows that the application attempts to prevent command injection by filtering the characters:`;`, `|` and `&`. However, user input is still directly passed into the system command.
+
+
+### Approach 
+By supplying the payload `a /etc/natas_webpass/natas11` as the input and click the submit button. The following content is returned: 
+```
+/etc/natas_webpass/natas11:UJdqkK1pTu6VLt9UHWAgRZz6sVUZ3lEk
+dictionary.txt:African
+dictionary.txt:Africans
+dictionary.txt:Allah
+dictionary.txt:Allah's
+dictionary.txt:American
+dictionary.txt:Americanism
+dictionary.txt:Americanism's
+dictionary.txt:Americanisms
+dictionary.txt:Americans
+dictionary.txt:April
+dictionary.txt:April's
+dictionary.txt:Aprils
+dictionary.txt:Asian
+dictionary.txt:Asians
+dictionary.txt:August
+dictionary.txt:August's
+dictionary.txt:Augusts
+dictionary.txt:Catholic
+dictionary.txt:Catholicism
+dictionary.txt:Catholicism's
+dictionary.txt:Catholicisms
+dictionary.txt:Catholics
+(and many other words that contain letter 'a' inside the dictionary.txt)
+```
+
+As the payload `a /etc/natas_webpass/natas11` is used, the executed command becomes: 
+```
+grep -i a /etc/natas_webpass/natas11 dictionary.txt
+```
+which returns the words that have letter `a` in both /etc/natas_webpass/natas11 and dictionary.txt
+
 
 ### Analysis
+This level demonstrates an incomplete command injection mitigation, where the application attempts to filter dangerous characters but fails to fully secure the command execution.
+
+Although characters like ;, |, and & are blocked, the application still allows user input to control the structure of the command. By injecting an additional file path (/etc/natas_webpass/natas11), it is possible to manipulate the behavior of the grep command without using restricted characters.
+
+In this case, grep accepts multiple file arguments:
+```
+grep -i a file1 file2
+```
+This causes the command to search both files and display their contents if matches are found. Since the password file contains the letter a, its content is revealed.
+
+This highlights that blacklist-based filtering is insufficient for preventing command injection. Attackers can often bypass such filters using alternative techniques. Proper defenses should include strict input validation, command escaping, or avoiding shell execution entirely.
+
 
 ---
 
@@ -577,7 +899,7 @@ After login, the following note is displayed:
 ```
 URL: http://natas11.natas.labs.overthewire.org
 Username: natas11
-Password: 
+Password: UJdqkK1pTu6VLt9UHWAgRZz6sVUZ3lEk
 ```
 After login, the following note is displayed: 
 
