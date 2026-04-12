@@ -901,7 +901,92 @@ URL: http://natas11.natas.labs.overthewire.org
 Username: natas11
 Password: UJdqkK1pTu6VLt9UHWAgRZz6sVUZ3lEk
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed a message `Cookies are protected with XOR encryption` and an input field labeled **“Background color:”**, along with a `Set color` button. Default input `#ffffff` and initial testing with sample value such as `#000000`is performed. The default input will remain the backgrond color of the page as white color, but the value `#000000` will change the background color to black. 
+
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas11", "pass": "<censored>" };</script></head>
+<?
+
+$defaultdata = array( "showpassword"=>"no", "bgcolor"=>"#ffffff");
+
+function xor_encrypt($in) {
+    $key = '<censored>';
+    $text = $in;
+    $outText = '';
+
+    // Iterate through each character
+    for($i=0;$i<strlen($text);$i++) {
+    $outText .= $text[$i] ^ $key[$i % strlen($key)];
+    }
+
+    return $outText;
+}
+
+function loadData($def) {
+    global $_COOKIE;
+    $mydata = $def;
+    if(array_key_exists("data", $_COOKIE)) {
+    $tempdata = json_decode(xor_encrypt(base64_decode($_COOKIE["data"])), true);
+    if(is_array($tempdata) && array_key_exists("showpassword", $tempdata) && array_key_exists("bgcolor", $tempdata)) {
+        if (preg_match('/^#(?:[a-f\d]{6})$/i', $tempdata['bgcolor'])) {
+        $mydata['showpassword'] = $tempdata['showpassword'];
+        $mydata['bgcolor'] = $tempdata['bgcolor'];
+        }
+    }
+    }
+    return $mydata;
+}
+
+function saveData($d) {
+    setcookie("data", base64_encode(xor_encrypt(json_encode($d))));
+}
+
+$data = loadData($defaultdata);
+
+if(array_key_exists("bgcolor",$_REQUEST)) {
+    if (preg_match('/^#(?:[a-f\d]{6})$/i', $_REQUEST['bgcolor'])) {
+        $data['bgcolor'] = $_REQUEST['bgcolor'];
+    }
+}
+
+saveData($data);
+
+
+
+?>
+
+<h1>natas11</h1>
+<div id="content">
+<body style="background: <?=$data['bgcolor']?>;">
+Cookies are protected with XOR encryption<br/><br/>
+
+<?
+if($data["showpassword"] == "yes") {
+    print "The password for natas12 is <censored><br>";
+}
+
+?>
+
+<form>
+Background color: <input name=bgcolor value="<?=$data['bgcolor']?>">
+<input type=submit value="Set color">
+</form>
+
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Approach 
 
@@ -1014,6 +1099,244 @@ After login, the following note is displayed:
 ---
 
 
+## Natas 18
+```
+URL: http://natas18.natas.labs.overthewire.org
+Username: natas18
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 19
+```
+URL: http://natas19.natas.labs.overthewire.org
+Username: natas19
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 20
+```
+URL: http://natas20.natas.labs.overthewire.org
+Username: natas20
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 21
+```
+URL: http://natas21.natas.labs.overthewire.org
+Username: natas21
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 22
+```
+URL: http://natas22.natas.labs.overthewire.org
+Username: natas22
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 23
+```
+URL: http://natas23.natas.labs.overthewire.org
+Username: natas23
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 24
+```
+URL: http://natas24.natas.labs.overthewire.org
+Username: natas24
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 25
+```
+URL: http://natas25.natas.labs.overthewire.org
+Username: natas25
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 26
+```
+URL: http://natas26.natas.labs.overthewire.org
+Username: natas26
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 27
+```
+URL: http://natas27.natas.labs.overthewire.org
+Username: natas27
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 28
+```
+URL: http://natas28.natas.labs.overthewire.org
+Username: natas28
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 29
+```
+URL: http://natas29.natas.labs.overthewire.org
+Username: natas29
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 30
+```
+URL: http://natas30.natas.labs.overthewire.org
+Username: natas30
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
+## Natas 31
+```
+URL: http://natas31.natas.labs.overthewire.org
+Username: natas31
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
 ## Natas 2
 ```
 URL: http://natas2.natas.labs.overthewire.org
@@ -1029,3 +1352,22 @@ After login, the following note is displayed:
 ### Analysis
 
 ---
+
+
+## Natas 2
+```
+URL: http://natas2.natas.labs.overthewire.org
+Username: natas2
+Password: 
+```
+After login, the following note is displayed: 
+
+### Approach 
+
+### Finding 
+
+### Analysis
+
+---
+
+
