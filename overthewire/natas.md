@@ -128,10 +128,7 @@ URL: http://natas2.natas.labs.overthewire.org
 Username: natas2
 Password: TguMNxKo1DSa1tujBLuZJnDUlCcUAPlI
 ```
-After login, the following note is displayed: 
-```
-There is nothing on this page
-```
+After login, the following note `There is nothing on this page` is displayed.
 
 ### Approach 
 The page did not display any obvious information related to the next level.  
@@ -191,10 +188,7 @@ URL: http://natas3.natas.labs.overthewire.org
 Username: natas3
 Password: 3gqisGdR0pjm6tpkDKdIWO2hSvchLeYH
 ```
-After login, the following note is displayed: 
-```
-There is nothing on this page
-```
+After login, the following note `There is nothing on this page` is displayed.
 
 ### Approach 
 Below is the initial inspection of the webpage and its source code (**CTRL + U**): 
@@ -250,18 +244,11 @@ URL: http://natas4.natas.labs.overthewire.org
 Username: natas4
 Password: QryZXc2e0zahULdHrtHxzyYkj59kUxLQ
 ```
-After login, the following note is displayed: 
-```
-Access disallowed. You are visiting from "" while authorized users should come only from "http://natas5.natas.labs.overthewire.org/"
-```
-After clicking `Refresh page`, we are navigating to `http://natas4.natas.labs.overthewire.org/index.php` and the following note is displayed:
-```
-Access disallowed. You are visiting from "http://natas4.natas.labs.overthewire.org/" while authorized users should come only from "http://natas5.natas.labs.overthewire.org/"
-```
-After clicking the `Refresh page` again, we are navigating to the same page `http://natas4.natas.labs.overthewire.org/index.php`, and the following note is displayed: 
-```
-Access disallowed. You are visiting from "http://natas4.natas.labs.overthewire.org/index.php" while authorized users should come only from "http://natas5.natas.labs.overthewire.org/"
-```
+After login, the following note is displayed: `Access disallowed. You are visiting from "" while authorized users should come only from "http://natas5.natas.labs.overthewire.org/"`
+
+After clicking `Refresh page`, we are navigating to `http://natas4.natas.labs.overthewire.org/index.php` and the following note is displayed: `Access disallowed. You are visiting from "http://natas4.natas.labs.overthewire.org/" while authorized users should come only from "http://natas5.natas.labs.overthewire.org/"`
+
+After clicking the `Refresh page` again, we are navigating to the same page `http://natas4.natas.labs.overthewire.org/index.php`, and the following note is displayed: `Access disallowed. You are visiting from "http://natas4.natas.labs.overthewire.org/index.php" while authorized users should come only from "http://natas5.natas.labs.overthewire.org/"`
 
 ### Approach 
 This suggests that the server is validating the **HTTP Referer header** to control access. To bypass this restriction, configure the proxy setting and turn on the intercept of the burpsuite. Then, the content below is captured through HTTP history: 
@@ -332,14 +319,12 @@ URL: http://natas5.natas.labs.overthewire.org
 Username: natas5
 Password: 0n35PkggAPm2zbEpOU802c0x0Msn1ToK
 ```
-After login, the following note is displayed: 
-```
-Access disallowed. You are not logged in
-```
+After login, the following note is displayed: `Access disallowed. You are not logged in`
 
 ### Approach 
 To do the investigation, the burpsuite is used and the intercept is turned on. Then, refresh the page again and get the request and forward it. Then, request and response below is collected from http history. 
-Content of the request: 
+
+#### Content of the request: 
 ```html
 GET / HTTP/1.1
 Host: natas5.natas.labs.overthewire.org
@@ -353,7 +338,7 @@ Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.
 Upgrade-Insecure-Requests: 1
 ```
 
-Content of the response
+#### Content of the response
 ```html
 HTTP/1.1 200 OK
 Date: Sat, 11 Apr 2026 14:57:37 GMT
@@ -385,7 +370,15 @@ Access disallowed. You are not logged in</div>
 
 Through observation, it was identified that the application uses a cookie parameter (`loggedin`) to manage authentication state.
 
-Next, the request is sent to the repeater and the loggedin parameter in cookie is modified from `Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; loggedin=0` to `Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; loggedin=1`. The modified request was then resent to the server.
+Next, the request is sent to the repeater and the loggedin parameter in cookie is modified from 
+```
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; loggedin=0
+```
+to 
+```
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; loggedin=1
+```
+The modified request was then resent to the server.
 
 
 ### Finding 
@@ -632,6 +625,7 @@ $encodedSecret = "3d3d516343746d4d6d6c315669563362";
 function encodeSecret($secret) {
     return bin2hex(strrev(base64_encode($secret)));
 }
+```
 
 This indicates that the input is transformed using the following sequence:
 1. Base64 encoding  
@@ -642,13 +636,12 @@ This indicates that the input is transformed using the following sequence:
 ### Approach 
 To discover the original input, the cyberchef (https://gchq.github.io/CyberChef/) is used. 
 The recipe will be reverse step of the encryption, perform the following operation: 
-Encrypted Answer as Input: `3d3d516343746d4d6d6c315669563362`
-From Hex: `==QcCtmMml1ViV3b`
-Reverse: `b3ViV1lmMmtCcQ==`
-From Base64: `oubWYf2kBq` and obtain the answer. 
+1. Encrypted Answer as Input: `3d3d516343746d4d6d6c315669563362`
+2. From Hex: `==QcCtmMml1ViV3b`
+3. Reverse: `b3ViV1lmMmtCcQ==`
+4. From Base64: `oubWYf2kBq` and obtain the answer. 
 
 Then, input the answer `oubWYf2kBq` into the input field and submit. Then the the message `Access granted. The password for natas9 is ZE1ck82lmdGIoErlhQgWND6j2Wzz6b6t` is returned. 
-
 
 
 ### Analysis
