@@ -1,12 +1,12 @@
-# Table of Contents
-1. [Module 1: Foundation of Cybersecurity](#module-1-foundation-of-cybersecurity)
-2. [Risk Management](#module-2-play-it-safe-manage-security-risk)
-3. [Network Security](#module-3-connect-and-protect-networks-and-network-security)
-4. [Linux and SQL](#module-4-tools-of-the-trade-linux-and-sql)
-5. [Assets, Threats and Vulnerabilities](#module-5-assets-threats-and-vulnerabilities)
-6. [Detection and Response](#module-6-sound-the-alarm-detection-and-response)
-7. [Python Automation](#module-7-automate-cybersecurity-tasks-with-python)
-8. [Professional Preparation](#module-8-put-it-to-work-prepare-for-cybersecurity-jobs)
+## Table of Contents
+- [Module 1: Foundation of Cybersecurity](#module-1-foundation-of-cybersecurity)
+- [Module 2: Play It Safe Manage Security Risk](#module-2-play-it-safe-manage-security-risk)
+- [Module 3: Connect and Protect Networks and Network Security](#module-3-connect-and-protect-networks-and-network-security)
+- [Module 4: Tools of the Trade Linux and SQL](#module-4-tools-of-the-trade-linux-and-sql)
+- [Module 5: Assets, Threats and Vulnerabilities](#module-5-assets-threats-and-vulnerabilities)
+- [Module 6: Sound the Alarm Detection and Response](#module-6-sound-the-alarm-detection-and-response)
+- [Module 7: Automate Cybersecurity Tasks with Python](#module-7-automate-cybersecurity-tasks-with-python)
+- [Module 8: Put It to Work Prepare for Cybersecurity Jobs](#module-8-put-it-to-work-prepare-for-cybersecurity-jobs)
 
 <!--
 1. [Foundation of Cybersecurity](#module-1-foundation-of-cybersecurity)
@@ -19,13 +19,18 @@
 8. [Professional Preparation](#module-8-put-it-to-work-prepare-for-cybersecurity-jobs)
 -->
 
-<br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br>
+
+---
+
+<br><br><br><br>
 
 # Module 1: Foundation of Cybersecurity
 ## Overview
 
 This module introduces the fundamental concepts of cybersecurity, including the role of security analysts, the importance of the CIA triad, and the evolving threat landscape. It also covers essential tools, basic programming knowledge, and the ethical responsibilities required to protect sensitive data. The focus is on building a strong foundation in both technical and non-technical aspects of cybersecurity.
 
+<br><br>
 
 ## Section 1: Welcome to the Exciting World of Cybersecurity
 
@@ -48,7 +53,7 @@ This module introduces the fundamental concepts of cybersecurity, including the 
 - Developed Python scripts to parse logs for suspicious activity.  
 - Practiced SIEM dashboards to monitor simulated network events in lab exercises.  
 
-
+<br><br>
 
 ## Section 2: The Evolution of Cybersecurity
 
@@ -71,7 +76,7 @@ This module introduces the fundamental concepts of cybersecurity, including the 
 - Simulated phishing exercises including BEC scenarios in lab environments.  
 - Analyzed malware samples safely to study behavior and mitigation.  
 
-
+<br><br>
 
 ## Section 3: Protect Against Threats, Risks, and Vulnerabilities
 
@@ -94,7 +99,7 @@ This module introduces the fundamental concepts of cybersecurity, including the 
 - Monitored lab environments for simulated insider threats.  
 - Followed detailed playbooks for handling sensitive data: **Chain of Custody, Protecting and Preserving Evidence, Prioritizing Order of Volatility**.  
 
-
+<br><br>
 
 ## Section 4: Cybersecurity Tools and Programming Languages
 
@@ -114,13 +119,13 @@ This module introduces the fundamental concepts of cybersecurity, including the 
 - Built GitHub repository with scripts for log analysis and packet capturing.  
 - Documented SIEM alerts and mitigation strategies, including screenshots, for portfolio.  
 
-
+<br><br>
 
 ## Reflection
 
 This module has given me a solid foundation in cybersecurity principles, tools, and professional practices. I have gained a clear understanding of the CIA triad, the role of a security analyst, and the importance of safeguarding PII and SPII in real-world environments. Learning about the evolution of cyber threats, from historical attacks like the Morris Worm to modern phishing and ransomware techniques, has strengthened my awareness of how both technology and human behavior influence security risks. I now appreciate the value of ethical decision-making, compliance, and risk frameworks like NIST CSF and ISO standards in guiding professional conduct. Hands-on experience with SIEM dashboards, packet analysis tools, and Python scripting has allowed me to apply theory in practice, preparing me to identify vulnerabilities, monitor systems effectively, and document incidents responsibly. Overall, this module has enhanced my technical skills, ethical mindset, and problem-solving abilities, providing a strong starting point for a career in cybersecurity.
 
-
+<br><br>
 
 ## Conclusion
 
@@ -137,7 +142,11 @@ This module established my foundational understanding of cybersecurity principle
 
 
 
-<br><br><br><br><br>
+<br><br><br><br>
+
+---
+
+<br><br><br><br>
 
 
 
@@ -147,6 +156,7 @@ This module established my foundational understanding of cybersecurity principle
 
 This module focuses on managing security risks through structured frameworks, security controls, and organizational policies. It introduces key concepts such as the CISSP security domains, NIST Risk Management Framework (RMF), and the role of identity and access management in protecting assets. The module emphasizes how organizations assess, prioritize, and mitigate risks in real-world environments.
 
+<br><br>
 
 ## Section 1: Security Domains
 
@@ -179,7 +189,7 @@ This module focuses on managing security risks through structured frameworks, se
 - I practice creating IAM policies and simulate data access scenarios.  
 - I draft basic disaster recovery strategies for projects, ensuring continuity under simulated risk conditions.  
 
----
+<br><br>
 
 ## Section 2: Security Frameworks and Controls
 
@@ -215,7 +225,7 @@ This module focuses on managing security risks through structured frameworks, se
 - I perform simulated access control setups and evaluate firewall policies.  
 - I practice documenting security policies in alignment with NIST CSF.  
 
----
+<br><br>
 
 ## Section 3: Introduction to Cybersecurity Tools
 
@@ -240,7 +250,7 @@ This module focuses on managing security risks through structured frameworks, se
 - I practice analyzing logs using Splunk to detect anomalies.  
 - I design simple automated responses for repeated security events using SOAR concepts.  
 
----
+<br><br>
 
 ## Section 4: Using Playbooks to Respond to Incidents
 
@@ -269,7 +279,7 @@ This module focuses on managing security risks through structured frameworks, se
 - I create basic playbooks for simulated attacks and review lessons learned.  
 - I practice coordinating responses with teams and automating simple remediation tasks.  
 
----
+<br><br>
 
 ## Reflection
 Through completing these foundational cybersecurity modules, I have gained a deep understanding of both theoretical frameworks and practical applications essential for protecting organizational assets.
@@ -283,6 +293,8 @@ The Cybersecurity Tools module provided hands-on exposure to logs, SIEM, and SOA
 Finally, the Playbooks and Incident Response module emphasized the importance of structured, repeatable procedures in responding to security incidents. Understanding the six phases of incident response and the integration of SIEM and SOAR helped me see how theory translates into actionable defense strategies. Creating and practicing playbooks for simulated attacks strengthened my problem-solving and teamwork skills while highlighting the need for continuous learning due to evolving threats.
 
 Overall, these modules have not only improved my technical knowledge but also enhanced my analytical thinking, problem-solving, and ability to apply cybersecurity principles in real-world scenarios. By combining theoretical understanding with hands-on practice, I feel confident in contributing effectively to cybersecurity operations and supporting organizational resilience against cyber threats.
+
+<br><br>
 
 ## Conclusion
 
@@ -299,7 +311,11 @@ This module strengthened my understanding of how organizations manage cybersecur
 
 
 
+<br><br><br><br>
 
+---
+
+<br><br><br><br>
 
 
 
@@ -352,7 +368,7 @@ This module explores how networks are structured, how data flows across systems,
 - Configuring small office networks and troubleshooting connectivity issues.  
 - Analyzing TCP logs to identify connection issues or suspicious traffic.
 
----
+<br><br>
 
 ## Section 2: Network Operation
 
@@ -382,7 +398,7 @@ This module explores how networks are structured, how data flows across systems,
 - Configuring DHCP, NAT, and VPN for secure home/office networks.  
 - Using SNMP for monitoring traffic and detecting anomalies.
 
----
+<br><br>
 
 ## Section 3: Secure Against Network Intrusions
 
@@ -403,7 +419,7 @@ This module explores how networks are structured, how data flows across systems,
 - Use Wireshark/tcpdump to monitor suspicious traffic.  
 - Apply firewall rules to mitigate SYN floods and ICMP attacks.
 
----
+<br><br>
 
 ## Section 4: Security Hardening
 
@@ -434,11 +450,12 @@ This module explores how networks are structured, how data flows across systems,
 ### How I Apply This
 - Implement MFA on personal accounts, configure IDS alerts in lab environment, test suspicious apps in sandbox.
 
----
+<br><br>
 
 ## Reflection
 Through this module, I have gained a comprehensive understanding of how networks are structured, operate, and are protected against intrusions. I learned not only the technical aspects of devices, protocols, and architectures but also the practical importance of securing networks and data. Understanding how LANs, WANs, and cloud computing environments interact has strengthened my foundation in network design, while learning management protocols such as DHCP, NAT, and SNMP has highlighted how devices communicate efficiently and securely. Exploring common network attacks and interception tactics has increased my awareness of potential vulnerabilities, and studying security hardening strategies—including OS hardening, multi-factor authentication, and the use of IDS, IPS, and SIEM tools—has shown me how layered defenses can significantly reduce risk. This module has also enhanced my analytical and problem-solving skills; analyzing TCP/IP logs, configuring security tools, and understanding network segmentation have given me confidence in monitoring and maintaining secure network environments. I now approach network security not just as a theoretical concept but as a practical responsibility. I can apply these skills by setting up and securing networks, monitoring traffic for anomalies, and implementing best practices to mitigate risks. Overall, this knowledge forms a strong foundation for advancing into areas such as cloud security, penetration testing, and enterprise network management, allowing me to contribute effectively to secure and efficient network operations in any organization.
 
+<br><br>
 
 ## Conclusion
 
@@ -446,7 +463,11 @@ This module provided me with a solid understanding of network architecture, prot
 
 
 
+<br><br><br><br>
 
+---
+
+<br><br><br><br>
 
 
 
@@ -455,7 +476,7 @@ This module provided me with a solid understanding of network architecture, prot
 ## Overview
 This document summarizes my learning from foundational modules on Operating Systems, Linux, command-line usage, and database fundamentals. It highlights both theoretical understanding and practical application in cybersecurity scenarios.
 
----
+<br><br>
 
 ## Section 1: Introduction to Operating Systems
 
@@ -488,7 +509,7 @@ This document summarizes my learning from foundational modules on Operating Syst
 - Prefer CLI for system analysis and troubleshooting.
 - Understand the boot process when analyzing persistence mechanisms or startup issues.
 
----
+<br><br>
 
 ## Section 2: The Linux Operating System
 
@@ -524,7 +545,7 @@ This document summarizes my learning from foundational modules on Operating Syst
 - Install and manage tools using package managers.
 - Navigate Linux architecture when troubleshooting issues.
 
----
+<br><br>
 
 ## Section 3: Linux Commands in the Bash Shell
 
@@ -581,7 +602,7 @@ This document summarizes my learning from foundational modules on Operating Syst
 - Detect anomalies using find.
 - Apply least privilege principles using chmod and chown.
 
----
+<br><br>
 
 ## Section 4: Databases and SQL
 
@@ -637,7 +658,7 @@ This document summarizes my learning from foundational modules on Operating Syst
 - Filter and isolate suspicious behavior.
 - Use aggregation to summarize large datasets.
 
----
+<br><br>
 
 <!--
 # Additional Skills and Professional Insights
@@ -656,7 +677,7 @@ This document summarizes my learning from foundational modules on Operating Syst
 - Maintain structured and professional documentation
 -->
 
----
+<br><br>
 
 ## Reflection
 
@@ -672,7 +693,7 @@ This enables me to:
 - Analyze logs and detect anomalies
 - Apply cybersecurity concepts in practical scenarios
 
----
+<br><br>
 
 ## Conclusion
 
@@ -684,7 +705,11 @@ This learning journey strengthened both my technical skills and analytical think
 
 
 
+<br><br><br><br>
 
+---
+
+<br><br><br><br>
 
 
 
@@ -696,7 +721,7 @@ This learning journey strengthened both my technical skills and analytical think
 
 This document summarizes my learning on the topic of **Assets, Threats, and Vulnerabilities** from foundational cybersecurity modules, including Operating Systems, Linux, command-line usage, and database fundamentals. It highlights both **theoretical understanding** and **practical application**, emphasizing the identification, management, and mitigation of risks in real-world scenarios.
 
----
+<br><br>
 
 ## Section 1: Introduction to Asset Security
 
@@ -731,7 +756,7 @@ This document summarizes my learning on the topic of **Assets, Threats, and Vuln
 - In lab exercises, I maintain a complete asset inventory and create a risk register to prioritize vulnerabilities.  
 - When experimenting with cloud platforms, I document which responsibilities are mine (data, identity) versus the provider’s (infrastructure).
 
----
+<br><br>
 
 ## Section 2: Protect Organizational Assets
 
@@ -768,7 +793,7 @@ This document summarizes my learning on the topic of **Assets, Threats, and Vuln
 - Implemented PoLP in lab environments, created role-based access control models, and applied encryption to sample datasets.  
 - Designed workflows that align with GDPR and PCI DSS requirements for secure data handling.
 
----
+<br><br>
 
 ## Section 3: Vulnerabilities in Systems
 
@@ -794,7 +819,7 @@ This document summarizes my learning on the topic of **Assets, Threats, and Vuln
 - Conduct vulnerability scans in lab environments, document findings, and propose remediation strategies.  
 - Perform mock penetration tests using limited and full-knowledge scenarios to evaluate defense mechanisms.
 
----
+<br><br>
 
 ## Section 4: Threats to Asset Security
 
@@ -819,20 +844,22 @@ This document summarizes my learning on the topic of **Assets, Threats, and Vuln
 - Conduct tabletop exercises simulating social engineering attacks to test policies.  
 - Configure lab environments to test malware containment and apply web exploit prevention strategies.
 
----
+<!--
+<br><br>
 
 ## Additional Notes & Professional Enhancements
 - Demonstrated understanding of **security frameworks** (NIST, OWASP, PASTA, STRIDE) aligns with industry standards.  
 - Awareness of **regulatory compliance** makes my portfolio relevant to employers in finance, healthcare, and cloud industries.  
 - Practical exercises (scans, penetration tests, encryption, access control) showcase applied technical skills, not just theory.  
+-->
 
----
+<br><br>
 
 ## Reflection
 
 Studying the module of **Assets, Threats, and Vulnerabilities** has deepened my understanding of how critical it is to recognize and protect organizational resources. I realized that cybersecurity is not solely about implementing technical controls, but also about adopting a holistic approach that accounts for people, processes, and technology. Through practical exercises, such as creating asset inventories, performing vulnerability scans, and simulating threat scenarios, I gained hands-on experience in identifying weaknesses and implementing effective safeguards. These activities highlighted that even seemingly minor vulnerabilities, such as weak passwords or outdated software, can expose an organization to significant risks if left unaddressed. Additionally, I learned the importance of prioritizing risks based on their likelihood and potential impact, ensuring that critical assets receive the highest level of protection. Overall, this topic has emphasized the importance of proactive thinking, anticipating threats before they occur, and continuously learning and adapting to an ever-evolving cybersecurity landscape.  
 
----
+<br><br>
 
 ## Conclusion
 
@@ -842,7 +869,11 @@ Understanding **Assets, Threats, and Vulnerabilities** is foundational to effect
 
 
 
+<br><br><br><br>
 
+---
+
+<br><br><br><br>
 
 
 
@@ -854,7 +885,7 @@ Understanding **Assets, Threats, and Vulnerabilities** is foundational to effect
 
 Detection and Incident Response is a critical aspect of cybersecurity that focuses on identifying, analyzing, and mitigating security incidents before they cause significant harm. This field involves understanding network events, monitoring traffic, analyzing logs, and responding to threats through structured methodologies. Key components include incident detection, triage and prioritization, threat intelligence, and the use of modern tools such as IDS, IPS, EDR, and SIEM platforms. Following the NIST Incident Response Lifecycle—Preparation, Detection & Analysis, Containment, Eradication & Recovery, and Post-Incident Activity—provides a structured approach to managing security events and ensuring business continuity. Practical exercises in network monitoring, packet analysis, and incident simulation reinforce the ability to respond effectively in real-world environments. This module summarizes my learning and practical application of **Detection and Incident Response**. It demonstrates both theoretical knowledge and hands-on skills, highlighting how I can contribute effectively in real-world cybersecurity roles.
 
----
+<br><br>
 
 ## Section 1: Introduction to Detection and Incident Response
 
@@ -878,7 +909,7 @@ I understand the importance of structured incident response, from initial detect
 ### How I Apply This
 In lab exercises, I document security events, practice triage and prioritization, and simulate incident response scenarios. I maintain a personal Incident Handler’s Journal to capture findings, actions taken, and lessons learned, mirroring professional SOC practices.
 
----
+<br><br>
 
 ## Section 2: Network Monitoring and Analysis
 
@@ -896,7 +927,7 @@ I understand packet anatomy, how to capture network traffic, and how baselines h
 ### How I Apply This
 I practice capturing and analyzing network traffic in lab environments, identifying suspicious patterns, and comparing them against established baselines. I document findings to support future incident investigations.
 
----
+<br><br>
 
 ## Section 3: Incident Investigation and Response
 
@@ -916,7 +947,7 @@ I understand how to prioritize incidents, use intelligence to contextualize aler
 ### How I Apply This
 I simulate phishing incidents and pipeline anomalies in labs, document triage processes, and evaluate remediation actions. I create mock final reports and lessons-learned summaries to emulate professional SOC deliverables.
 
----
+<br><br>
 
 ## Section 4: Network Traffic and Logs using IDS and SIEM Tools
 
@@ -936,20 +967,26 @@ I understand log types, SIEM workflows, and detection technologies. I can interp
 ### How I Apply This
 I practice analyzing lab-generated IDS/IPS alerts, correlating logs in SIEM platforms, and using both signature- and anomaly-based detection to identify potential threats. I document each step in a manner consistent with professional incident response protocols.
 
----
+
+
+<!--
+<br><br>
 
 ## Additional Professional Enhancements
 - Focus on **structured documentation** to demonstrate professionalism and maintain evidence integrity.  
 - Awareness of **modern SOC tools and frameworks** (Splunk, Google SecOps, Suricata, CI/CD monitoring) showcases practical, industry-relevant skills.  
 - Emphasis on **proactive threat hunting, threat intelligence, and lessons-learned processes** demonstrates readiness to handle real-world incidents.
+<!--
 
----
+
+
+<br><br>
 
 ## Reflection
 
 Studying Detection and Incident Response has helped me appreciate the importance of a systematic and proactive approach to cybersecurity. I have learned that timely identification and proper handling of incidents can significantly reduce the impact on organizational operations and data integrity. Hands-on practice with tools like Wireshark, tcpdump, and SIEM platforms has strengthened my technical skills, while using SOC frameworks and playbooks has highlighted the importance of processes and teamwork. I also realized the value of proper documentation and maintaining a chain of custody, which ensures that investigations remain reliable and evidence admissible. Overall, this topic has reinforced the need for vigilance, continuous learning, and structured workflows to mitigate threats efficiently.
 
----
+<br><br>
 
 ## Conclusion
 
@@ -961,7 +998,11 @@ Detection and Incident Response is foundational to maintaining secure and resili
 
 
 
+<br><br><br><br>
 
+---
+
+<br><br><br><br>
 
 
 
@@ -976,7 +1017,7 @@ Python is a versatile programming language widely used in cybersecurity to autom
 
 This module summarizes my learning and practical application of **Python programming** for cybersecurity purposes. Python is a versatile language widely used in automation, data parsing, network analysis, and security tool development. This portfolio highlights both theoretical understanding and hands-on skills, demonstrating readiness for real-world cybersecurity roles.
 
----
+<br><br>
 
 ## Section 1: Introduction to Python
 
@@ -989,7 +1030,7 @@ Python is a **general-purpose programming language** frequently used in cybersec
 
 Basic Python syntax includes **comments**, `print()` statements, and **data types** such as strings, integers, floats, booleans, lists, tuples, dictionaries, and sets. Variables store information and must follow naming conventions for readability. **Control flow** involves conditional statements (`if`, `elif`, `else`) and loops (`for`, `while`) with loop control mechanisms like `break` and `continue`.
 
----
+<br><br>
 
 ## Section 2: Writing Effective Python Code
 
@@ -998,7 +1039,7 @@ Functions in Python allow **reusable code blocks**, defined with `def`, using **
 
 Python includes many **built-in functions** such as `type()`, `max()`, `min()`, and `sorted()` to simplify operations. Additionally, modules and libraries extend functionality and are imported with `import` or `from [module] import [function]`. Following **PEP 8** style guidelines improves code readability and maintainability.
 
----
+<br><br>
 
 ## Section 3: Working with Strings and Lists
 
@@ -1010,7 +1051,7 @@ String and list manipulation is central to Python programming:
 - **List Methods**: `.append()`, `.insert()`, `.remove()` for dynamic data handling.  
 - **Regular Expressions (Regex)**: Used for pattern matching in text, accessed via the `re` module. Common symbols include `\w`, `\d`, `\s`, `.`, `+`, `*`, and `{n}`.
 
----
+<br><br>
 
 ## Section 4: Python in Practice
 
@@ -1023,36 +1064,42 @@ Python also supports **DevSecOps** integration, allowing automated security chec
 
 **Project-Specific Cross-Check**: For tasks like updating `allow_list.txt`, the workflow involves reading the file, converting its content into a list, iterating and removing items safely, then writing the updated list back—demonstrating practical Python application in cybersecurity workflows.
 
----
+<br><br>
 
 ## Real-World Example
 In cybersecurity operations, Python scripts can automatically parse firewall logs to identify suspicious IP addresses, scan for malware signatures in bulk, or validate configuration compliance across multiple servers. For example, using Python to iterate through an IP allowlist and remove unauthorized addresses reduces manual effort and prevents human error in maintaining secure access control.
 
----
+<br><br>
 
 ## My Practical Understanding
 I understand Python's core syntax, data structures, and control flow mechanisms, enabling me to automate repetitive tasks efficiently. I have hands-on experience with file manipulation, string/list operations, debugging strategies, and integrating scripts with security processes. This foundation allows me to develop reliable tools that enhance cybersecurity workflows.
 
----
+<br><br>
 
 ## How I Apply This
 I apply Python in lab exercises to parse log files, automate report generation, and filter data for threat intelligence purposes. I implement error handling and debugging to ensure scripts execute reliably and safely. Additionally, I integrate Python scripts with CI/CD pipelines for automated security checks, simulating professional DevSecOps practices.
 
----
+
+
+<!--
+<br><br>
 
 ## Additional Professional Enhancements
 - Emphasize **automation and efficiency**, showcasing Python’s ability to reduce human error and speed up processes.  
 - Include **well-commented code snippets** in GitHub repositories to demonstrate readability and coding professionalism.  
 - Showcase **integration with cybersecurity tools** (e.g., SIEM, IDS/IPS log parsing, malware analysis automation).  
 - Highlight **problem-solving skills** by explaining how Python scripts improve workflow, security, and compliance.
+--> 
 
----
+
+
+<br><br>
 
 ## Reflection
 
 Studying Python for cybersecurity has strengthened my understanding of automation and problem-solving in technical environments. I realized that scripting reduces human error, speeds up repetitive tasks, and enables consistent, reliable analysis of large datasets. Through hands-on practice, I developed skills in file handling, data parsing, debugging, and exception management, which are essential for real-world cybersecurity operations. Learning to write clean, maintainable, and PEP 8-compliant code also highlighted the importance of professionalism and readability in technical documentation. Overall, this experience reinforced the significance of combining programming knowledge with security expertise to efficiently manage risks and enhance operational effectiveness.
 
----
+<br><br>
 
 ## Conclusion
 
@@ -1062,7 +1109,11 @@ Python is a critical tool in modern cybersecurity, allowing professionals to aut
 
 
 
+<br><br><br><br>
 
+---
+
+<br><br><br><br>
 
 
 
@@ -1075,7 +1126,7 @@ This topic focuses on the essential practices of protecting organizational data,
 
 This module highlights my understanding and practical application of **data protection, incident escalation, stakeholder communication, cybersecurity community engagement, and AI-assisted workflows**. It demonstrates both technical knowledge and professional skills required to operate effectively in real-world cybersecurity environments.
 
----
+<br><br>
 
 ## Section 1: Protect Data and Communicate Incidents
 
@@ -1102,7 +1153,7 @@ I understand how to classify data and assets based on sensitivity and business i
 ### How I Apply This
 In lab scenarios, I classify datasets and simulate incident responses, ensuring proper prioritization of critical assets. I also design simple BCP/DRP outlines to demonstrate preparedness for real-world disruptions.
 
----
+<br><br>
 
 ## Section 2: Escalate Incidents
 
@@ -1127,7 +1178,7 @@ I understand how to triage incidents, determine severity, and escalate appropria
 ### How I Apply This
 I simulate incident escalation workflows in labs, categorizing incidents and assigning priorities. I also document escalation paths to reflect real SOC operations.
 
----
+<br><br>
 
 ## Section 3: Communicate Effectively to Influence Stakeholders
 
@@ -1149,7 +1200,7 @@ I understand how to adjust communication styles depending on the audience, ensur
 ### How I Apply This
 I practice writing incident summaries, creating simple dashboards, and presenting findings in both technical and non-technical formats to simulate real workplace communication.
 
----
+<br><br>
 
 ## Section 4: Engage with the Cybersecurity Community
 
@@ -1170,7 +1221,7 @@ I understand the importance of continuous learning and networking to stay inform
 ### How I Apply This
 I follow cybersecurity resources, engage with professional communities, and incorporate new knowledge into my lab practices and projects.
 
----
+<br><br>
 
 ## Section 5: Use AI to Optimize Workflows
 
@@ -1204,7 +1255,7 @@ I understand how AI can improve efficiency while recognizing its limitations and
 ### How I Apply This
 I use AI tools to assist with documentation, analysis, and summarization while validating outputs to ensure correctness and security compliance.
 
----
+<br><br>
 
 ## Career Readiness & Professional Development
 
@@ -1223,20 +1274,22 @@ I understand how to present my technical skills and experiences effectively to a
 ### How I Apply This
 I prepare structured responses for interviews, document my achievements using measurable outcomes, and continuously build my portfolio to showcase practical skills.
 
----
+<br><br>
 
+<!--
 ## Additional Professional Enhancements
 - Emphasis on **clear documentation and communication skills**, which are critical in SOC roles  
 - Demonstration of **both technical and soft skills**, making the profile well-rounded  
 - Integration of **AI, community engagement, and real-world workflows**, aligning with modern cybersecurity practices
+-->
 
----
+<br><br>
 
 ## Reflection
 
 Studying this topic has helped me understand that cybersecurity is not only about technical skills but also about communication, decision-making, and responsibility. I realized that properly classifying data and assets is crucial for prioritizing protection efforts, especially when dealing with sensitive information such as PII or confidential business data. Through practical exercises, I learned how incident escalation ensures that the right expertise is applied at the right time, reducing the overall impact of security events. I also gained valuable insight into how communication plays a critical role in influencing stakeholders, where translating technical details into clear, concise information can directly impact decision-making. Additionally, exploring AI tools and cybersecurity communities reinforced the importance of continuous learning and adapting to new technologies and threats. Overall, this topic strengthened both my technical understanding and my professional skills.
 
----
+<br><br>
 
 ## Conclusion
 
