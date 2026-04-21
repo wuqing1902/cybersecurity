@@ -1,4 +1,20 @@
+# Table of Contents
+1. [Foundation of Cybersecurity](#module-1-foundation-of-cybersecurity)
+2. [Risk Management](#module-2-play-it-safe-manage-security-risk)
+3. [Network Security](#module-3-connect-and-protect-networks-and-network-security)
+4. [Linux and SQL](#module-4-tools-of-the-trade-linux-and-sql)
+5. [Assets, Threats and Vulnerabilities](#module-5-assets-threats-and-vulnerabilities)
+6. [Detection and Response](#module-6-sound-the-alarm-detection-and-response)
+7. [Python Automation](#module-7-automate-cybersecurity-tasks-with-python)
+8. [Professional Preparation](#module-8-put-it-to-work-prepare-for-cybersecurity-jobs)
+
+<br><br><br><br><br>
+
 # Module 1: Foundation of Cybersecurity
+## Overview
+
+This module introduces the fundamental concepts of cybersecurity, including the role of security analysts, the importance of the CIA triad, and the evolving threat landscape. It also covers essential tools, basic programming knowledge, and the ethical responsibilities required to protect sensitive data. The focus is on building a strong foundation in both technical and non-technical aspects of cybersecurity.
+
 
 ## Section 1: Welcome to the Exciting World of Cybersecurity
 
@@ -21,7 +37,7 @@
 - Developed Python scripts to parse logs for suspicious activity.  
 - Practiced SIEM dashboards to monitor simulated network events in lab exercises.  
 
----
+
 
 ## Section 2: The Evolution of Cybersecurity
 
@@ -44,7 +60,7 @@
 - Simulated phishing exercises including BEC scenarios in lab environments.  
 - Analyzed malware samples safely to study behavior and mitigation.  
 
----
+
 
 ## Section 3: Protect Against Threats, Risks, and Vulnerabilities
 
@@ -67,7 +83,7 @@
 - Monitored lab environments for simulated insider threats.  
 - Followed detailed playbooks for handling sensitive data: **Chain of Custody, Protecting and Preserving Evidence, Prioritizing Order of Volatility**.  
 
----
+
 
 ## Section 4: Cybersecurity Tools and Programming Languages
 
@@ -87,12 +103,17 @@
 - Built GitHub repository with scripts for log analysis and packet capturing.  
 - Documented SIEM alerts and mitigation strategies, including screenshots, for portfolio.  
 
----
+
 
 ## Reflection
 
 This module has given me a solid foundation in cybersecurity principles, tools, and professional practices. I have gained a clear understanding of the CIA triad, the role of a security analyst, and the importance of safeguarding PII and SPII in real-world environments. Learning about the evolution of cyber threats, from historical attacks like the Morris Worm to modern phishing and ransomware techniques, has strengthened my awareness of how both technology and human behavior influence security risks. I now appreciate the value of ethical decision-making, compliance, and risk frameworks like NIST CSF and ISO standards in guiding professional conduct. Hands-on experience with SIEM dashboards, packet analysis tools, and Python scripting has allowed me to apply theory in practice, preparing me to identify vulnerabilities, monitor systems effectively, and document incidents responsibly. Overall, this module has enhanced my technical skills, ethical mindset, and problem-solving abilities, providing a strong starting point for a career in cybersecurity.
 
+
+
+## Conclusion
+
+This module established my foundational understanding of cybersecurity principles, including the CIA triad, common threats, and the responsibilities of a security analyst. I developed awareness of how technical tools and human factors contribute to security risks, and gained initial hands-on exposure to SIEM tools and Python for basic log analysis. This foundation prepares me to approach cybersecurity problems with both technical knowledge and an ethical mindset.
 
 <!--
 ### Notes / Tips for Employers
@@ -105,12 +126,16 @@ This module has given me a solid foundation in cybersecurity principles, tools, 
 
 
 
-
+<br><br><br><br><br>
 
 
 
 
 # Module 2: Play It Save Manage Security Risk
+## Overview
+
+This module focuses on managing security risks through structured frameworks, security controls, and organizational policies. It introduces key concepts such as the CISSP security domains, NIST Risk Management Framework (RMF), and the role of identity and access management in protecting assets. The module emphasizes how organizations assess, prioritize, and mitigate risks in real-world environments.
+
 
 ## Section 1: Security Domains
 
@@ -248,6 +273,10 @@ Finally, the Playbooks and Incident Response module emphasized the importance of
 
 Overall, these modules have not only improved my technical knowledge but also enhanced my analytical thinking, problem-solving, and ability to apply cybersecurity principles in real-world scenarios. By combining theoretical understanding with hands-on practice, I feel confident in contributing effectively to cybersecurity operations and supporting organizational resilience against cyber threats.
 
+## Conclusion
+
+This module strengthened my understanding of how organizations manage cybersecurity risks using frameworks, controls, and structured processes. I learned to evaluate different types of security controls, apply risk management methodologies, and understand the importance of access control and policy enforcement. These skills enable me to assess risks systematically and contribute to building secure and resilient systems.
+
 
 <!--
 ### Professional Tips
@@ -266,6 +295,10 @@ Overall, these modules have not only improved my technical knowledge but also en
 
 
 # Module 3: Connect And Protect Networks and Network Security
+## Overview
+
+This module explores how networks are structured, how data flows across systems, and how to protect networks from attacks. It covers network architecture, protocols, common attack techniques, and security hardening strategies. The focus is on understanding both the technical operation of networks and the methods used to detect and mitigate network-based threats.
+
 
 ## Section 1: Network Architecture
 
@@ -396,7 +429,9 @@ Overall, these modules have not only improved my technical knowledge but also en
 Through this module, I have gained a comprehensive understanding of how networks are structured, operate, and are protected against intrusions. I learned not only the technical aspects of devices, protocols, and architectures but also the practical importance of securing networks and data. Understanding how LANs, WANs, and cloud computing environments interact has strengthened my foundation in network design, while learning management protocols such as DHCP, NAT, and SNMP has highlighted how devices communicate efficiently and securely. Exploring common network attacks and interception tactics has increased my awareness of potential vulnerabilities, and studying security hardening strategies—including OS hardening, multi-factor authentication, and the use of IDS, IPS, and SIEM tools—has shown me how layered defenses can significantly reduce risk. This module has also enhanced my analytical and problem-solving skills; analyzing TCP/IP logs, configuring security tools, and understanding network segmentation have given me confidence in monitoring and maintaining secure network environments. I now approach network security not just as a theoretical concept but as a practical responsibility. I can apply these skills by setting up and securing networks, monitoring traffic for anomalies, and implementing best practices to mitigate risks. Overall, this knowledge forms a strong foundation for advancing into areas such as cloud security, penetration testing, and enterprise network management, allowing me to contribute effectively to secure and efficient network operations in any organization.
 
 
+## Conclusion
 
+This module provided me with a solid understanding of network architecture, protocols, and common attack methods. I developed practical skills in analyzing network traffic, identifying suspicious patterns, and applying basic security hardening techniques. These skills enable me to monitor network activity effectively and contribute to detecting and preventing network-based attacks.
 
 
 
@@ -411,9 +446,9 @@ This document summarizes my learning from foundational modules on Operating Syst
 
 ---
 
-# Section 1: Introduction to Operating Systems
+## Section 1: Introduction to Operating Systems
 
-## Key Concepts
+### Key Concepts
 - Operating System (OS): Interface between hardware and users; manages memory, processes, and system resources.
 - Types of OS:
   - Windows (closed-source)
@@ -429,24 +464,24 @@ This document summarizes my learning from foundational modules on Operating Syst
   - GUI (Graphical, beginner-friendly)
   - CLI (Command Line, powerful and efficient)
 
-## Real-World Example
+### Real-World Example
 - Security analysts use Linux-based virtual machines to safely analyze malware without affecting the host system.
 - Investigations often rely on CLI history logs to trace attacker activities.
 
-## My Practical Understanding
+### My Practical Understanding
 - The OS is a critical control layer for system security.
 - CLI provides efficiency and auditability, which are essential in cybersecurity operations.
 
-## How I Apply This
+### How I Apply This
 - Use virtualization tools (VirtualBox / VMware) to run isolated environments.
 - Prefer CLI for system analysis and troubleshooting.
 - Understand the boot process when analyzing persistence mechanisms or startup issues.
 
 ---
 
-# Section 2: The Linux Operating System
+## Section 2: The Linux Operating System
 
-## Key Concepts
+### Key Concepts
 - Linux Architecture:
   User → Applications → Shell → Filesystem → Kernel → Hardware
 
@@ -465,32 +500,32 @@ This document summarizes my learning from foundational modules on Operating Syst
   - APT / dpkg (Debian-based)
   - YUM / RPM (Red Hat-based)
 
-## Real-World Example
+### Real-World Example
 - Penetration testers use Kali Linux because it includes pre-installed security tools.
 - Enterprises use Red Hat for stable and secure production environments.
 
-## My Practical Understanding
+### My Practical Understanding
 - Linux is modular and customizable, making it suitable for security operations.
 - Different distributions serve different purposes depending on use case.
 
-## How I Apply This
+### How I Apply This
 - Use Ubuntu for general tasks and Kali Linux for security labs.
 - Install and manage tools using package managers.
 - Navigate Linux architecture when troubleshooting issues.
 
 ---
 
-# Section 3: Linux Commands in the Bash Shell
+## Section 3: Linux Commands in the Bash Shell
 
-## Key Concepts
+### Key Concepts
 
-### Navigation and File Reading
+#### Navigation and File Reading
 - pwd: Print working directory
 - ls: List directory contents (use -la for details)
 - cd: Change directory
 - cat, head, tail, less: Read file content
 
-### File and Directory Management
+#### File and Directory Management
 - mkdir: Create directory
 - rmdir: Remove empty directory
 - touch: Create empty file
@@ -498,24 +533,24 @@ This document summarizes my learning from foundational modules on Operating Syst
 - mv: Move or rename files
 - cp: Copy files
 
-### Filtering and Redirection
+#### Filtering and Redirection
 - grep: Search for strings in files
 - find: Locate files and directories
 - | (pipe): Pass output between commands
 - > and >>: Redirect output (overwrite or append)
 
-### Permissions and Authorization
+#### Permissions and Authorization
 - Permission format: -rwxr-xr--
 - chmod: Modify permissions
 - chown: Change ownership
 - sudo: Execute commands with elevated privileges
 
-### User Management
+#### User Management
 - useradd: Add user
 - usermod: Modify user
 - userdel: Delete user
 
-## Real-World Example
+### Real-World Example
 - Detect failed login attempts:
   ```bash
   grep "Failed password" /var/log/auth.log
@@ -526,20 +561,20 @@ This document summarizes my learning from foundational modules on Operating Syst
   find / -mtime -1
   ```
 
-## My Practical Understanding
+### My Practical Understanding
 - Linux commands are essential for incident response and investigation.
 - File permissions are critical for preventing unauthorized access.
 
-## How I Apply This
+### How I Apply This
 - Analyze logs using grep and less.
 - Detect anomalies using find.
 - Apply least privilege principles using chmod and chown.
 
 ---
 
-# Section 4: Databases and SQL
+## Section 4: Databases and SQL
 
-## Key Concepts
+### Key Concepts
 - Relational Databases:
   - Data is stored in tables with rows and columns
   - Primary Key: Unique identifier
@@ -566,7 +601,7 @@ This document summarizes my learning from foundational modules on Operating Syst
 - Aggregate Functions:
   - COUNT(), AVG(), SUM()
 
-## Real-World Example
+### Real-World Example
 - Detect suspicious login attempts:
   ```sql
   SELECT *
@@ -582,17 +617,18 @@ This document summarizes my learning from foundational modules on Operating Syst
   WHERE country LIKE 'MEX%';
   ```
 
-## My Practical Understanding
+### My Practical Understanding
 - SQL is essential for analyzing structured logs.
 - Combining filters and joins enables deeper investigation.
 
-## How I Apply This
+### How I Apply This
 - Analyze login patterns using SQL queries.
 - Filter and isolate suspicious behavior.
 - Use aggregation to summarize large datasets.
 
 ---
 
+<!--
 # Additional Skills and Professional Insights
 
 ## Security Awareness
@@ -607,10 +643,11 @@ This document summarizes my learning from foundational modules on Operating Syst
 - Practice commands in lab environments
 - Simulate real-world attack scenarios
 - Maintain structured and professional documentation
+-->
 
 ---
 
-# Reflection
+## Reflection
 
 Through these modules, I developed a strong foundation in:
 - Operating system functionality
@@ -626,7 +663,7 @@ This enables me to:
 
 ---
 
-# Conclusion
+## Conclusion
 
 This learning journey strengthened both my technical skills and analytical thinking, preparing me for entry-level cybersecurity roles such as:
 - Security Analyst
