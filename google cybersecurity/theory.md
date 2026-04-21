@@ -151,7 +151,7 @@ This module established my foundational understanding of cybersecurity principle
 
 
 
-# Module 2: Play It Save Manage Security Risk
+# Module 2: Play It Safe Manage Security Risk
 ## Overview
 
 This module focuses on managing security risks through structured frameworks, security controls, and organizational policies. It introduces key concepts such as the CISSP security domains, NIST Risk Management Framework (RMF), and the role of identity and access management in protecting assets. The module emphasizes how organizations assess, prioritize, and mitigate risks in real-world environments.
@@ -1010,7 +1010,7 @@ Detection and Incident Response is foundational to maintaining secure and resili
 
 
 
-# Module 7: Automate Cybersecuirty Tasks With Pyhton
+# Module 7: Automate Cybersecurity Tasks With Python
 ## Overview
 
 Python is a versatile programming language widely used in cybersecurity to automate repetitive tasks, analyze data, and enhance operational efficiency. Its flexibility allows professionals to work with logs, parse files, manipulate strings and lists, and develop tools for network monitoring, malware analysis, and threat detection. By learning Python fundamentals, control flow, functions, modules, and file operations, I gained both the theoretical knowledge and practical skills necessary to develop reliable scripts. Additionally, Python’s integration with DevSecOps pipelines demonstrates its value in automating security checks and ensuring compliance across modern software development workflows. 
