@@ -1,5 +1,5 @@
 # Table of Contents
-1. [Foundation of Cybersecurity](#module-1-foundation-of-cybersecurity)
+1. [Module 1: Foundation of Cybersecurity](#module-1-foundation-of-cybersecurity)
 2. [Risk Management](#module-2-play-it-safe-manage-security-risk)
 3. [Network Security](#module-3-connect-and-protect-networks-and-network-security)
 4. [Linux and SQL](#module-4-tools-of-the-trade-linux-and-sql)
@@ -8,7 +8,18 @@
 7. [Python Automation](#module-7-automate-cybersecurity-tasks-with-python)
 8. [Professional Preparation](#module-8-put-it-to-work-prepare-for-cybersecurity-jobs)
 
-<br><br><br><br><br>
+<!--
+1. [Foundation of Cybersecurity](#module-1-foundation-of-cybersecurity)
+2. [Risk Management](#module-2-play-it-safe-manage-security-risk)
+3. [Network Security](#module-3-connect-and-protect-networks-and-network-security)
+4. [Linux and SQL](#module-4-tools-of-the-trade-linux-and-sql)
+5. [Assets, Threats and Vulnerabilities](#module-5-assets-threats-and-vulnerabilities)
+6. [Detection and Response](#module-6-sound-the-alarm-detection-and-response)
+7. [Python Automation](#module-7-automate-cybersecurity-tasks-with-python)
+8. [Professional Preparation](#module-8-put-it-to-work-prepare-for-cybersecurity-jobs)
+-->
+
+<br><br><br><br><br><br><br><br><br><br>
 
 # Module 1: Foundation of Cybersecurity
 ## Overview
