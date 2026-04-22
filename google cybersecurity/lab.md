@@ -2,6 +2,8 @@
 
 This repository contains 17 cybersecurity labs completed as part of a structured hands-on training program. Each lab simulates real-world scenarios — from internal audits and network attacks to SIEM investigations and Python automation. This is one component of a broader cybersecurity portfolio.
 
+<br><br><br>
+
 **Key skills demonstrated:**
 
 - Network traffic analysis (Wireshark, tcpdump)
@@ -12,7 +14,7 @@ This repository contains 17 cybersecurity labs completed as part of a structured
 - IDS rule writing (Suricata)
 - Asset classification and access control
 
-
+<br><br><br>
 
 ## Tools and Technologies
 
@@ -25,7 +27,7 @@ This repository contains 17 cybersecurity labs completed as part of a structured
 | Frameworks | NIST CSF, MITRE ATT&CK, PASTA, Pyramid of Pain |
 | Security Concepts | Least Privilege, MFA, RBAC, Encryption, Hashing |
 
-
+<br><br><br>
 
 
 ## Table of Contents
