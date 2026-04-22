@@ -1,8 +1,56 @@
-## Table of Contents
+## About This Lab Collection
 
-- [Module 2: Internal IT Audit – Botium Toys](#module-2-internal-it-audit--botium-toys)
-- [Module 3: Network Layer Communication Analysis (tcpdump)](#module-3-network-layer-communication-analysis-tcpdump)
-- [Module 4: Network Attack Analysis (Wireshark – SYN Flood)](#module-4-network-attack-analysis-wireshark--syn-flood)
+This repository contains 17 cybersecurity labs completed as part of a structured hands-on training program. Each lab simulates real-world scenarios — from internal audits and network attacks to SIEM investigations and Python automation. This is one component of a broader cybersecurity portfolio.
+
+**Key skills demonstrated:**
+
+- Network traffic analysis (Wireshark, tcpdump)
+- Incident response and threat hunting
+- SIEM querying (Splunk, Wazuh, Chronicle)
+- NIST CSF and risk assessment frameworks
+- Python scripting for security automation
+- IDS rule writing (Suricata)
+- Asset classification and access control
+
+
+
+## Tools and Technologies
+
+| Category | Tools |
+|----------|-------|
+| Network Analysis | Wireshark, tcpdump, Suricata |
+| SIEM | Splunk, Wazuh, Google Chronicle |
+| Operating Systems | Linux (Bash), Windows |
+| Programming | Python 3, SQL (MariaDB) |
+| Frameworks | NIST CSF, MITRE ATT&CK, PASTA, Pyramid of Pain |
+| Security Concepts | Least Privilege, MFA, RBAC, Encryption, Hashing |
+
+
+
+
+## Table of Contents
+- [Lab 1: Internal IT Audit Documentation – Botium Toys](#lab-1-internal-it-audit-documentation--botium-toys)
+- [Lab 2: Analyze Network Layer Communication](#lab-2-analyze-network-layer-communication)
+- [Lab 3: Network Attack Analysis (Wireshark – SYN Flood)](#lab-3-network-attack-analysis-wireshark--syn-flood)
+- [Lab 4: Apply OS Hardening Technique – Web Server Attack Investigation](#lab-4-apply-os-hardening-technique--web-server-attack-investigation)
+- [Lab 5: Incident Report Analysis – NIST Cybersecurity Framework (CSF) Application](#lab-5-incident-report-analysis--nist-cybersecurity-framework-csf-application)
+- [Lab 6: Network Hardening Analysis – Security Risk Assessment](#lab-6-network-hardening-analysis--security-risk-assessment)
+- [Lab 7: Databases and SQL – Security Analysis & Data Investigation](#lab-7-databases-and-sql--security-analysis--data-investigation)
+- [Lab 8: Linux Commands in the Bash Shell](#lab-8-linux-commands-in-the-bash-shell)
+- [Lab 9: Introduction to Asset Security](#lab-9-introduction-to-asset-security)
+- [Lab 10: Protect Organizational Assets](#lab-10-protect-organizational-assets)
+- [Lab 11: Threats to Asset Security](#lab-11-threats-to-asset-security)
+- [Lab 12: Vulnerabilities in Systems – Identify the Attack Vectors of a USB Drive](#lab-12-vulnerabilities-in-systems--identify-the-attack-vectors-of-a-usb-drive)
+- [Lab 13: Incident Investigation and Response](#lab-13-incident-investigation-and-response)
+- [Lab 14: Network Monitoring and Analysis](#lab-14-network-monitoring-and-analysis)
+- [Lab 15: Network Traffic and Logs using IDS and SIEM Tools](#lab-15-network-traffic-and-logs-using-ids-and-siem-tools)
+- [Lab 16: Automate Cybersecurity Tasks with Python](#lab-16-automate-cybersecurity-tasks-with-python)
+- [Lab 17: Put It to Work – Prepare for Cybersecurity Jobs](#lab-17-put-it-to-work--prepare-for-cybersecurity-jobs)
+
+
+
+
+
 
 
 
@@ -18,18 +66,18 @@
 
 
 
-# Lab Module 2: Internal IT Audit Documentation – Botium Toys
+# Lab 1: Internal IT Audit Documentation – Botium Toys 
 
 **Framework aligned:** NIST Cybersecurity Framework (CSF)  
 **Skills:** Risk Scoring | Gap Analysis | Compliance Mapping | Control Assessment  
 
----
+<br><br>
 
 ## Objective
 
 Conduct an internal IT audit for Botium Toys to evaluate security posture, identify risks, assess controls, check compliance with regulatory standards, and provide actionable recommendations.
 
----
+<br><br>
 
 ## 1. Scope & Goals
 
@@ -38,7 +86,7 @@ Conduct an internal IT audit for Botium Toys to evaluate security posture, ident
 | **Scope** | Entire security program; all assets, systems, internal processes, controls; compliance with regulatory standards |
 | **Goals** | Assess assets & controls → Identify gaps → Recommend fixes → Align with NIST CSF |
 
----
+<br><br>
 
 ## 2. Risk Assessment
 
@@ -63,7 +111,7 @@ Conduct an internal IT audit for Botium Toys to evaluate security posture, ident
 
 **Risk Score:** 8/10 (High) – High risk of data loss or regulatory penalties without corrective action.
 
----
+<br><br>
 
 ## 3. Control Categories
 
@@ -75,47 +123,47 @@ Conduct an internal IT audit for Botium Toys to evaluate security posture, ident
 
 **Control Types:** Preventative | Detective | Corrective | Deterrent
 
----
+<br><br>
 
 ## 4. Controls Assessment Checklist
 
 | Status | Control | Explanation |
 |--------|---------|-------------|
-| ❌ Missing | Least Privilege | All employees have excessive access |
-| ❌ Missing | Disaster Recovery Plans | No continuity plan |
-| ❌ Missing | Strong Password Policies | Minimal requirements |
-| ❌ Missing | Separation of Duties | CEO overlaps critical roles |
-| ✅ Implemented | Firewall | Rules actively enforced |
-| ❌ Missing | Intrusion Detection System (IDS) | Not deployed |
-| ❌ Missing | Backups | Critical data not backed up |
-| ✅ Implemented | Antivirus | Installed & monitored |
-| ⚠️ Partial | Manual Monitoring & Legacy Maintenance | Exists but unscheduled |
-| ❌ Missing | Encryption | No encryption for sensitive data |
-| ❌ Missing | Password Management System | Not used |
-| ✅ Implemented | Physical Locks | Offices, storefront, warehouse |
-| ✅ Implemented | CCTV | Installed & working |
-| ✅ Implemented | Fire Detection/Prevention | Alarms & sprinklers functional |
+| Missing | Least Privilege | All employees have excessive access |
+| Missing | Disaster Recovery Plans | No continuity plan |
+| Missing | Strong Password Policies | Minimal requirements |
+| Missing | Separation of Duties | CEO overlaps critical roles |
+| Implemented | Firewall | Rules actively enforced |
+| Missing | Intrusion Detection System (IDS) | Not deployed |
+| Missing | Backups | Critical data not backed up |
+| Implemented | Antivirus | Installed & monitored |
+| Partial | Manual Monitoring & Legacy Maintenance | Exists but unscheduled |
+| Missing | Encryption | No encryption for sensitive data |
+| Missing | Password Management System | Not used |
+| Implemented | Physical Locks | Offices, storefront, warehouse |
+| Implemented | CCTV | Installed & working |
+| Implemented | Fire Detection/Prevention | Alarms & sprinklers functional |
 
----
+<br><br>
 
 ## 5. Compliance Checklist
 
 | Standard | Status | Requirement | Gap |
 |----------|--------|-------------|-----|
-| PCI DSS | ❌ Fail | Restrict cardholder data access | All employees have access |
-| PCI DSS | ❌ Fail | Secure data processing & transmission | No encryption |
-| PCI DSS | ❌ Fail | Encrypt transactions | Not implemented |
-| PCI DSS | ❌ Fail | Secure password management | Weak policies + no mgmt system |
-| GDPR | ✅ Pass | 72‑hour breach notification | Plan exists |
-| GDPR | ❌ Fail | EU customer data privacy | No encryption |
-| GDPR | ❌ Fail | Data classification & inventory | Assets listed but unclassified |
-| GDPR | ✅ Pass | Privacy policies enforced | Enforced among staff |
-| SOC 1/2 | ❌ Fail | User access policies | No least privilege or separation of duties |
-| SOC 1/2 | ❌ Fail | Data confidentiality | No encryption |
-| SOC 1/2 | ✅ Pass | Data integrity | Measures in place |
-| SOC 1/2 | ❌ Fail | Authorized access only | Unrestricted internal access |
+| PCI DSS | Fail | Restrict cardholder data access | All employees have access |
+| PCI DSS | Fail | Secure data processing & transmission | No encryption |
+| PCI DSS | Fail | Encrypt transactions | Not implemented |
+| PCI DSS | Fail | Secure password management | Weak policies + no mgmt system |
+| GDPR | Pass | 72‑hour breach notification | Plan exists |
+| GDPR | Fail | EU customer data privacy | No encryption |
+| GDPR | Fail | Data classification & inventory | Assets listed but unclassified |
+| GDPR | Pass | Privacy policies enforced | Enforced among staff |
+| SOC 1/2 | Fail | User access policies | No least privilege or separation of duties |
+| SOC 1/2 | Fail | Data confidentiality | No encryption |
+| SOC 1/2 | Pass | Data integrity | Measures in place |
+| SOC 1/2 | Fail | Authorized access only | Unrestricted internal access |
 
----
+<br><br>
 
 ## 6. Recommendations (Prioritized)
 
@@ -133,9 +181,9 @@ Conduct an internal IT audit for Botium Toys to evaluate security posture, ident
 - Maintain physical controls (locks, CCTV, fire safety)
 - Classify assets and enforce GDPR/PCI/SOC access rules
 
-> ✅ Addressing these gaps will reduce risk, protect sensitive data, and improve security posture.
+> Addressing these gaps will reduce risk, protect sensitive data, and improve security posture.
 
----
+<br><br>
 
 ## 7. Reflection
 
@@ -147,7 +195,7 @@ This audit reinforced a **holistic cybersecurity approach** (administrative + te
 
 **Demonstrates:** Cybersecurity principles, analytical thinking, and business continuity planning.
 
----
+<br><br>
 
 ## 8. Appendix: Key Terminology
 
@@ -178,19 +226,19 @@ This audit reinforced a **holistic cybersecurity approach** (administrative + te
 
 
 
-# Lab Module 3: Analyze Network Layer Communication
+# Lab 2: Analyze Network Layer Communication 
 
 **Tools Used:** tcpdump  
 **Protocols Analyzed:** DNS, ICMP  
 **Skills:** Packet Analysis | Protocol Identification | Root Cause Analysis | Incident Investigation  
 
----
+<br><br>
 
 ## Objective
 
 Analyze network traffic using `tcpdump` to identify why users receive a **“destination port unreachable”** error when accessing a website, and determine the root cause of the DNS communication failure.
 
----
+<br><br>
 
 ## 1. Scenario Overview
 
@@ -198,14 +246,14 @@ Users reported inability to access **yummyrecipesforme.com**, receiving the erro
 
 As a cybersecurity analyst, I used `tcpdump` to capture and analyze network traffic while attempting to access the website, focusing on DNS and ICMP communication patterns.
 
----
+<br><br>
 
 ## 2. Captured Traffic Summary
 
 > **Note:** The following is a summarized representation of the captured `tcpdump` logs:
 
 | Timestamp | Source | Destination | Protocol | Message Type |
-|-----------|--------|-------------|----------|---------------|
+|-----------|--------|-------------|----------|--------------|
 | 13:24:32.192571 | 192.51.100.15:35084 | 203.0.113.2:53 | DNS (UDP) | A? yummyrecipesforme.com |
 | 13:24:32.193400 | 203.0.113.2 | 192.51.100.15 | ICMP | UDP port 53 unreachable |
 | 13:24:32.194100 | 192.51.100.15:35084 | 203.0.113.2:53 | DNS (UDP) | A? yummyrecipesforme.com (retry) |
@@ -213,7 +261,7 @@ As a cybersecurity analyst, I used `tcpdump` to capture and analyze network traf
 
 **Pattern observed:** Each DNS query received an ICMP error instead of a valid DNS response.
 
----
+<br><br>
 
 ## 3. Traffic Analysis Findings
 
@@ -235,7 +283,7 @@ As a cybersecurity analyst, I used `tcpdump` to capture and analyze network traf
 - The DNS server is **responding with ICMP errors** instead of DNS replies
 - This indicates the DNS service is **not reachable or not functioning properly**
 
----
+<br><br>
 
 ## 4. Incident Timeline
 
@@ -247,7 +295,7 @@ As a cybersecurity analyst, I used `tcpdump` to capture and analyze network traf
 | Repeated failures confirmed | 13:24:32.194 |
 | Root cause identified | Post‑analysis |
 
----
+<br><br>
 
 ## 5. Investigation Process
 
@@ -258,7 +306,7 @@ As a cybersecurity analyst, I used `tcpdump` to capture and analyze network traf
 5. Verified repeated failure pattern
 6. Concluded DNS service unavailability
 
----
+<br><br>
 
 ## 6. Root Cause Analysis
 
@@ -270,13 +318,13 @@ As a cybersecurity analyst, I used `tcpdump` to capture and analyze network traf
 ### Less Likely but Possible:
 - **Denial of Service (DoS) attack** overwhelming the DNS server
 
----
+<br><br>
 
 ## 7. Conclusion
 
 The issue is caused by a **failure in DNS communication**. The client cannot retrieve the IP address of `yummyrecipesforme.com` because **UDP port 53 on the DNS server is unreachable**. This prevents domain resolution, resulting in users being unable to access the website.
 
----
+<br><br>
 
 ## 8. Recommended Next Steps
 
@@ -287,7 +335,7 @@ The issue is caused by a **failure in DNS communication**. The client cannot ret
 | Short‑term | Restart or reconfigure DNS service |
 | Ongoing | Monitor for unusual traffic patterns (potential DoS) |
 
----
+<br><br>
 
 ## 9. Skills Demonstrated
 
@@ -297,7 +345,7 @@ The issue is caused by a **failure in DNS communication**. The client cannot ret
 - Root cause analysis in cybersecurity incidents
 - Technical documentation for troubleshooting
 
----
+<br><br>
 
 ## 10. Reflection
 
@@ -309,7 +357,7 @@ This lab reinforced practical network troubleshooting skills. Key takeaways:
 
 **Demonstrates:** Network analysis, protocol behavior understanding, and systematic incident investigation.
 
----
+<br><br>
 
 ## 11. Appendix: Key Terminology
 
@@ -345,25 +393,25 @@ This lab reinforced practical network troubleshooting skills. Key takeaways:
 
 
 
-# Module 4: Network Attack Analysis (Wireshark – SYN Flood)
+# Lab 3: Network Attack Analysis (Wireshark – SYN Flood)
 
 **Tools Used:** Wireshark  
 **Attack Type Analyzed:** SYN Flood (Denial of Service)  
 **Skills:** Packet Analysis | Attack Pattern Recognition | TCP Handshake | Incident Response | Mitigation Strategies  
 
----
+<br><br>
 
 ## Objective
 
 Analyze a cybersecurity incident involving a travel agency's website that experienced connection timeouts. Using Wireshark logs, identify the type of network attack, examine its impact, and explain how it disrupted the web server's functionality.
 
----
+<br><br>
 
 ## 1. Scenario Overview
 
 A travel agency's website experienced connection timeouts, preventing employees and customers from accessing its sales pages. Automated alerts indicated a problem with the web server. A packet sniffer captured network traffic revealing a large number of TCP SYN requests from an unfamiliar IP address, overwhelming the web server.
 
----
+<br><br>
 
 ## 2. Wireshark Log Analysis (TCP/HTTP)
 
@@ -383,7 +431,7 @@ A travel agency's website experienced connection timeouts, preventing employees 
 
 **Status Legend:** 🟢 Normal | 🔴 Attack Traffic | 🟡 Error/Timeout
 
----
+<br><br>
 
 ## 3. Normal vs. Attack Traffic Analysis
 
@@ -412,7 +460,7 @@ The Wireshark log reveals several abnormal patterns:
 | Resource exhaustion | Legitimate traffic (e.g., `198.51.100.14`) initially processed but later fails |
 | Timeout errors | HTTP `504 Gateway Time-out` appears after attack intensifies |
 
----
+<br><br>
 
 ## 4. Attack Identification
 
@@ -429,16 +477,19 @@ The Wireshark log reveals several abnormal patterns:
 | Resource exhaustion | Server becomes unable to respond to legitimate SYN requests |
 | Timeout errors | Employees receive `504 Gateway Time-out` instead of web content |
 
----
+<br><br>
 
 ## 5. Attack Mechanism Explained
 
 ### How SYN Flood Works:
-Step 1: Attacker sends massive volume of SYN packets (spoofed or real)
-Step 2: Server responds with SYN-ACK and reserves resources for each connection
-Step 3: Attacker never sends final ACK, leaving connections "half-open"
-Step 4: Server's connection queue fills up
-Step 5: Legitimate SYN requests are dropped or timeout
+
+| Step | Action |
+|------|--------|
+| Step 1: | Attacker sends massive volume of SYN packets (spoofed or real) |
+| Step 2: | Server responds with SYN-ACK and reserves resources for each connection |
+| Step 3: | Attacker never sends final ACK, leaving connections "half-open" |
+| Step 4: | Server's connection queue fills up |
+| Step 5: | Legitimate SYN requests are dropped or timeout |
 
 ### Impact on the Travel Agency Website:
 
@@ -449,7 +500,7 @@ Step 5: Legitimate SYN requests are dropped or timeout
 | Resource exhaustion | Web server CPU/memory consumed by half-open connections |
 | Business disruption | No online vacation package sales during attack |
 
----
+<br><br>
 
 ## 6. Incident Timeline
 
@@ -462,7 +513,7 @@ Step 5: Legitimate SYN requests are dropped or timeout
 | T+15 min | Attack confirmed as DoS (SYN Flood) |
 | Post-incident | Mitigation strategies recommended |
 
----
+<br><br>
 
 ## 7. Consequences of the Attack
 
@@ -474,7 +525,7 @@ Step 5: Legitimate SYN requests are dropped or timeout
 | **Reputational** | Customers may lose trust in travel agency |
 | **Technical** | Web server resources exhausted |
 
----
+<br><br>
 
 ## 8. Mitigation Strategies
 
@@ -496,7 +547,7 @@ Step 5: Legitimate SYN requests are dropped or timeout
 | **DDoS protection** | Deploy cloud-based DDoS mitigation service |
 | **Monitoring** | Set alerts for sudden SYN traffic spikes |
 
----
+<br><br>
 
 ## 9. Comparison: Normal vs. Attack Traffic
 
@@ -508,7 +559,7 @@ Step 5: Legitimate SYN requests are dropped or timeout
 | Server response | 200 OK | 504 Timeout |
 | Connection queue | Manageable | Exhausted |
 
----
+<br><br>
 
 ## 10. Skills Demonstrated
 
@@ -519,7 +570,7 @@ Step 5: Legitimate SYN requests are dropped or timeout
 - Mitigation strategy development
 - Technical documentation for security incidents
 
----
+<br><br>
 
 ## 11. Reflection
 
@@ -532,7 +583,7 @@ This lab provided hands-on experience analyzing a real-world DoS attack scenario
 
 **Demonstrates:** Network security analysis, attack identification, and defensive strategy formulation.
 
----
+<br><br>
 
 ## 12. Appendix: Key Terminology
 
@@ -575,14 +626,14 @@ This lab provided hands-on experience analyzing a real-world DoS attack scenario
 
 
 
-# Module 5: Apply OS Hardening Technique – Web Server Attack Investigation
+# Lab 4: Apply OS Hardening Technique – Web Server Attack Investigation
 
 **Tools Used:** tcpdump  
 **Attack Type Analyzed:** Brute Force Attack (Admin Account Compromise)  
 **Protocols Analyzed:** HTTP, DNS  
 **Skills:** Protocol Analysis | Incident Documentation | Root Cause Analysis | OS Hardening | 2FA Implementation  
 
----
+<br><br>
 
 ## Objective
 
@@ -592,13 +643,13 @@ Investigate a security incident for **yummyrecipesforme.com** where visitors wer
 2. Document the incident in detail with evidence
 3. Recommend security measures to prevent future attacks
 
----
+<br><br>
 
 ## 1. Scenario Overview
 
 A former employee executed a **brute force attack** to gain administrative access to `yummyrecipesforme.com`, then modified the website to distribute malware. Visitors were prompted to download an executable file (disguised as a free recipe offer), which caused system slowdowns and redirected browsers to **greatrecipesforme.com** (a malicious website).
 
----
+<br><br>
 
 ## 2. Network Protocol Identification
 
@@ -631,7 +682,7 @@ A former employee executed a **brute force attack** to gain administrative acces
 | 4 | After execution, DNS query for `greatrecipesforme.com` | Malware triggers redirection |
 | 5 | HTTP connection to malicious site | User redirected to attacker-controlled server |
 
----
+<br><br>
 
 ## 3. Incident Documentation
 
@@ -670,7 +721,7 @@ A former employee executed a **brute force attack** to gain administrative acces
 - Customer reports
 - Hosting provider feedback
 
----
+<br><br>
 
 ## 4. Attack Timeline
 
@@ -683,7 +734,7 @@ A former employee executed a **brute force attack** to gain administrative acces
 | Post-execution | Browsers redirected to `greatrecipesforme.com` |
 | Detection | Website owner locked out; customers report issues |
 
----
+<br><br>
 
 ## 5. Root Cause Analysis
 
@@ -701,7 +752,7 @@ A former employee executed a **brute force attack** to gain administrative acces
 - No administrative access monitoring
 - Missing web application firewall (WAF)
 
----
+<br><br>
 
 ## 6. Recommended Security Measures
 
@@ -723,19 +774,19 @@ A former employee executed a **brute force attack** to gain administrative acces
 | Medium | Implement account monitoring and alerting | Detect unauthorized access |
 | Low | Deploy Web Application Firewall (WAF) | Block malicious requests |
 
----
+<br><br>
 
 ## 7. Prevention Checklist
 
 | Control | Status (Post-Implementation) | Description |
 |---------|------------------------------|-------------|
-| 2FA Enabled | ✅ Recommended | Admin accounts require OTP |
-| Strong Password Policy | ✅ Recommended | Minimum length, complexity requirements |
-| Login Attempt Limits | ✅ Recommended | 5 failed attempts = 15-min lockout |
-| Account Monitoring | ✅ Recommended | Alerts for unusual admin logins |
-| WAF | ⚠️ Optional | Additional defense layer |
+| 2FA Enabled | Recommended | Admin accounts require OTP |
+| Strong Password Policy | Recommended | Minimum length, complexity requirements |
+| Login Attempt Limits | Recommended | 5 failed attempts = 15-min lockout |
+| Account Monitoring | Recommended | Alerts for unusual admin logins |
+| WAF | Optional | Additional defense layer |
 
----
+<br><br>
 
 ## 8. Skills Demonstrated
 
@@ -746,7 +797,7 @@ A former employee executed a **brute force attack** to gain administrative acces
 - Understanding of brute force attack vectors
 - OS hardening principles for web servers
 
----
+<br><br>
 
 ## 9. Reflection
 
@@ -759,7 +810,7 @@ This lab reinforced the critical relationship between **network analysis**, **in
 
 **Demonstrates:** Protocol analysis, incident documentation, root cause identification, and practical security hardening recommendations.
 
----
+<br><br>
 
 ## 10. Appendix: Key Terminology
 
@@ -796,16 +847,14 @@ This lab reinforced the critical relationship between **network analysis**, **in
 
 
 
----
 
-# Module 6: Incident Report Analysis – NIST Cybersecurity Framework (CSF) Application
+# Lab 5: Incident Report Analysis – NIST Cybersecurity Framework (CSF) Application
 
 **Framework Applied:** NIST Cybersecurity Framework (CSF) – Identify, Protect, Detect, Respond, Recover  
 **Attack Type Analyzed:** DDoS (ICMP Flood)  
-**Date:** [YYYY-MM-DD]  
 **Skills:** Incident Analysis | NIST CSF Application | Response Planning | Recovery Strategy | Monitoring Implementation  
 
----
+<br><br>
 
 ## Objective
 
@@ -818,13 +867,13 @@ Analyze a network security incident using the **NIST Cybersecurity Framework (CS
 5. Develop a response plan for future incidents
 6. Outline recovery strategies to restore systems and services
 
----
+<br><br>
 
 ## 1. Scenario Overview
 
 A multimedia company experienced a **Distributed Denial of Service (DDoS) attack** caused by an incoming flood of ICMP packets. The attack disrupted internal network services for **two hours**, preventing normal operations. The cybersecurity team responded to contain the incident, restored critical services, and analyzed the vulnerability that enabled the attack.
 
----
+<br><br>
 
 ## 2. Incident Summary
 
@@ -836,7 +885,7 @@ A multimedia company experienced a **Distributed Denial of Service (DDoS) attack
 | **Response** | Incoming ICMP traffic blocked; non-critical services stopped; critical services restored |
 | **Duration** | Approximately 2 hours |
 
----
+<br><br>
 
 ## 3. NIST CSF Framework Application
 
@@ -850,7 +899,7 @@ The NIST Cybersecurity Framework consists of **five core functions**. Each funct
 | **Respond** | Take action during/after incident | Isolated systems, restored critical services, analyzed logs |
 | **Recover** | Restore normal operations | Brought services online, enforced firewall rules, conducted review |
 
----
+<br><br>
 
 ## 4. Identify – Attack and Affected Systems
 
@@ -871,7 +920,7 @@ The NIST Cybersecurity Framework consists of **five core functions**. Each funct
 | 3 | Network bandwidth and server resources become exhausted |
 | 4 | Legitimate traffic cannot be processed → denial of service |
 
----
+<br><br>
 
 ## 5. Protect – Security Measures Implemented
 
@@ -883,12 +932,14 @@ The NIST Cybersecurity Framework consists of **five core functions**. Each funct
 | Ongoing | Continuous staff awareness training | Enable security team to recognize unusual traffic patterns |
 
 ### Firewall Rule Example (Conceptual)
-Rule: Rate Limit ICMP
-Condition: Protocol = ICMP AND Direction = Inbound
-Action: Limit to 10 packets/second per source IP
-Log: Yes
+| Field | Value |
+|-------|-------|
+| Rule: | Rate Limit ICMP |
+| Condition: | Protocol = ICMP AND Direction = Inbound |
+| Action: | Limit to 10 packets/second per source IP |
+| Log: | Yes |
 
----
+<br><br>
 
 ## 6. Detect – Monitoring Methods
 
@@ -906,7 +957,7 @@ Log: Yes
 | Source IP diversity | Varied legitimate IPs | Single or spoofed IP range |
 | Network latency | < 50ms | > 500ms or timeout |
 
----
+<br><br>
 
 ## 7. Respond – Response Plan for Future Incidents
 
@@ -926,7 +977,7 @@ Log: Yes
 - [ ] Preserve logs for forensic analysis
 - [ ] Notify stakeholders (internal + external if required)
 
----
+<br><br>
 
 ## 8. Recover – Recovery Plan
 
@@ -946,7 +997,7 @@ Log: Yes
 | Was the response effective? | Refine response procedures |
 | What would we do differently? | Update playbooks and policies |
 
----
+<br><br>
 
 ## 9. Comparison: Before vs. After NIST CSF Implementation
 
@@ -958,7 +1009,7 @@ Log: Yes
 | **Recovery time** | ~2 hours | Target: <30 minutes |
 | **Staff training** | Minimal | Continuous awareness program |
 
----
+<br><br>
 
 ## 10. Tools and Concepts Used
 
@@ -970,7 +1021,7 @@ Log: Yes
 | DDoS Mitigation Strategies | Rate limiting, source IP verification |
 | NIST Cybersecurity Framework | Structured incident management |
 
----
+<br><br>
 
 ## 11. Skills Demonstrated
 
@@ -981,7 +1032,7 @@ Log: Yes
 - Professional documentation and reporting of cybersecurity incidents
 - DDoS attack pattern recognition (ICMP flood)
 
----
+<br><br>
 
 ## 12. Reflection
 
@@ -994,7 +1045,7 @@ This lab reinforced the value of using a **structured framework** like NIST CSF 
 
 **Demonstrates:** Framework-based incident analysis, DDoS mitigation understanding, and comprehensive security program thinking.
 
----
+<br><br>
 
 ## 13. Appendix: Key Terminology
 
@@ -1009,7 +1060,7 @@ This lab reinforced the value of using a **structured framework** like NIST CSF 
 | Rate Limiting | Restricting traffic volume per source |
 | Spoofed IP | Falsified source IP address |
 
----
+<br><br>
 
 ## 14. NIST CSF Quick Reference
 
@@ -1021,7 +1072,7 @@ This lab reinforced the value of using a **structured framework** like NIST CSF 
 | **Respond** | What actions do we take? |
 | **Recover** | How do we restore operations? |
 
----
+
 
 
 
@@ -1042,15 +1093,15 @@ This lab reinforced the value of using a **structured framework** like NIST CSF 
 
 
 
----
 
-# Module 7: Network Hardening Analysis – Security Risk Assessment
+
+# Lab 6: Network Hardening Analysis – Security Risk Assessment
 
 **Focus Area:** Network Hardening | Vulnerability Assessment  
 **Attack Type Analyzed:** Data Breach (Credential Compromise)  
 **Skills:** Vulnerability Identification | Risk Assessment | MFA Implementation | Firewall Hardening | Password Policy Enforcement  
 
----
+<br><br>
 
 ## Objective
 
@@ -1061,7 +1112,7 @@ Assess network vulnerabilities and apply network hardening techniques to secure 
 3. Explain the effectiveness of chosen hardening practices
 4. Document recommendations for network security improvements
 
----
+<br><br>
 
 ## 1. Scenario Overview
 
@@ -1069,7 +1120,7 @@ A social media organization recently experienced a **data breach** that compromi
 
 **Industry Context:** Social media platforms are high-value targets due to large volumes of PII (Personally Identifiable Information).
 
----
+<br><br>
 
 ## 2. Incident Summary
 
@@ -1080,7 +1131,7 @@ A social media organization recently experienced a **data breach** that compromi
 | **Root Cause** | Weak authentication practices and insufficient network controls |
 | **Response** | Vulnerability assessment conducted; hardening recommendations developed |
 
----
+<br><br>
 
 ## 3. Identified Vulnerabilities
 
@@ -1100,9 +1151,9 @@ A social media organization recently experienced a **data breach** that compromi
 | No firewall rules | Unconfigured or misconfigured firewall | DoS, DDoS, unauthorized access |
 | No MFA | Cost/perception barriers; lack of awareness | Phishing; credential theft |
 
-> ⚠️ **If left unaddressed**, these vulnerabilities could lead to repeated data breaches and unauthorized network access.
+> **If left unaddressed**, these vulnerabilities could lead to repeated data breaches and unauthorized network access.
 
----
+<br><br>
 
 ## 4. Recommended Network Hardening Tools and Methods
 
@@ -1116,7 +1167,7 @@ A social media organization recently experienced a **data breach** that compromi
 | **Medium** | Strong password policies | Enforce credential hygiene | Week 2 |
 | **Ongoing** | Employee security training | Reduce password sharing | Monthly |
 
----
+<br><br>
 
 ### 4.1 Multi-Factor Authentication (MFA)
 
@@ -1135,7 +1186,7 @@ A social media organization recently experienced a **data breach** that compromi
 | Possession (something you have) | Smartphone, hardware token, smart card |
 | Inherence (something you are) | Fingerprint, facial recognition, retina scan |
 
----
+<br><br>
 
 ### 4.2 Strong Password Policies
 
@@ -1148,7 +1199,7 @@ A social media organization recently experienced a **data breach** that compromi
 | Account lockout | Lock after 5 failed attempts (15 min) | Prevent brute force |
 | Password sharing | Explicitly prohibited in policy | Reduce insider risk |
 
----
+<br><br>
 
 ### 4.3 Firewall Maintenance
 
@@ -1166,7 +1217,7 @@ A social media organization recently experienced a **data breach** that compromi
 | Outbound Rule | Prevent data exfiltration | Destination = known malicious IP | DENY + ALERT |
 | ICMP Rule (prevents DoS) | Protocol = ICMP AND Packet Rate > 100/sec | RATE LIMIT to 10/sec |
 
----
+<br><br>
 
 ## 5. Effectiveness of Recommendations
 
@@ -1186,7 +1237,7 @@ A social media organization recently experienced a **data breach** that compromi
 | Protects against phishing | Attacker needs more than credentials |
 | Low user friction (modern implementations) | High adoption rate |
 
----
+<br><br>
 
 ## 6. Implementation Roadmap
 
@@ -1197,7 +1248,7 @@ A social media organization recently experienced a **data breach** that compromi
 | **Phase 3: Medium-term** | Weeks 3-4 | Enforce password policies; employee training | Password policy compliance >95% |
 | **Phase 4: Ongoing** | Monthly/Quarterly | Rule reviews; vulnerability scans; refresher training | No high-risk findings |
 
----
+<br><br>
 
 ## 7. Comparison: Before vs. After Hardening
 
@@ -1209,7 +1260,7 @@ A social media organization recently experienced a **data breach** that compromi
 | **Password policy** | None | 12 chars + complexity + rotation |
 | **Breach risk** | High | Low-Medium |
 
----
+<br><br>
 
 ## 8. Skills Demonstrated
 
@@ -1220,7 +1271,7 @@ A social media organization recently experienced a **data breach** that compromi
 - Documentation and explanation of cybersecurity measures
 - Implementation roadmap development
 
----
+<br><br>
 
 ## 9. Tools and Concepts Used
 
@@ -1232,7 +1283,7 @@ A social media organization recently experienced a **data breach** that compromi
 | Network Vulnerability Assessment | Identify security gaps |
 | Security Policy Documentation | Formalize hardening requirements |
 
----
+<br><br>
 
 ## 10. Reflection
 
@@ -1246,7 +1297,7 @@ This lab reinforced the importance of **defense in depth** and **proactive netwo
 
 **Demonstrates:** Risk assessment methodology, security control selection, and practical network hardening implementation.
 
----
+<br><br>
 
 ## 11. Appendix: Key Terminology
 
@@ -1261,7 +1312,7 @@ This lab reinforced the importance of **defense in depth** and **proactive netwo
 | Credential Stuffing | Attack using stolen credentials from one site on another |
 | PII | Personally Identifiable Information (names, addresses, etc.) |
 
----
+<br><br>
 
 ## 12. Additional Recommendations for Future Improvement
 
@@ -1273,7 +1324,7 @@ This lab reinforced the importance of **defense in depth** and **proactive netwo
 | 4 | Establish formal information security policy | High | Document hardening requirements |
 | 5 | Perform periodic penetration testing | Low | Validate security controls |
 
----
+<br><br>
 
 ## 13. NIST CSF Mapping (Optional Reference)
 
@@ -1285,7 +1336,6 @@ This lab reinforced the importance of **defense in depth** and **proactive netwo
 | **Respond** | (Future improvement) Incident response plan |
 | **Recover** | (Future improvement) Recovery procedures |
 
----
 
 
 
@@ -1314,21 +1364,21 @@ This lab reinforced the importance of **defense in depth** and **proactive netwo
 
 
 
----
 
-# Module 8: Databases and SQL – Security Analysis & Data Investigation
+
+# Lab 7: Databases and SQL – Security Analysis & Data Investigation
 
 **Tools Used:** MariaDB SQL  
 **Focus Area:** Database Querying | Data Filtering | Table Joins  
 **Skills:** SELECT Queries | WHERE Filters | AND/OR/NOT Operators | INNER/LEFT/RIGHT JOINs | Security Data Analysis  
 
----
+<br><br>
 
 ## Objective
 
 Learn to query, filter, and join data from a relational database using SQL. This lab provides practical experience in retrieving and analyzing information for security purposes, including investigating login attempts, employee device assignments, and departmental data.
 
----
+<br><br>
 
 ## 1. Scenario Overview
 
@@ -1342,7 +1392,7 @@ As a cybersecurity analyst, I need to:
 - `employees` table – employee details and department assignments
 - `log_in_attempts` table – user login activity records
 
----
+<br><br>
 
 ## 2. Lab Activities Summary
 
@@ -1354,7 +1404,7 @@ As a cybersecurity analyst, I need to:
 | 4 | Multiple conditions | AND, OR, NOT operators |
 | 5 | Combining tables | INNER JOIN, LEFT JOIN, RIGHT JOIN |
 
----
+<br><br>
 
 ## 3. Activity 1: Perform a SQL Query
 
@@ -1410,221 +1460,247 @@ Objective: Apply filters to retrieve specific information about employees, machi
 ### Sample Data
 **`machines` table:**
 
-device_id	operating_system
-101	OS 1
-102	OS 2
-103	OS 2
-104	OS 3
+| device_id	| operating_system | 
+| --------- | ---------------- | 
+| 101 |	OS 1 |
+| 102 |	OS 2 |
+| 103 |	OS 2 |
+| 104 |	OS 3 |
 
 
 **`employees` table:**
 
-employee_id	name	department	office	device_id
-1	Alice	Finance	North-101	101
-2	Bob	Sales	South-109	102
-3	Charlie	Marketing	East-170	103
-4	Diana	IT	West-220	104
+| employee_id | name | department | office | device_id |
+| ----------- | ---- | ---------- | ------ | --------- |
+| 1 | Alice | Finance | North-101 | 101 | 
+| 2 | Bob | Sales | South-109 | 102 |
+| 3 | Charlie | Marketing | East-170 | 103 |
+| 4 | Diana	| IT | West-220 | 104 |
 
 
 ### SQL Queries Executed
-Query	Purpose	SQL Statement
-1	View device columns	SELECT device_id, operating_system FROM machines;
-2	Filter OS 2 devices	SELECT device_id, operating_system FROM machines WHERE operating_system = 'OS 2';
-3	Finance department	SELECT * FROM employees WHERE department = 'Finance';
-4	Sales department	SELECT * FROM employees WHERE department = 'Sales';
-5	Specific office	SELECT * FROM employees WHERE office = 'South-109';
-6	South building (pattern)	SELECT * FROM employees WHERE office LIKE 'South-%';
+| Query | Purpose | SQL Statement |
+|-------|---------|---------------|
+| 1 | View device columns | SELECT device_id, operating_system FROM machines; |
+| 2 | Filter OS 2 devices | SELECT device_id, operating_system FROM machines WHERE operating_system = 'OS 2'; |
+| 3 | Finance department | SELECT * FROM employees WHERE department = 'Finance'; |
+| 4 | Sales department | SELECT * FROM employees WHERE department = 'Sales'; |
+| 5 | Specific office | SELECT * FROM employees WHERE office = 'South-109'; |
+| 6 | South building (pattern) | SELECT * FROM employees WHERE office LIKE 'South-%'; |
 
 
 ### Key Learning: LIKE Pattern Matching
-Pattern	Meaning	Example Match
-'South-%'	Starts with "South-"	South-109, South-205
-'%East%'	Contains "East"	North-East, East-170
-'%109'	Ends with "109"	South-109, North-109
+| Pattern | Meaning | Example Match |
+|---------|---------|---------------|
+| 'South-%' | Starts with "South-" | South-109, South-205 |
+| '%East%' | Contains "East" | North-East, East-170 |
+| '%109' | Ends with "109" | South-109, North-109 |
 
 
 ## 5. Activity 3: Apply More Filters in SQL
 Objective: Filter data by dates, times, and numeric values using operators.
 
-Sample Data: log_in_attempts
-event_id	username	login_date	login_time	success	country
-100	Alice	2022-05-08	08:30:00	1	USA
-101	Bob	2022-05-09	06:45:00	0	CAN
-102	Charlie	2022-05-10	07:15:00	1	MEX
-103	Diana	2022-05-11	06:30:00	0	USA
-104	Bob	2022-05-12	08:00:00	1	USA
+### **Sample Data:** `log_in_attempts`
+| event_id | username | login_date | login_time | success | country |
+|----------|----------|------------|------------|---------|---------|
+| 100 | Alice | 2022-05-08 | 08:30:00 | 1 | USA |
+| 101 | Bob | 2022-05-09 | 06:45:00 | 0 | CAN |
+| 102 | Charlie | 2022-05-10 | 07:15:00 | 1 | MEX |
+| 103 | Diana | 2022-05-11 | 06:30:00 | 0 | USA |
+| 104 | Bob | 2022-05-12 | 08:00:00 | 1 | USA |
 
 
-SQL Queries Executed
-Filter Type	SQL Statement	Result Count
-Date > value	WHERE login_date > '2022-05-09'	3 rows
-Date >= value	WHERE login_date >= '2022-05-09'	4 rows
-Date range	WHERE login_date BETWEEN '2022-05-09' AND '2022-05-11'	3 rows
-Time < value	WHERE login_time < '07:00:00'	2 rows
-Time range	WHERE login_time BETWEEN '06:00:00' AND '07:00:00'	2 rows
-Numeric >=	WHERE event_id >= 100	5 rows
-Numeric range	WHERE event_id BETWEEN 100 AND 150	5 rows
+### SQL Queries Executed
+| Filter Type | SQL Statement | Result Count |
+|-------------|---------------|--------------|
+| Date > value | WHERE login_date > '2022-05-09' | 3 rows |
+| Date >= value | WHERE login_date >= '2022-05-09' | 4 rows |
+| Date range | WHERE login_date BETWEEN '2022-05-09' AND '2022-05-11' | 3 rows |
+| Time < value | WHERE login_time < '07:00:00' | 2 rows |
+| Time range | WHERE login_time BETWEEN '06:00:00' AND '07:00:00' | 2 rows |
+| Numeric >= | WHERE event_id >= 100 | 5 rows |
+| Numeric range | WHERE event_id BETWEEN 100 AND 150 | 5 rows |
 
 
-Key Learning: Comparison Operators
-Operator	Meaning	Use Case
->	Greater than	After a specific date
->=	Greater than or equal	On or after a specific date
-<	Less than	Before a specific time
-<=	Less than or equal	On or before
-BETWEEN	Inclusive range	Date or numeric ranges
+### Key Learning: Comparison Operators
+| Operator | Meaning | Use Case |
+|----------|---------|----------|
+| > | Greater than | After a specific date |
+| >= | Greater than or equal | On or after a date |
+| < | Less than | Before a specific time |
+| <= | Less than or equal | On or before |
+| BETWEEN | Inclusive range | Date or numeric ranges |
 
 
-6. Activity 4: Filter with AND, OR, and NOT
+## 6. Activity 4: Filter with AND, OR, and NOT
 Objective: Apply multiple conditions using logical operators.
 
-Sample Data
-log_in_attempts table:
+### Sample Data
+#### **`log_in_attempts` table:**
 
-event_id	username	login_date	login_time	success	country
-100	Alice	2022-05-08	08:30:00	1	USA
-101	Bob	2022-05-09	19:00:00	0	CAN
-102	Charlie	2022-05-10	17:15:00	1	MEX
-103	Diana	2022-05-11	20:30:00	0	USA
-104	Eve	2022-05-12	16:00:00	1	MEX
+| event_id | username | login_date | login_time | success | country |
+|---------|----------|------------|------------|---------|---------|
+| 100 | Alice | 2022-05-08 | 08:30:00 | 1 | USA |
+| 101 | Bob | 2022-05-09 | 19:00:00 | 0 | CAN |
+| 102 | Charlie | 2022-05-10 | 17:15:00 | 1 | MEX |
+| 103 | Diana | 2022-05-11 | 20:30:00 | 0 | USA |
+| 104 | Eve | 2022-05-12 | 16:00:00 | 1 | MEX |
 
-employees table:
-emp_id	username	department	office
-1	Alice	Finance	East-170
-2	Bob	Sales	South-109
-3	Charlie	Marketing	East-320
-4	Diana	Information Technology	West-205
-5	Eve	Marketing	East-170
+#### **`employees` table:**
 
-
-SQL Queries Executed
-Query	Logical Operator	SQL Statement	Security Relevance
-1	AND	WHERE login_time > '18:00' AND success = 0	Failed after-hours logins
-2	OR	WHERE login_date = '2022-05-08' OR login_date = '2022-05-09'	Suspicious date range
-3	NOT	WHERE NOT country LIKE 'MEX%'	Exclude specific country
-4	AND (dept + office)	WHERE department = 'Marketing' AND office LIKE 'East-%'	Department in specific building
-5	OR (departments)	WHERE department = 'Finance' OR department = 'Sales'	High-value departments
-6	NOT (department)	WHERE NOT department = 'Information Technology'	All except IT
+| emp_id | username | department | office |
+|--------|----------|------------|--------|
+| 1 | Alice | Finance | East-170 |
+| 2 | Bob | Sales | South-109|
+| 3 | Charlie | Marketing | East-320 |
+| 4 | Diana | Information Technology | West-205 |
+| 5 | Eve | Marketing | East-170 |
 
 
-Key Learning: Logical Operator Truth Table
-Condition A	Condition B	A AND B	A OR B	NOT A
-TRUE	TRUE	TRUE	TRUE	FALSE
-TRUE	FALSE	FALSE	TRUE	FALSE
-FALSE	TRUE	FALSE	TRUE	TRUE
-FALSE	FALSE	FALSE	FALSE	TRUE
+### SQL Queries Executed
+| Query | Logical Operator | SQL Statement | Security Relevance |
+|------|------------------|----------------|--------------------|
+| 1 | AND | WHERE login_time > '18:00' AND success = 0 | Failed after-hours logins |
+| 2 | OR | WHERE login_date = '2022-05-08' OR login_date = '2022-05-09' | Suspicious date range |
+| 3 | NOT | WHERE NOT country LIKE 'MEX%' | Exclude specific country |
+| 4 | AND | WHERE department = 'Marketing' AND office LIKE 'East-%' | Dept in specific building |
+| 5 | OR | WHERE department = 'Finance' OR department = 'Sales' | High-value departments |
+| 6 | NOT | WHERE NOT department = 'Information Technology' | All except IT |
 
 
-7. Activity 5: Complete a Join
+### Key Learning: Logical Operator Truth Table
+| Condition A | Condition B | A AND B | A OR B | NOT A |
+|-------------|-------------|---------|--------|-------|
+| TRUE | TRUE | TRUE | TRUE | FALSE |
+| TRUE | FALSE | FALSE | TRUE | FALSE |
+| FALSE | TRUE | FALSE | TRUE | TRUE |
+| FALSE | FALSE | FALSE | FALSE | TRUE |
+
+
+## 7. Activity 5: Complete a Join
 Objective: Use INNER JOIN, LEFT JOIN, and RIGHT JOIN to combine tables.
 
-Sample Data
-employees table:
+### Sample Data
+#### **`employees` table:**
 
-emp_id	username	department	device_id
-1	Alice	Finance	101
-2	Bob	Sales	102
-3	Charlie	Marketing	103
-4	Diana	IT	NULL
-5	Eve	Marketing	104
-machines table:
+| emp_id | username | department | device_id |
+|--------|----------|------------|-----------|
+| 1 | Alice | Finance | 101 |
+| 2 | Bob | Sales | 102 |
+| 3 | Charlie | Marketing | 103 |
+| 4 | Diana | IT | NULL |
+| 5 | Eve | Marketing | 104 |
 
-device_id	device_name	operating_system
-101	Laptop-A	OS 1
-102	Laptop-B	OS 2
-103	Laptop-C	OS 2
-105	Laptop-E	OS 1
-log_in_attempts table:
+#### **`machines` table:**
 
-event_id	username	login_date	login_time	success
-100	Alice	2022-05-08	08:30:00	1
-101	Bob	2022-05-09	19:00:00	0
-102	Charlie	2022-05-10	17:15:00	1
-103	Eve	2022-05-11	20:30:00	0
+| device_id | device_name | operating_system |
+|-----------|-------------|------------------|
+| 101 | Laptop-A | OS 1 |
+| 102 | Laptop-B | OS 2 |
+| 103 | Laptop-C | OS 2 |
+| 105 | Laptop-E | OS 1 |
 
+#### **`log_in_attempts` table:**
 
-Join Results Summary
-Join Type	SQL Statement	Rows Returned	What It Shows
-INNER JOIN	machines INNER JOIN employees ON machines.device_id = employees.device_id	3	Only matched devices & employees
-LEFT JOIN	machines LEFT JOIN employees ON machines.device_id = employees.device_id	4	All machines + matched employees (unassigned machines show NULL)
-RIGHT JOIN	machines RIGHT JOIN employees ON machines.device_id = employees.device_id	5	All employees + matched machines (employees without devices show NULL)
-INNER JOIN (logins)	employees INNER JOIN log_in_attempts ON employees.username = log_in_attempts.username	4	Employees who have login records
+| event_id | username | login_date | login_time | success | 
+| -------- | -------- | ---------- | ---------- | ------- | 
+| 100 | Alice | 2022-05-08 | 08:30:00 |	1 |
+| 101 | Bob | 2022-05-09 | 19:00:00 | 0 |
+| 102 | Charlie | 2022-05-10 | 17:15:00 | 1 |
+| 103 | Eve | 2022-05-11 | 20:30:00 | 0 |
 
 
-Key Learning: JOIN Types Visualized
-Join Type	Result
-INNER JOIN	Only rows with matches in both tables
-LEFT JOIN	All rows from left table + matches from right table (NULL if no match)
-RIGHT JOIN	All rows from right table + matches from left table (NULL if no match)
-text
+### Join Results Summary
+| Join Type | SQL Statement | Rows Returned | What It Shows |
+|-----------|---------------|---------------|---------------|
+| INNER JOIN | machines INNER JOIN employees ON machines.device_id = employees.device_id | 3 | Only matched records |
+| LEFT JOIN | machines LEFT JOIN employees ON machines.device_id = employees.device_id | 4 | All machines + matches |
+| RIGHT JOIN | machines RIGHT JOIN employees ON machines.device_id = employees.device_id | 5 | All employees + matches |
+| INNER JOIN login | employees INNER JOIN log_in_attempts ON employees.username = log_in_attempts.username | 4 | Employees with login records |
 
 
-INNER JOIN:     LEFT JOIN:        RIGHT JOIN:
-┌─────┬─────┐   ┌─────┬─────┐     ┌─────┬─────┐
-│  A  │  B  │   │  A  │  B  │     │  A  │  B  │
-├─────┼─────┤   ├─────┼─────┤     ├─────┼─────┤
-│ ✓   │ ✓   │   │ ✓   │ ✓   │     │ ✓   │ ✓   │
-│ ✓   │ ✓   │   │ ✓   │ ✓   │     │ ✓   │ ✓   │
-└─────┴─────┘   │ ✓   │NULL │     │NULL │ ✓   │
-                └─────┴─────┘     └─────┴─────┘
+### Key Learning: JOIN Types Visualized
+| Join Type  | Result |
+|------------|--------|
+| INNER JOIN | Only rows with matches in both tables |
+| LEFT JOIN | All left + matched right (NULL if no match) |
+| RIGHT JOIN | All right + matched left (NULL if no match) |
+
+#### INNER JOIN: 
+| A | B | 
+| ✓ | ✓ |
+| ✓ | ✓ |
+
+#### LEFT JOIN: 
+| A | B | 
+| ✓ | ✓ |
+| ✓ | ✓ |
+| ✓ | NULL |
+
+#### RIGHT JOIN:
+| A | B | 
+| ✓ | ✓ |
+| ✓ | ✓ |
+| NULL | ✓ |
 
 
-8. Security Applications of SQL
-Security Task	SQL Technique	Example Use Case
-Incident investigation	WHERE filters	Find failed logins after hours
-User behavior analysis	ORDER BY + date/time	Identify unusual login patterns
-Asset management	JOIN tables	Match employees to devices
-Compliance reporting	SELECT + filters	Generate access audit reports
-Anomaly detection	BETWEEN + time ranges	Flag logins outside business hours
-Department isolation	AND/OR conditions	Focus on sensitive departments
 
 
-9. Skills Demonstrated
-Skill	Application in Lab
-SELECT queries	Retrieved specific columns from employee, machine, and login tables
-WHERE filters	Narrowed results based on conditions (department, OS, date, time)
-Comparison operators	Used >, <, >=, <=, BETWEEN for numeric and date filtering
-Logical operators	Combined conditions with AND, OR, NOT
-Pattern matching	Used LIKE with wildcards (%) for office building queries
-Sorting	Used ORDER BY for chronological analysis
-Table joins	Performed INNER, LEFT, and RIGHT JOINs to combine related data
-Security data analysis	Applied SQL to investigate login anomalies and asset assignments
+## 8. Security Applications of SQL
+| Security Task | SQL Technique | Example Use Case |
+|---------------|---------------|------------------|
+| Incident investigation | WHERE filters | Find failed logins after hours |
+| User behavior analysis | ORDER BY | Identify unusual login patterns |
+| Asset management | JOIN | Match employees to devices |
+| Compliance reporting | SELECT + filters | Generate audit reports |
+| Anomaly detection | BETWEEN | Detect off-hours logins |
+| Department isolation | AND / OR | Focus on sensitive departments |
 
 
-10. Reflection
+## 9. Skills Demonstrated
+| Skill | Application in Lab |
+|-------|--------------------|
+| SELECT queries | Retrieved specific columns |
+| WHERE filters | Filtered based on conditions |
+| Comparison operators | Used >, <, >=, <=, BETWEEN |
+| Logical operators | Used AND, OR, NOT |
+| Pattern matching | Used LIKE with % |
+| Sorting | Used ORDER BY |
+| Table joins | INNER, LEFT, RIGHT JOIN |
+| Security data analysis | Investigated login anomalies |
+
+
+## 10. Reflection
 This lab provided hands-on experience with SQL for security analysis purposes. Key takeaways:
 
-SELECT statements form the foundation of data retrieval – knowing which columns to query saves time and reduces noise
-
-WHERE filters are essential for narrowing down security investigations (e.g., failed logins, specific time ranges)
-
-Logical operators (AND, OR, NOT) enable complex investigations that combine multiple conditions
-
-JOINs are critical for understanding relationships between entities (employees → devices → login attempts)
-
-ORDER BY helps identify patterns chronologically, which is crucial for incident timelines
+- SELECT statements form the foundation of data retrieval – knowing which columns to query saves time and reduces noise
+- WHERE filters are essential for narrowing down security investigations (e.g., failed logins, specific time ranges)
+- Logical operators (AND, OR, NOT) enable complex investigations that combine multiple conditions
+- JOINs are critical for understanding relationships between entities (employees → devices → login attempts)
+- ORDER BY helps identify patterns chronologically, which is crucial for incident timelines
 
 Demonstrates: Practical SQL proficiency for security monitoring, incident investigation, and asset management.
 
-11. Appendix: Key Terminology
-Term	Meaning
-SELECT	SQL statement to retrieve data from a database
-FROM	Specifies which table to query
-WHERE	Filters rows based on conditions
-ORDER BY	Sorts results by specified columns
-LIKE	Pattern matching with wildcards (%)
-BETWEEN	Filters within an inclusive range
-AND	Requires both conditions to be true
-OR	Requires at least one condition to be true
-NOT	Excludes rows matching the condition
-INNER JOIN	Returns only matching rows from both tables
-LEFT JOIN	Returns all rows from left table + matches from right
-RIGHT JOIN	Returns all rows from right table + matches from left
-Wildcard (%)	Matches any character(s) in LIKE patterns
+## 11. Appendix: Key Terminology
+	
+| Term | Meaning |
+|------|---------|
+| SELECT | SQL statement to retrieve data from a database |
+| FROM | Specifies which table to query |
+| WHERE | Filters rows based on conditions |
+| ORDER BY | Sorts results by specified columns |
+| LIKE | Pattern matching with wildcards (%) |
+| BETWEEN | Filters within an inclusive range |
+| AND | Requires both conditions to be true |
+| OR | Requires at least one condition to be true |
+| NOT | Excludes rows matching the condition |
+| INNER JOIN | Returns only matching rows from both tables |
+| LEFT JOIN | Returns all rows from left table + matches from right |
+| RIGHT JOIN | Returns all rows from right table + matches from left |
+| Wildcard (%) | Matches any character(s) in LIKE patterns |
 
-
-12. SQL Quick Reference Card
-sql
+## 12. SQL Quick Reference Card
+```sql
 -- Basic query
 SELECT column1, column2 FROM table_name;
 
@@ -1648,7 +1724,7 @@ SELECT * FROM table1 INNER JOIN table2 ON table1.key = table2.key;
 
 -- Left join
 SELECT * FROM table1 LEFT JOIN table2 ON table1.key = table2.key;
-
+```
 
 
 
@@ -1673,19 +1749,19 @@ SELECT * FROM table1 LEFT JOIN table2 ON table1.key = table2.key;
 
 
 
-# Module 9: Linux Commands in the Bash Shell
+# Lab 8: Linux Commands in the Bash Shell
 
 **Tools Used:** Bash Shell | Linux Command Line  
 **Focus Area:** System Navigation | File Management | User Administration | Permissions | Log Analysis   
 **Skills:** pwd, ls, cd, cat, head, grep, mkdir, mv, rm, touch, nano, chmod, useradd, usermod, userdel, groupdel, man, whatis, apropos  
 
----
+<br><br>
 
 ## Objective
 
 Develop foundational Linux Bash skills for security analysis, including navigating directories, managing files, filtering data, controlling permissions, administering users, and accessing command-line help.
 
----
+<br><br>
 
 ## 1. Scenario Overview
 
@@ -1697,7 +1773,7 @@ As a cybersecurity analyst working in a Linux environment, I need to:
 - Add and remove users and groups
 - Find help for unfamiliar commands
 
----
+<br><br>
 
 ## 2. Lab Activities Summary
 
@@ -1710,7 +1786,7 @@ As a cybersecurity analyst working in a Linux environment, I need to:
 | 5 | User management | useradd, usermod, chown, userdel | Controlling system access and ownership |
 | 6 | Getting help | man, whatis, apropos | Discovering commands and options |
 
----
+<br><br>
 
 ## 3. Activity 1: Find Files with Linux Commands
 
@@ -1727,7 +1803,6 @@ As a cybersecurity analyst working in a Linux environment, I need to:
 | `head -n [number] [file]` | Show first N lines | `head -n 10 server_logs.txt` |
 
 ### Commands Executed
-
 ```bash
 # Navigate to reports directory and examine users
 cd /home/analyst/reports
@@ -1739,24 +1814,28 @@ cat Q1_added_users.txt
 cd /home/analyst/logs
 ls
 head -n 10 server_logs.txt
+```
 
-Security Application
-Task	Command	Purpose
-Locate log files	cd /var/log	Access system logs
-Preview large logs	head -n 50 auth.log	Check recent authentication attempts
-Read configuration	cat /etc/passwd	View user accounts
+### Security Application
+| Task	| Command | Purpose |
+|-------|---------|---------|
+| Locate log files | cd /var/log | Access system logs |
+| Preview large logs | head -n 50 auth.log | Check recent authentication attempts |
+| Read configuration | cat /etc/passwd | View user accounts |
+
+<br><br>
+
+## 4. Activity 2: Filter with grep
+**Objective:** Use grep and piping to search for specific information.
+
+### Command Reference
+| Command | Purpose | Example | 
+|---------|---------|---------|
+| grep "pattern" [file] | Search for pattern in file | grep "error" server_logs.txt |
+| command \| grep "pattern" | Pipe output to grep | ls \| grep "Q1" |
 
 
-4. Activity 2: Filter with grep
-Objective: Use grep and piping to search for specific information.
-
-Command Reference
-Command	Purpose	Example
-grep "pattern" [file]	Search for pattern in file	grep "error" server_logs.txt
-command | grep "pattern"	Pipe output to grep	ls | grep "Q1"
-
-
-Commands Executed
+### Commands Executed
 ```bash
 # Search for errors in logs
 cd /home/analyst/logs
@@ -1773,38 +1852,42 @@ grep "Human Resource" Q4_added_users.txt
 ```
 
 
-Security Application
-Task	Command	Purpose
-Find failed logins	grep "Failed password" /var/log/auth.log	Investigate brute force attempts
-Search by IP	grep "192.168.1.100" access.log	Track specific attacker
-Exclude patterns	grep -v "success" login.log	Find only failures
-Count matches	grep -c "error" server_logs.txt	Quantify issues
+### Security Application
+| Task | Command | Purpose | 
+|------|---------|---------|
+| Find failed logins | grep "Failed password" /var/log/auth.log | Investigate brute force attempts |
+| Search by IP | grep "192.168.1.100" access.log | Track specific attacker |
+| Exclude patterns | grep -v "success" login.log | Find only failures |
+| Count matches | grep -c "error" server_logs.txt | Quantify issues |
 
 
-grep Options Reference
-Option	Meaning	Use Case
--i	Case insensitive	Search without case sensitivity
--v	Invert match	Exclude matching lines
--c	Count	Count occurrences
--n	Show line numbers	Locate exact position
--r	Recursive	Search directories
+### grep Options Reference
+| Option | Meaning | Use Case |
+|--------|---------|----------|
+| -i | Case insensitive | Search without case sensitivity |
+| -v | Invert match | Exclude matching lines |
+| -c | Count | Count occurrences |
+| -n | Show line numbers | Locate exact position |
+| -r | Recursive | Search directories |
+
+<br><br>
+
+## 5. Activity 3: Manage Files with Linux Commands
+**Objective:** Create, move, remove files and directories, and edit files using nano.
+
+### Command Reference
+| Command | Purpose | Example |
+|---------|---------|---------|
+| `mkdir [dir]` | Create directory | `mkdir /home/analyst/logs` |
+| `rm [file]` | Remove file | `rm tempnotes.txt` |
+| `rm -r [dir]` | Remove directory recursively | `rm -r /home/analyst/temp` |
+| `mv [source] [dest]` | Move/rename file | `mv Q3patches.txt /home/analyst/reports` |
+| `touch [file]` | Create empty file | `touch tasks.txt` |
+| `nano [file]` | Edit file | `nano tasks.txt` |
+| `clear` | Clear terminal screen | `clear` |
 
 
-5. Activity 3: Manage Files with Linux Commands
-Objective: Create, move, remove files and directories, and edit files using nano.
-
-Command Reference
-Command	Purpose	Example
-mkdir [dir]	Create directory	mkdir /home/analyst/logs
-rm [file]	Remove file	rm tempnotes.txt
-rm -r [dir]	Remove directory recursively	rm -r /home/analyst/temp
-mv [source] [dest]	Move/rename file	mv Q3patches.txt /home/analyst/reports
-touch [file]	Create empty file	touch tasks.txt
-nano [file]	Edit file	nano tasks.txt
-clear	Clear terminal screen	clear
-
-
-Commands Executed
+### Commands Executed
 ```bash
 # Create and remove directories
 mkdir /home/analyst/logs
@@ -1821,18 +1904,20 @@ cat /home/analyst/notes/tasks.txt
 ```
 
 
-Security Application
-Task	Command	Purpose
-Create evidence directory	mkdir incident_2024	Organize investigation files
-Move suspicious file	mv suspect_file /quarantine/	Isolate potential malware
-Remove sensitive temp files	rm -r /tmp/sensitive_data	Secure data cleanup
-Create case notes	touch case_notes.txt && nano case_notes.txt	Document findings
+### Security Application
+| Task | Command | Purpose |
+|------|---------|---------|
+| Create evidence directory | `mkdir incident_2024` | Organize investigation files |
+| Move suspicious file | `mv suspect_file /quarantine/` | Isolate potential malware |
+| Remove sensitive temp files | `rm -r /tmp/sensitive_data` | Secure data cleanup |
+| Create case notes | `touch case_notes.txt && nano case_notes.txt` | Document findings |
 
+<br><br>
 
-6. Activity 4: Manage Authorization
-Objective: Examine and modify file and directory permissions.
+## 6. Activity 4: Manage Authorization
+**Objective:** Examine and modify file and directory permissions.
 
-Permission Structure
+### Permission Structure
 -rw-r--r-- 1 owner group size date filename
 │││││││││
 │││└─┴─┴─┴─ Other permissions (read/write/execute)
@@ -1841,27 +1926,31 @@ Permission Structure
 └───────── File type (-=file, d=directory)
 
 
-Permission	Symbol	Numeric Value	Meaning
-Read	r	4	View contents
-Write	w	2	Modify contents
-Execute	x	1	Run as program
+| Permission | Symbol | Numeric Value | Meaning |
+|------------|--------|---------------|---------|
+| Read | r | 4 | View contents |
+| Write | w | 2 | Modify contents |
+| Execute | x | 1 | Run as program |
 
 
-Command Reference
-Command	Purpose	Example
-ls -la	List all files with permissions	ls -la
-chmod [permissions] [file]	Change file permissions	chmod o-w project_k.txt
+
+### Command Reference
+| Command | Purpose | Example |
+|---------|---------|---------|
+| `ls -la` | List all files with permissions | `ls -la` |
+| `chmod [permissions] [file]` | Change file permissions | `chmod o-w project_k.txt` |
 
 
-Permission Formats
-Format	Example	Meaning
-Symbolic	chmod o-w file.txt	Remove write for others
-Symbolic	chmod go-rw file.txt	Remove read/write for group and others
-Symbolic	chmod ug=r file.txt	Set owner and group to read-only
-Numeric	chmod 755 file.txt	Owner:rwx, Group:r-x, Other:r-x
+### Permission Formats
+| Format | Example | Meaning |
+|--------|---------|---------|
+| Symbolic | `chmod o-w file.txt` | Remove write for others |
+| Symbolic | `chmod go-rw file.txt` | Remove read/write for group and others |
+| Symbolic | `chmod ug=r file.txt` | Set owner and group to read-only |
+| Numeric | `chmod 755 file.txt` | Owner:rwx, Group:r-x, Other:r-x |
 
 
-Commands Executed
+### Commands Executed
 ```bash
 cd /home/researcher2/projects
 ls -la
@@ -1880,35 +1969,39 @@ chmod g-x drafts
 ```
 
 
-Security Application
-Task	Command	Purpose
-Check file permissions	ls -la sensitive_file.txt	Verify access restrictions
-Remove world read	chmod o-r /etc/shadow	Protect password hashes
-Make script executable	chmod +x scan.sh	Allow script execution
-Restrict directory access	chmod 700 /home/analyst/private	Only owner can access
+### Security Application
+| Task | Command | Purpose |
+|------|---------|---------|
+| Check file permissions | `ls -la sensitive_file.txt` | Verify access restrictions |
+| Remove world read | `chmod o-r /etc/shadow` | Protect password hashes |
+| Make script executable | `chmod +x scan.sh` | Allow script execution |
+| Restrict directory access | `chmod 700 /home/analyst/private` | Only owner can access |
+
+<br><br>
+
+## 7. Activity 5: Add and Manage Users with Linux Commands
+**Objective:** Add, modify, and delete users and groups.
+
+### Command Reference
+| Command | Purpose | Example |
+|---------|---------|---------|
+| `sudo useradd [username]` | Add new user | `sudo useradd researcher9` |
+| `sudo usermod -g [group] [user]` | Set primary group | `sudo usermod -g research_team researcher9` |
+| `sudo usermod -a -G [group] [user]` | Add to secondary group | `sudo usermod -a -G sales_team researcher9` |
+| `sudo chown [user] [file]` | Change file owner | `sudo chown researcher9 project_r.txt` |
+| `sudo userdel [username]` | Delete user | `sudo userdel researcher9` |
+| `sudo groupdel [groupname]` | Delete group | `sudo groupdel researcher9` |
 
 
-7. Activity 5: Add and Manage Users with Linux Commands
-Objective: Add, modify, and delete users and groups.
-
-Command Reference
-Command	Purpose	Example
-sudo useradd [username]	Add new user	sudo useradd researcher9
-sudo usermod -g [group] [user]	Set primary group	sudo usermod -g research_team researcher9
-sudo usermod -a -G [group] [user]	Add to secondary group	sudo usermod -a -G sales_team researcher9
-sudo chown [user] [file]	Change file owner	sudo chown researcher9 project_r.txt
-sudo userdel [username]	Delete user	sudo userdel researcher9
-sudo groupdel [groupname]	Delete group	sudo groupdel researcher9
+### User vs Group Types
+| Type | Description | Example |
+|------|-------------|---------|
+| Primary group | Default group for user's files | research_team |
+| Secondary group | Additional group membership | sales_team |
+| System user | Service account (no login) | www-data |
 
 
-User vs Group Types
-Type	Description	Example
-Primary group	Default group for user's files	research_team
-Secondary group	Additional group membership	sales_team
-System user	Service account (no login)	www-data
-
-
-Commands Executed
+### Commands Executed
 ```bash
 # Add new user
 sudo useradd researcher9
@@ -1928,25 +2021,28 @@ sudo groupdel researcher9
 ```
 
 
-Security Application
-Task	Command	Purpose
-Create auditor account	sudo useradd auditor	Temporary investigation access
-Remove departed employee	sudo userdel -r jsmith	Revoke access immediately
-Change file ownership	sudo chown newadmin config.ini	Transfer responsibility
-Verify group membership	groups researcher9	Check user's groups
+### Security Application
+| Task | Command | Purpose |
+|------|---------|---------|
+| Create auditor account | `sudo useradd auditor` | Temporary investigation access |
+| Remove departed employee | `sudo userdel -r jsmith` | Revoke access immediately |
+| Change file ownership | `sudo chown newadmin config.ini` | Transfer responsibility |
+| Verify group membership | `groups researcher9` | Check user's groups |
+
+<br><br>
+
+## 8. Activity 6: Get Help in the Command Line
+**Objective:** Use man, whatis, and apropos to discover commands and options.
+
+### Command Reference
+| Command | Purpose | Example |
+|---------|---------|---------|
+| `whatis [command]` | Short description | `whatis cat` → "concatenate files and print" |
+| `man [command]` | Manual page | `man cat` (full documentation) |
+| `apropos [keyword]` | Search commands by keyword | `apropos "create new group"` |
 
 
-8. Activity 6: Get Help in the Command Line
-Objective: Use man, whatis, and apropos to discover commands and options.
-
-Command Reference
-Command	Purpose	Example
-whatis [command]	Short description	whatis cat → "concatenate files and print"
-man [command]	Manual page	man cat (full documentation)
-apropos [keyword]	Search commands by keyword	apropos "create new group"
-
-
-Commands Executed
+### Commands Executed
 ```bash
 # Get short descriptions
 whatis cat
@@ -1963,15 +2059,17 @@ apropos "create new group"
 ```
 
 
-Security Application
-Task	Command	Purpose
-Find log viewing command	apropos "view log"	Discover tail, less, journalctl
-Learn chmod syntax	man chmod	Understand permission options
-Check command purpose	whatis journalctl	Quick command description
+### Security Application
+| Task | Command | Purpose |
+|------|---------|---------|
+| Find log viewing command | `apropos "view log"` | Discover tail, less, journalctl |
+| Learn chmod syntax | `man chmod` | Understand permission options |
+| Check command purpose | `whatis journalctl` | Quick command description |
 
+<br><br>
 
-9. Linux Command Quick Reference Card
-Navigation & File Management
+## 9. Linux Command Quick Reference Card
+### Navigation & File Management
 ```bash
 pwd                    # Show current directory
 ls -la                 # List all files with details
@@ -1982,7 +2080,7 @@ tail -n 20 file.txt    # Show last 20 lines
 ```
 
 
-File Operations
+### File Operations
 ```bash
 mkdir new_dir          # Create directory
 rm file.txt            # Delete file
@@ -1994,7 +2092,7 @@ nano file.txt          # Edit file
 ```
 
 
-Searching & Filtering
+### Searching & Filtering
 ```bash
 grep "pattern" file.txt          # Search in file
 grep -i "pattern" file.txt       # Case insensitive
@@ -2002,7 +2100,7 @@ grep -v "pattern" file.txt       # Exclude pattern
 ls | grep "keyword"              # Pipe to filter
 ```
 
-Permissions
+### Permissions
 ```bash
 ls -la                 # View permissions
 chmod 755 file.txt     # Numeric: rwxr-xr-x
@@ -2011,7 +2109,7 @@ chmod go-rw file.txt   # Remove r/w for group/others
 chown user:group file  # Change owner:group
 ```
 
-User Management (requires sudo)
+### User Management (requires sudo)
 ```bash
 sudo useradd username           # Add user
 sudo userdel -r username        # Delete user with home dir
@@ -2020,7 +2118,7 @@ sudo groupadd groupname         # Create group
 sudo groupdel groupname         # Delete group
 ```
 
-Getting Help
+### Getting Help
 ```bash
 whatis command         # One-line description
 man command            # Full manual
@@ -2028,80 +2126,86 @@ command --help         # Short help (many commands)
 apropos keyword        # Search commands by keyword
 ```
 
+<br><br>
 
-10. Skills Demonstrated
-Skill	Application in Lab
-Directory navigation	pwd, cd, ls to locate logs and reports
-File content inspection	cat, head to read user lists and logs
-Pattern searching	grep with piping to filter files and content
-File management	mkdir, mv, rm, touch, nano for organizing evidence
-Permission management	chmod, ls -la to restrict access
-User administration	useradd, usermod, chown, userdel for access control
-Command discovery	man, whatis, apropos to find help
-Security analysis	Applied Linux commands to security-relevant tasks
+## 10. Skills Demonstrated
+| Skill | Application in Lab |
+|-------|-------------------|
+| Directory navigation | pwd, cd, ls to locate logs and reports |
+| File content inspection | cat, head to read user lists and logs |
+| Pattern searching | grep with piping to filter files and content |
+| File management | mkdir, mv, rm, touch, nano for organizing evidence |
+| Permission management | chmod, ls -la to restrict access |
+| User administration | useradd, usermod, chown, userdel for access control |
+| Command discovery | man, whatis, apropos to find help |
 
+<br><br>
 
-11. Reflection
+## 11. Reflection
 This lab provided comprehensive hands-on experience with essential Linux Bash commands. Key takeaways:
 
-Navigation and file inspection (pwd, cd, ls, cat, head) are foundational for locating and examining logs during incident investigation
-
-grep with piping enables efficient searching through large log files – critical for identifying specific events like failed logins or error patterns
-
-File management commands (mkdir, mv, rm, touch, nano) help organize investigation artifacts and document findings
-
-Permission management (chmod, ls -la) ensures sensitive files are protected according to the principle of least privilege
-
-User administration (useradd, usermod, userdel) is essential for onboarding/offboarding and maintaining proper access control
-
-Help commands (man, whatis, apropos) enable self-sufficient learning and discovery of new commands
+- Navigation and file inspection (pwd, cd, ls, cat, head) are foundational for locating and examining logs during incident investigation
+- grep with piping enables efficient searching through large log files – critical for identifying specific events like failed logins or error patterns
+- File management commands (mkdir, mv, rm, touch, nano) help organize investigation artifacts and document findings
+- Permission management (chmod, ls -la) ensures sensitive files are protected according to the principle of least privilege
+- User administration (useradd, usermod, userdel) is essential for onboarding/offboarding and maintaining proper access control
+- Help commands (man, whatis, apropos) enable self-sufficient learning and discovery of new commands
 
 Demonstrates: Practical Linux proficiency for security monitoring, incident investigation, log analysis, and system administration.
 
-12. Appendix: Key Terminology
-Term	Meaning
-Bash	Bourne Again SHell – default Linux command-line interpreter
-Directory	Linux term for folder
-Piping (|)	Sends output of one command as input to another
-grep	Global Regular Expression Print – searches for patterns
-Permission	Access control setting (read, write, execute)
-Owner	User who owns a file/directory
-Group	Collection of users with shared permissions
-chmod	Change mode – modifies permissions
-sudo	Superuser do – executes command with elevated privileges
-Home directory	User's personal directory (/home/username)
-Manual page	Built-in documentation for Linux commands
+<br><br>
 
+## 12. Appendix: Key Terminology
+| Term | Meaning |
+|------|---------|
+| Bash | Bourne Again SHell – default Linux command-line interpreter |
+| Directory | Linux term for folder |
+| Piping (\|) | Sends output of one command as input to another |
+| grep | Global Regular Expression Print – searches for patterns |
+| Permission | Access control setting (read, write, execute) |
+| Owner | User who owns a file/directory |
+| Group | Collection of users with shared permissions |
+| chmod | Change mode – modifies permissions |
+| sudo | Superuser do – executes command with elevated privileges |
+| Home directory | User's personal directory (/home/username) |
+| Manual page | Built-in documentation for Linux commands |
 
-13. Common Security Scenarios & Linux Commands
-Scenario	Linux Command
-Investigate failed SSH logins	grep "Failed password" /var/log/auth.log
-Find large log files	find /var/log -size +100M
-Monitor live log	tail -f /var/log/syslog
-Check disk space	df -h
-Find files owned by user	find /home -user jsmith
-Count unique IPs in log	grep "Failed" auth.log | awk '{print $11}' | sort | uniq -c
-Backup directory	cp -r /important/data /backup/
+<br><br>
 
-
-
-
-
-
-
-
+## 13. Common Security Scenarios & Linux Commands
+| Scenario | Linux Command |
+|----------|---------------|
+| Investigate failed SSH logins | `grep "Failed password" /var/log/auth.log` |
+| Find large log files | `find /var/log -size +100M` |
+| Monitor live log | `tail -f /var/log/syslog` |
+| Check disk space | `df -h` |
+| Find files owned by user | `find /home -user jsmith` |
+| Count unique IPs in log | `grep "Failed" auth.log \| awk '{print $11}' \| sort \| uniq -c` |
+| Backup directory | `cp -r /important/data /backup/` |
 
 
 
+
+
+
+<br><br><br><br>
 
 ---
 
-# Module 10: Introduction to Asset Security
+<br><br><br><br>
+
+
+
+
+
+
+
+# Lab 9: Introduction to Asset Security
 
 **Focus Area:** Asset Management | Risk Assessment | Asset Classification  
 **Skills:** Asset Inventory Creation | Sensitivity Classification | Risk Scoring | Likelihood & Severity Assessment | Risk Prioritization  
 
----
+<br><br>
 
 ## Objective
 
@@ -2109,7 +2213,7 @@ Understand asset management and risk assessment in a cybersecurity context. This
 1. Classifying assets connected to a home network based on sensitivity
 2. Scoring risks based on likelihood and severity to prioritize security resources
 
----
+<br><br>
 
 ## 1. Scenario Overview
 
@@ -2120,7 +2224,7 @@ Asset security is the foundation of any cybersecurity program. Organizations can
 | **Activity 1** | Home network asset inventory | Identify, document, and classify all connected devices |
 | **Activity 2** | Bank operational risk assessment | Evaluate risks, calculate scores, and prioritize responses |
 
----
+<br><br>
 
 ## 2. Activity 1: Classify Assets Connected to a Home Network
 
@@ -2177,7 +2281,7 @@ This activity highlighted the importance of maintaining an accurate inventory of
 - Implement additional security measures for shared devices
 - Regular inventory audits (quarterly)
 
----
+<br><br>
 
 ## 3. Activity 2: Score Risks Based on Likelihood and Severity
 
@@ -2221,24 +2325,17 @@ This activity highlighted the importance of maintaining an accurate inventory of
 | Funds | Supply chain disruption | Delivery delays due to natural disasters | 1 | 2 | 2 |
 
 ### Risk Matrix Visualization
-Severity →
-Likelihood ↓
-│ Low (1) Moderate (2) High (3)
-│
-Rare (1) [1] [2] [3]
-│ (Theft) (Supply chain) (Theft - Sev 3)
-│
-Likely (2) [2] [4] ★ [6] ★★
-│ (BEC) (User DB)
-│
-High (3) [3] [6] ★★ [9] ★★★
-│ (Records leak)
-│
-└─────────────────────────────────────────→
+| Likelihood \ Severity | Low (1)        | Moderate (2)        | High (3)              |
+|----------------------|----------------|----------------------|------------------------|
+| Rare (1)             | [1] Theft      | [2] Supply Chain     | [3] Theft (Sev 3)      |
+| Likely (2)           | [2] BEC        | [4] ★ User DB        | [6] ★★                 |
+| High (3)             | [3]            | [6] ★★               | [9] ★★★ Records Leak   |
 
+**Legend:**  
+- ★ = Medium Priority  
+- ★★ = High Priority  
+- ★★★ = Critical Priority
 
-
-**Legend:** ★ = Medium Priority | ★★ = High Priority | ★★★ = Critical Priority
 
 ### Detailed Risk Analysis
 
@@ -2289,7 +2386,7 @@ This activity demonstrated the process of evaluating security risks systematical
 - Add risk velocity (how quickly risk materializes)
 - Include risk appetite tolerance thresholds
 
----
+<br><br>
 
 ## 4. Asset Security Best Practices Summary
 
@@ -2301,7 +2398,7 @@ This activity demonstrated the process of evaluating security risks systematical
 | **Risk Prioritization** | Address highest scores first | Records leak prioritized |
 | **Continuous Monitoring** | Regular reassessment | Quarterly inventory audits recommended |
 
----
+<br><br>
 
 ## 5. Skills Demonstrated
 
@@ -2316,7 +2413,7 @@ This activity demonstrated the process of evaluating security risks systematical
 | Risk prioritization | Ranked risks from Critical (9) to Low (2) |
 | Action planning | Developed timeline-based mitigation strategies |
 
----
+<br><br>
 
 ## 6. Tools and Concepts Used
 
@@ -2329,7 +2426,7 @@ This activity demonstrated the process of evaluating security risks systematical
 | Risk Formula (L×S) | Calculated numerical priorities |
 | Priority Action Plan | Mapped risks to mitigation timelines |
 
----
+<br><br>
 
 ## 7. Reflection - Full Lab
 
@@ -2351,7 +2448,7 @@ This lab reinforced the foundational relationship between **asset management** a
 
 **Demonstrates:** Asset security fundamentals, risk assessment methodology, and practical security decision-making applicable to both home and enterprise environments.
 
----
+<br><br>
 
 ## 8. Appendix: Key Terminology
 
@@ -2370,13 +2467,13 @@ This lab reinforced the foundational relationship between **asset management** a
 | **PII** | Personally Identifiable Information |
 | **Need-to-know** | Access principle: only provide necessary access |
 
----
+<br><br>
 
 ## 9. Risk Assessment Quick Reference
 
 ### Risk Score Calculation
-Risk Score = Likelihood (1-3) × Severity (1-3)
-Possible scores: 1, 2, 3, 4, 6, 9
+- Risk Score = Likelihood (1-3) × Severity (1-3)
+- Possible scores: 1, 2, 3, 4, 6, 9
 
 
 ### Priority Matrix
@@ -2390,18 +2487,17 @@ Possible scores: 1, 2, 3, 4, 6, 9
 | 1 | Very Low | No action needed |
 
 ### Likelihood × Severity Heat Map
-Severity
-1 2 3
-┌────┬────┬────┐
-Likely- 1│ 1 │ 2 │ 3 │
-hood 2│ 2 │ 4 │ 6 │
-3│ 3 │ 6 │ 9 │
-└────┴────┴────┘
+| Likelihood \ Severity | 1 (Low) | 2 (Moderate) | 3 (High) |
+|----------------------|--------|--------------|----------|
+| 1 (Rare)             | 1 🟢   | 2 🟢         | 3 🟡     |
+| 2 (Likely)           | 2 🟢   | 4 🟡         | 6 🟠     |
+| 3 (High)             | 3 🟡   | 6 🟠         | 9 🔴     |
 
-Green = Low priority (1-2)
-Yellow = Medium priority (3-4)
-Orange = High priority (6)
-Red = Critical priority (9)
+**Legend:**
+- 🟢 Low (1–2)
+- 🟡 Medium (3–4)
+- 🟠 High (6)
+- 🔴 Critical (9)
 
 
 
@@ -2434,19 +2530,19 @@ Red = Critical priority (9)
 
 
 
-# Module 11: Protect Organizational Assets
+# Lab 10: Protect Organizational Assets
 
 **Focus Area:** Data Protection | Encryption | Hashing | Access Control | Least Privilege  
 **Standards Referenced:** NIST SP 800-53 (AC-6)  
 **Skills:** Data Handling Policies | Encryption/Decryption | Hash Generation (SHA-256) | File Integrity Verification | RBAC | Account Lifecycle Management | MFA  
 
----
+<br><br>
 
 ## Objective
 
 Protect organizational data through secure handling practices, encryption, hashing, and access control improvements. This lab consists of four activities simulating real-world cybersecurity scenarios.
 
----
+<br><br>
 
 ## 1. Lab Activities Summary
 
@@ -2457,7 +2553,7 @@ Protect organizational data through secure handling practices, encryption, hashi
 | 3 | Create hash values | SHA-256, sha256sum, cmp | File integrity verification |
 | 4 | Improve AAA (Authentication, Authorization, Accounting) | RBAC, MFA, account lifecycle | Access control enforcement |
 
----
+<br><br>
 
 ## 2. Activity 1: Determine Appropriate Data Handling Practices
 
@@ -2481,9 +2577,14 @@ Protect organizational data through secure handling practices, encryption, hashi
 | **Enhancements** | Privilege separation, parameterized access, monitoring privileged actions |
 
 ### Least Privilege Implementation Model
-User Request → Role Evaluation → Minimum Required Access → Granted
-↑
-Regular Review & Revocation
+
+| Step | Process                  | Description                                      |
+|------|--------------------------|--------------------------------------------------|
+| 1    | User Request             | User requests access to a resource               |
+| 2    | Role Evaluation          | System checks user's role/permissions            |
+| 3    | Minimum Required Access  | Determine least privilege needed                 |
+| 4    | Access Granted           | Only necessary access is provided                |
+| 5    | Review & Revocation      | Periodic audit and removal of excess privileges  |
 
 
 ### Root Cause Analysis
@@ -2504,19 +2605,21 @@ Regular Review & Revocation
 | Regular access reviews (monthly/quarterly) | Scheduled audits | Catches orphaned permissions |
 | Enable access logging | Audit trails | Detect unauthorized access attempts |
 
----
+<br><br>
 
 ## 3. Activity 2: Decrypt an Encrypted Message
 
 **Objective:** Use Linux commands to decrypt encrypted data and recover hidden messages.
 
 ### Decryption Process Flow
-Step 1: Navigate directories (ls, cd)
-Step 2: Read instructions (cat README.txt)
-Step 3: Find hidden files (ls -a)
-Step 4: Decrypt Caesar cipher (tr command)
-Step 5: Decrypt AES file (openssl)
-Step 6: View recovered content (cat)
+| Step | Task | 
+|------|------| 
+| Step 1: | Navigate directories (ls, cd) |
+| Step 2: | Read instructions (cat README.txt) |
+| Step 3: | Find hidden files (ls -a) |
+| Step 4: | Decrypt Caesar cipher (tr command) |
+| Step 5: | Decrypt AES file (openssl) |
+| Step 6: | View recovered content (cat) |
 
 
 ### Key Commands Reference
@@ -2540,11 +2643,12 @@ cat .leftShift3 | tr "d-za-cD-ZA-C" "a-zA-Z"
 
 How it works:
 
-Original	Shifted	Translation
-d → a	d becomes a	3-letter backward shift
-e → b	e becomes b	
-f → c	f becomes c	
-a → x	a wraps to x	
+| Cipher | Plaintext | Explanation |
+|--------|-----------|-------------|
+| d | a | Shift back by 3 |
+| e | b | Shift back by 3 |
+| f | c | Shift back by 3 |
+| a | x | Wrap-around shift |	
 
 
 OpenSSL AES-256-CBC Decryption
@@ -2552,14 +2656,15 @@ OpenSSL AES-256-CBC Decryption
 openssl aes-256-cbc -pbkdf2 -a -d -in Q1.encrypted -out Q1.recovered -k ettubrute
 ```
 
-Parameter	Meaning
-aes-256-cbc	AES algorithm, 256-bit key, CBC mode
--pbkdf2	Password-Based Key Derivation Function 2
--a	Base64 encode/decode
--d	Decrypt mode
--in [file]	Input encrypted file
--out [file]	Output decrypted file
--k [password]	Decryption password
+| Parameter | Meaning |
+|-----------|---------|
+| `aes-256-cbc` | AES algorithm, 256-bit key, CBC mode |
+| `-pbkdf2` | Password-Based Key Derivation Function 2 |
+| `-a` | Base64 encode/decode |
+| `-d` | Decrypt mode |
+| `-in [file]` | Input encrypted file |
+| `-out [file]` | Output decrypted file |
+| `-k [password]` | Decryption password |
 
 
 Commands Executed
@@ -2581,23 +2686,29 @@ cat Q1.recovered
 
 
 Encryption Types Compared
-Type	Example	Strength	Use Case
-Classical cipher	Caesar cipher (shift)	Very weak	Historical/educational
-Symmetric encryption	AES-256-CBC	Strong	Bulk data encryption
-Asymmetric encryption	RSA	Strong	Key exchange, digital signatures
+| Type | Example | Strength | Use Case |
+|------|---------|----------|----------|
+| Classical cipher | Caesar cipher (shift) | Very weak | Historical/educational |
+| Symmetric encryption | AES-256-CBC | Strong | Bulk data encryption |
+| Asymmetric encryption | RSA | Strong | Key exchange, digital signatures |
+
+
 
 Reflection - Activity 2
 This activity strengthened understanding of encryption and decryption processes. It demonstrated how classical ciphers (Caesar) and modern encryption (AES-256-CBC) can be reversed using correct tools and commands, reinforcing the importance of protecting sensitive data.
 
-4. Activity 3: Create Hash Values
-Objective: Generate and compare hash values to verify file integrity.
+<br><br>
 
-Hash Function Properties
-Property	Description
-Deterministic	Same input always produces same hash
-One-way	Cannot reverse hash to original input
-Collision-resistant	Two different inputs unlikely to produce same hash
-Avalanche effect	Small change in input → completely different hash
+## 4. Activity 3: Create Hash Values
+**Objective:** Generate and compare hash values to verify file integrity.
+
+| Hash Function Properties | Description |
+|-------------------------|-------------|
+| Deterministic | Same input always produces same hash |
+| One-way | Cannot reverse hash to original input |
+| Collision-resistant | Two different inputs unlikely to produce same hash |
+| Avalanche effect | Small change in input → completely different hash |
+
 
 SHA-256 Hash Example
 ```
@@ -2632,40 +2743,37 @@ cmp file1hash file2hash
 
 
 Hash Comparison Visualization
-file1.txt                     file2.txt
-    │                              │
-    ▼                              ▼
-sha256sum                      sha256sum
-    │                              │
-    ▼                              ▼
-file1hash                      file2hash
-    │                              │
-    └────────── cmp ──────────────┘
-                    │
-                    ▼
-            "Different - No match"
+- File 1 Process: file1.txt → sha256sum → file1hash  
+- File 1 Process: file2.txt → sha256sum → file2hash  
+- file1hash vs file2hash → cmp → "Different - No match"
 
 
 Findings
-Observation	Implication
-Files appeared identical when viewed with cat	Human-readable content was the same
-Hash values were different	Hidden differences exist (whitespace, line endings, metadata)
-cmp reported files differ	Security tool detected tampering
+| Observation | Implication |
+|-------------|-------------|
+| Files appeared identical when viewed with cat | Human-readable content was the same |
+| Hash values were different | Hidden differences exist (whitespace, line endings, metadata) |
+| cmp reported files differ | Security tool detected tampering |
 
 
 Why Hashes Differ for Seemingly Identical Files
-Hidden Difference	Example
-Whitespace	Trailing space, tab vs. space
-Line endings	LF (Unix) vs. CRLF (Windows)
-Encoding	UTF-8 vs. ASCII
-Hidden characters	Null bytes, special characters
-Metadata	File timestamps (some hash algorithms include)
+| Hidden Difference | Example |
+|------------------|---------|
+| Whitespace | Trailing space, tab vs. space |
+| Line endings | LF (Unix) vs. CRLF (Windows) |
+| Encoding | UTF-8 vs. ASCII |
+| Hidden characters | Null bytes, special characters |
+| Metadata | File timestamps (some hash algorithms include) |
 
 
 Integrity Verification Workflow
-Original File ──sha256sum──→ Original Hash ──┐
-                                              ├── Compare ──→ Match = Intact
-Received File ──sha256sum──→ New Hash ──────┘               Mismatch = Tampered
+Original File → sha256sum → Original Hash  
+Received File → sha256sum → New Hash  
+
+Original Hash vs New Hash → Compare  
+Result:  
+- Match → Intact 
+- Mismatch → Tampered 
 
 
 Reflection - Activity 3
@@ -2673,8 +2781,10 @@ This activity highlighted the importance of hashing for ensuring data integrity.
 
 Key takeaway: Even a single character difference (including invisible characters) produces a completely different hash value.
 
-5. Activity 4: Improve Authentication, Authorization, and Accounting (AAA)
-Objective: Analyze an access control incident and recommend improvements.
+<br><br>
+
+## 5. Activity 4: Improve Authentication, Authorization, and Accounting (AAA)
+**Objective:** Analyze an access control incident and recommend improvements.
 
 Incident Data
 Employee Record:
@@ -2692,136 +2802,149 @@ Action: Payroll event added (FAUX_BANK)
 ```
 
 
-Incident Timeline
-```
-2019-12-27: Contractor contract ends
-     │
-     ▼ (3 years, 10 months gap)
-2023-10-03: Payroll event added using same account
-     │
-     ▼
-Current: Account still active with admin privileges
-```
+### Incident Timeline
+
+| Date | Event Description | Notes |
+|------|-------------------|-------|
+| 2019-12-27 | Contractor contract ends                               | Account should be deactivated   |
+| 2023-10-03 | Payroll event executed using same account              | Unauthorized / suspicious use   |
+| Current    | Account still active with admin privileges             | Critical security risk ⚠️       |
 
 
 Issues Identified
-#	Issue	Severity	Risk
-1	Contractor account active 4 years after contract end	🔴 Critical	Unauthorized access
-2	User had administrative privileges	🔴 Critical	Excessive permissions
-3	No automatic account expiration	🟠 High	Orphaned accounts
-4	Payroll action from non-payroll role	🔴 Critical	Segregation of duties violation
+| # | Issue | Severity | Risk |
+|---|-------|----------|------|
+| 1 | Contractor account active 4 years after contract end | 🔴 Critical | Unauthorized access |
+| 2 | User had administrative privileges | 🔴 Critical | Excessive permissions |
+| 3 | No automatic account expiration | 🟠 High | Orphaned accounts |
+| 4 | Payroll action from non-payroll role | 🔴 Critical | Segregation of duties violation |
 
 
 Account Lifecycle Management Gaps
-text
-[Provisioning] → [Active] → [Review] → [De-provisioning]
-      ✅              ✅          ❌            ❌
-   (Created)      (Used)    (No review)   (Never removed)
+
+| Lifecycle Stage | Status | Description |
+|-----------------|--------|-------------|
+| Provisioning | ✓ | Account created |
+| Active | ✓ | Account in use |
+| Review | ✗ | No periodic review |
+| De-provisioning | ✗ | Account never removed |
 
 
 Recommendations
-Priority	Recommendation	Implementation	MITRE ATT&CK Mapping
-Critical	Implement automatic account expiration	Set end date in identity management system	T1078 - Valid Accounts
-Critical	Apply RBAC with limited privileges	Legal attorneys should not have payroll access	T1098 - Account Manipulation
-High	Enable MFA for all admin accounts	Require second factor for sensitive actions	T1557 - Man-in-the-Middle
-High	Conduct quarterly access reviews	Automated certification campaigns	TA0006 - Credential Access
-Medium	Enable logging for all admin actions	SIEM integration	TA0007 - Discovery
+| Priority | Recommendation | Implementation | MITRE ATT&CK Mapping |
+|----------|---------------|----------------|----------------------|
+| Critical | Implement automatic account expiration | Set end date in identity management system | T1078 - Valid Accounts |
+| Critical | Apply RBAC with limited privileges | Legal attorneys should not have payroll access | T1098 - Account Manipulation |
+| High | Enable MFA for all admin accounts | Require second factor for sensitive actions | T1557 - Man-in-the-Middle |
+| High | Conduct quarterly access reviews | Automated certification campaigns | TA0006 - Credential Access |
+| Medium | Enable logging for all admin actions | SIEM integration | TA0007 - Discovery |
 
 
 Least Privilege Applied to Robert Taylor Jr.
-Before	After
-Legal\Administrator	Legal\Legal_Reviewer
-Access to payroll system	Access to legal documents only
-Admin privileges	Read-only for most systems
-Active indefinitely	Account expires with contract
+| Before | After |
+|--------|-------|
+| Legal\Administrator | Legal\Legal_Reviewer |
+| Access to payroll system | Access to legal documents only |
+| Admin privileges | Read-only for most systems |
+| Active indefinitely | Account expires with contract |
 
 
 Reflection - Activity 4
 This activity highlighted the importance of proper account lifecycle management and access control enforcement. Retaining active accounts for former employees and granting excessive privileges significantly increases security risks.
 
 Key takeaways:
+- Accounts must be de-provisioned immediately upon employment termination
+- Administrative privileges should be rare and tightly controlled
+- Segregation of duties prevents single-user abuse
+- Regular access reviews catch orphaned accounts
 
-Accounts must be de-provisioned immediately upon employment termination
+<br><br>
 
-Administrative privileges should be rare and tightly controlled
-
-Segregation of duties prevents single-user abuse
-
-Regular access reviews catch orphaned accounts
-
-6. AAA Framework Summary
-Component	Definition	Controls Implemented
-Authentication	Verifying user identity	MFA, strong passwords
-Authorization	Determining access rights	RBAC, least privilege
-Accounting	Tracking user actions	Logging, audit trails
+## 6. AAA Framework Summary
+| Component | Definition | Controls Implemented |
+|-----------|------------|----------------------|
+| Authentication | Verifying user identity | MFA, strong passwords |
+| Authorization | Determining access rights | RBAC, least privilege |
+| Accounting | Tracking user actions | Logging, audit trails |
 
 
 Security Controls Comparison
-Control	Before Incident	After Recommendations
-Account expiration	Manual (forgotten)	Automatic
-Access reviews	None	Quarterly
-MFA	Not enabled	Required for admin
-Privilege level	Admin (excessive)	Role-appropriate
-Segregation of duties	Violated	Enforced
+| Control | Before Incident | After Recommendations |
+|---------|-----------------|----------------------|
+| Account expiration | Manual (forgotten) | Automatic |
+| Access reviews | None | Quarterly |
+| MFA | Not enabled | Required for admin |
+| Privilege level | Admin (excessive) | Role-appropriate |
+| Segregation of duties | Violated | Enforced |
 
+<br><br>
 
-7. Skills Demonstrated
-Skill	Application in Lab
-Least privilege implementation	Analyzed data leak; recommended role-based restrictions
-NIST framework application	Applied NIST SP 800-53 AC-6
-Encryption/decryption	Used Caesar cipher and AES-256-CBC decryption
-Hash generation	Generated SHA-256 hashes with sha256sum
-File integrity verification	Compared hashes using cmp
-Access control analysis	Identified unauthorized payroll access
-Account lifecycle management	Recommended automatic expiration
-Security control recommendations	Proposed MFA, RBAC, access reviews
+## 7. Skills Demonstrated
+| Skill | Application in Lab |
+|-------|-------------------|
+| Least privilege implementation | Analyzed data leak; recommended role-based restrictions |
+| NIST framework application | Applied NIST SP 800-53 AC-6 |
+| Encryption/decryption | Used Caesar cipher and AES-256-CBC decryption |
+| Hash generation | Generated SHA-256 hashes with sha256sum |
+| File integrity verification | Compared hashes using cmp |
+| Access control analysis | Identified unauthorized payroll access |
+| Account lifecycle management | Recommended automatic expiration |
+| Security control recommendations | Proposed MFA, RBAC, access reviews |
 
+<br><br>
 
-8. Tools and Concepts Used
-Tool/Concept	Application
-NIST SP 800-53 AC-6	Least privilege framework
-Caesar cipher	Classical encryption decryption
-OpenSSL (AES-256-CBC)	Modern symmetric decryption
-SHA-256	Cryptographic hashing
-sha256sum	Linux hash generation
-cmp	File comparison
-RBAC	Role-based access control
-MFA	Multi-factor authentication
-AAA framework	Authentication, Authorization, Accounting
+## 8. Tools and Concepts Used
+| Tool/Concept | Application |
+|--------------|-------------|
+| NIST SP 800-53 AC-6 | Least privilege framework |
+| Caesar cipher | Classical encryption decryption |
+| OpenSSL (AES-256-CBC) | Modern symmetric decryption |
+| SHA-256 | Cryptographic hashing |
+| sha256sum | Linux hash generation |
+| cmp | File comparison |
+| RBAC | Role-based access control |
+| MFA | Multi-factor authentication |
+| AAA framework | Authentication, Authorization, Accounting |
 
+<br><br>
 
-9. Reflection - Full Lab
+## 9. Reflection - Full Lab
 This lab provided practical experience in securing data through multiple approaches: data handling policies, encryption, hashing, and access control mechanisms.
 
 Key takeaways from each activity:
 
-Activity	Key Insight
-Activity 1	Least privilege requires both policy AND technical enforcement
-Activity 2	Encryption is reversible with proper keys/tools
-Activity 3	Hashes detect invisible tampering (whitespace, encoding)
-Activity 4	Account lifecycle management is often the weakest link
-Demonstrates: Practical data protection skills including encryption, hashing, access control, and security policy implementation.
+| Activity | Key Insight |
+|----------|--------------|
+| Activity 1 | Least privilege requires both policy AND technical enforcement |
+| Activity 2 | Encryption is reversible with proper keys/tools |
+| Activity 3 | Hashes detect invisible tampering (whitespace, encoding) |
+| Activity 4 | Account lifecycle management is often the weakest link |
+| Demonstrates | Practical data protection skills including encryption, hashing, access control, and security policy implementation. |
 
-10. Appendix: Key Terminology
-Term	Meaning
-Least Privilege	Users get minimum access necessary for their role
-NIST SP 800-53	Security and privacy controls catalog
-Caesar cipher	Classical substitution cipher shifting letters
-AES-256-CBC	Advanced Encryption Standard, 256-bit key, Cipher Block Chaining mode
-OpenSSL	Open-source cryptography toolkit
-SHA-256	Secure Hash Algorithm (256-bit output)
-Hash	Fixed-size output from hash function
-cmp	Linux command to compare files byte by byte
-RBAC	Role-Based Access Control
-MFA	Multi-Factor Authentication
-AAA	Authentication, Authorization, Accounting
-Segregation of duties	Single user cannot perform conflicting actions
-Orphaned account	Active account without a valid user
+<br><br>
 
+## 10. Appendix: Key Terminology
+| Term | Meaning |
+|------|---------|
+| Least Privilege | Users get minimum access necessary for their role |
+| NIST SP 800-53 | Security and privacy controls catalog |
+| Caesar cipher | Classical substitution cipher shifting letters |
+| AES-256-CBC | Advanced Encryption Standard, 256-bit key, Cipher Block Chaining mode |
+| OpenSSL | Open-source cryptography toolkit |
+| SHA-256 | Secure Hash Algorithm (256-bit output) |
+| Hash | Fixed-size output from hash function |
+| cmp | Linux command to compare files byte by byte |
+| RBAC | Role-Based Access Control |
+| MFA | Multi-Factor Authentication |
+| AAA | Authentication, Authorization, Accounting |
+| Segregation of duties | Single user cannot perform conflicting actions |
+| Orphaned account | Active account without a valid user |
 
-11. Command Quick Reference
+<br><br>
+
+## 11. Command Quick Reference
 Encryption/Decryption
-bash
+```bash
 # Generate SHA-256 hash
 sha256sum filename.txt
 
@@ -2836,13 +2959,15 @@ openssl aes-256-cbc -pbkdf2 -a -d -in encrypted.aes -out decrypted.txt -k passwo
 
 # AES-256-CBC encryption
 openssl aes-256-cbc -pbkdf2 -a -e -in plaintext.txt -out encrypted.aes -k password
+```
 
 
 File Navigation
-bash
+```bash
 ls -a          # List all files including hidden
 cat file.txt   # Display file contents
 cd directory   # Change directory
+```
 
 
 
@@ -2851,6 +2976,11 @@ cd directory   # Change directory
 
 
 
+<br><br><br><br>
+
+---
+
+<br><br><br><br>
 
 
 
@@ -2858,15 +2988,13 @@ cd directory   # Change directory
 
 
 
-
-
-# Module 12: Threats to Asset Security
+# Lab 11: Threats to Asset Security
 
 **Focus Area:** Threat Identification | Social Engineering | Phishing Analysis | Threat Modeling  
 **Frameworks Applied:** PASTA (Process for Attack Simulation and Threat Analysis)  
 **Skills:** Email Header Analysis | Phishing Detection | Social Engineering Tactics | Threat Actor Profiling | Attack Modeling | Risk Assessment | Security Control Recommendations  
 
----
+<br><br>
 
 ## Objective
 
@@ -2876,7 +3004,7 @@ Identify and analyze threats to organizational assets, with particular emphasis 
 2. Applying the PASTA threat model to assess risks and vulnerabilities in software applications
 3. Implementing professional procedures for documenting and mitigating potential security threats
 
----
+<br><br>
 
 ## 1. Lab Activities Summary
 
@@ -2885,7 +3013,7 @@ Identify and analyze threats to organizational assets, with particular emphasis 
 | 1 | Phishing email analysis | Email headers, URL inspection, social engineering tactics | Prevent credential theft and malware installation |
 | 2 | PASTA threat modeling | 7-stage framework, attack trees, risk analysis | Proactive security assessment before deployment |
 
----
+<br><br>
 
 ## 2. Activity 1: Filter Malicious Emails
 
@@ -2923,32 +3051,58 @@ As a security analyst at **Imaginary Bank**, investigate a suspicious spear phis
 | **Actual destination** | Unknown external domain | Credential harvesting page |
 
 ### Phishing Email Anatomy
-┌─────────────────────────────────────────────────────────────┐
-│ From: imaginarybank@gmail.org ← Suspicious domain │
-│ To: executive@imaginarybank.com │
-│ Subject: RE: You are been added to an ecsecutiv's groups ← Misspelling │
-├─────────────────────────────────────────────────────────────┤
-│ │
-│ Dear Executive, │
-│ │
-│ You have been added to the Execs collaboration group. │
-│ Download ExecuTalk to join: │
-│ │
-│ [Download for Mac] [Download for Windows] │
-│ [Download for Android] │
-│ │
-│ ⚠️ This invitation will expire in 48 hours! ← Urgency │
-│ │
-│ ExecuTalk© All rights reserved. ← Fake branding │
-│ │
-└─────────────────────────────────────────────────────────────┘
-│
-▼
-┌────────────────────────┐
-│ Malicious Login Page │
-│ (Credential Harvesting) │
-└────────────────────────┘
+```
+From: imaginarybank@gmail.org
+To: executive@imaginarybank.com
+Subject: RE: You are been added to an ecsecutiv's groups
 
+Dear Executive,
+
+You have been added to the Execs collaboration group.
+Download ExecuTalk to join:
+
+[Download for Mac] [Download for Windows]
+[Download for Android]
+
+This invitation will expire in 48 hours!
+
+ExecuTalk© All rights reserved. 
+```
+
+#### Phishing Email Explaination
+
+| Component | Indicator | Why It’s Suspicious |
+|-----------|-----------|---------------------|
+| From | imaginarybank@gmail.org | Mismatched / fake domain |
+| Subject | "ecsecutiv's groups" | Spelling/grammar errors |
+| Message | Generic greeting | Lack of personalization |
+| Links | Download buttons | Potential malware delivery |
+| Urgency | "Expires in 48 hours" | Pressures user to act quickly |
+| Branding | ExecuTalk© | Fake or spoofed branding |
+| Outcome | Login page | Credential harvesting |
+
+
+#### Phishing Email Analysis
+
+| Stage | Attack Technique | Security Weakness Exploited |
+|-------|------------------|-----------------------------|
+| Email Spoofing | Fake sender domain | Lack of email filtering |
+| Social Engineering | Urgency + authority | User awareness gap |
+| Delivery | Malicious links/downloads | No link inspection |
+| Exploitation | Fake login page | Credential reuse / weak MFA |
+| Impact | Account compromise | Lack of monitoring |
+
+**Attack Type:** Phishing (Social Engineering)  
+**Key Indicators:**
+- Suspicious sender domain
+- Spelling/grammar mistakes
+- Urgent language
+- Unverified download links
+
+**Mitigation:**
+- User awareness training
+- Email filtering (SPF, DKIM, DMARC)
+- Multi-Factor Authentication (MFA)
 
 
 ### Threat Actor Tactics – Social Engineering Techniques
@@ -2997,7 +3151,7 @@ As a security analyst at **Imaginary Bank**, investigate a suspicious spear phis
 | **DKIM** | Digital signature on emails | Verifies email wasn't altered |
 | **DMARC** | Policy for handling failed SPF/DKIM | Tells receivers what to do with suspicious emails |
 
----
+<br><br>
 
 ## 3. Activity 2: Apply the PASTA Threat Model Framework
 
@@ -3029,7 +3183,7 @@ As part of a security team evaluating a new mobile app for sneaker enthusiasts, 
 | VI | Attack Modeling | How could attacks happen? | Attack trees |
 | VII | Risk Analysis & Impact | What are the priorities? | Risk mitigation plan |
 
----
+<br><br>
 
 ### Stage I: Define Business and Security Objectives
 
@@ -3040,7 +3194,7 @@ As part of a security team evaluating a new mobile app for sneaker enthusiasts, 
 | **Security** | Ensure PCI-DSS compliance for payment handling |
 | **Security** | Protect user PII and payment data |
 
----
+<br><br>
 
 ### Stage II: Define Technical Scope
 
@@ -3056,16 +3210,14 @@ As part of a security team evaluating a new mobile app for sneaker enthusiasts, 
 
 **Prioritized Asset:** **APIs** – handle sensitive data between multiple systems, creating larger attack surface
 
----
+<br><br>
 
 ### Stage III: Decompose Application
 
 **Data Flow Diagram:**
-User ──→ Mobile App ──→ API Gateway ──→ Payment API ──→ Bank
-│ │
-│ └──→ SQL Database (user data, inventory)
-│
-└──→ Product Search ──→ Database Query
+- User → Mobile App → API Gateway → Payment API → Bank  
+- User → SQL Database (user data, inventory)
+- User → Product Search → Database Query
 
 
 **Data Flow Path Analyzed:** `User ↔ Product Search Process ↔ Database`
@@ -3077,7 +3229,7 @@ User ──→ Mobile App ──→ API Gateway ──→ Payment API ──→ 
 | API Gateway | Routes requests | Trusted (internal) |
 | SQL Database | Stores inventory data | Trusted (internal) |
 
----
+<br><br>
 
 ### Stage IV: Threat Analysis
 
@@ -3099,7 +3251,7 @@ User ──→ Mobile App ──→ API Gateway ──→ Payment API ──→ 
 | **External - Hacker** | Financial gain, notoriety | Medium-High | Payment data, credentials |
 | **External - Competitor** | Business intelligence | Medium | Inventory, user base |
 
----
+<br><br>
 
 ### Stage V: Vulnerability Analysis
 
@@ -3121,26 +3273,30 @@ User ──→ Mobile App ──→ API Gateway ──→ Payment API ──→ 
 | Weak Passwords | High (3) | Medium (2) | **6 (High)** |
 | Missing Input Validation | Medium (2) | Medium (2) | **4 (Medium)** |
 
----
+<br><br>
 
 ### Stage VI: Attack Modeling
 
 **Attack Tree – Compromise User Data**
-Compromise User Data
-│
-┌──────────────────┼──────────────────┐
-│ │ │
-SQL Injection Session Hijacking Credential Theft
-│ │ │
-Inject malicious Steal session Phishing/
-SQL query token Brute force
-│ │ │
-┌───┴───┐ ┌───┴───┐ ┌───┴───┐
-│ │ │ │ │ │
-UNION Boolean XSS Network Brute Credential
-based blind sniffing force stuffing
 
-text
+| Main Attack Vector | Technique | Method | Impact | Mitigation |
+|--------------------|-----------|--------|--------|------------|
+| SQL Injection | Injection | UNION-based | Database data exposure | Input validation, prepared statements |
+| SQL Injection | Injection | Boolean-based / Blind | Database data exposure | Input validation, prepared statements |
+| Session Hijacking | Exploitation | Cross-Site Scripting (XSS) | Session takeover | HTTPS, secure cookies, CSP |
+| Session Hijacking | Network Attack | Packet sniffing | Session takeover | HTTPS, secure cookies, CSP |
+| Credential Theft | Password Attack | Brute force | Account compromise | MFA, rate limiting, password policies |
+| Credential Theft | Credential Reuse | Credential stuffing | Account compromise | MFA, rate limiting, password policies |
+
+
+**Threat Modeling Technique:** Attack Tree  
+**Goal:** Identify multiple paths to compromise user data  
+
+**Key Risks:**
+- Injection vulnerabilities
+- Weak session management
+- Poor authentication controls
+
 
 **Attack Vector Analysis:**
 
@@ -3151,7 +3307,7 @@ text
 | Brute Force | No rate limiting | Low | Medium |
 | Credential Stuffing | Password reuse | Low | Medium |
 
----
+<br><br>
 
 ### Stage VII: Risk Analysis and Impact
 
@@ -3177,7 +3333,7 @@ text
 | Code review process | Mandatory for all pull requests | Medium |
 | Security logging | Centralized SIEM integration | High |
 
----
+<br><br>
 
 ### PASTA Stage Summary Table
 
@@ -3191,7 +3347,7 @@ text
 | VI (Attack Modeling) | Attack tree shows multiple compromise paths |
 | VII (Risk Analysis) | Critical risk: SQL injection (score 9) |
 
----
+<br><br>
 
 ## 4. Threat Actor Profile Summary
 
@@ -3202,7 +3358,7 @@ text
 | **External hacker** | Financial gain | Payment data, user accounts | SQL injection, API abuse |
 | **Competitor** | Business intelligence | Inventory, user base | Reconnaissance, scraping |
 
----
+<br><br>
 
 ## 5. Skills Demonstrated
 
@@ -3218,7 +3374,7 @@ text
 | Vulnerability analysis | Identified SQL injection, session hijacking risks |
 | Security control recommendations | Proposed 2FA, rate limiting, prepared statements |
 
----
+<br><br>
 
 ## 6. Tools and Concepts Used
 
@@ -3233,7 +3389,7 @@ text
 | 2FA | Recommended authentication control |
 | Rate limiting | Recommended API protection |
 
----
+<br><br>
 
 ## 7. Reflection
 
@@ -3253,7 +3409,7 @@ Through these two activities, I enhanced practical skills in asset security and 
 
 **Demonstrates:** Threat identification, social engineering detection, structured threat modeling, and proactive security assessment.
 
----
+<br><br>
 
 ## 8. Appendix: Key Terminology
 
@@ -3272,7 +3428,7 @@ Through these two activities, I enhanced practical skills in asset security and 
 | **PCI-DSS** | Payment Card Industry Data Security Standard |
 | **API** | Application Programming Interface |
 
----
+<br><br>
 
 ## 9. PASTA Quick Reference – 7 Stages
 
@@ -3286,22 +3442,22 @@ Through these two activities, I enhanced practical skills in asset security and 
 | VI | How could attacks happen? | Attack trees |
 | VII | What do we fix first? | Risk mitigation plan |
 
----
+<br><br>
 
 ## 10. Phishing Email Checklist for Analysts
 
 | Check | What to Look For | Suspicious Indicators |
 |-------|-----------------|----------------------|
-| □ | Sender email address | Different domain, misspellings |
-| □ | Subject line | Grammar errors, urgency words |
-| □ | Greeting | Generic ("Dear User") vs. personalized |
-| □ | Links | Hover to see actual URL; check domain |
-| □ | Attachments | Unexpected files (.exe, .zip, .js) |
-| □ | Urgency | "Act now", "48 hours", "immediate action" |
-| □ | Request | Asking for credentials, payment, personal info |
-| □ | Branding | Logo quality, copyright notices, legal language |
+| () | Sender email address | Different domain, misspellings |
+| () | Subject line | Grammar errors, urgency words |
+| () | Greeting | Generic ("Dear User") vs. personalized |
+| () | Links | Hover to see actual URL; check domain |
+| () | Attachments | Unexpected files (.exe, .zip, .js) |
+| () | Urgency | "Act now", "48 hours", "immediate action" |
+| () | Request | Asking for credentials, payment, personal info |
+| () | Branding | Logo quality, copyright notices, legal language |
 
----
+
 
 
 
@@ -3330,20 +3486,19 @@ Through these two activities, I enhanced practical skills in asset security and 
 
 
 
-# Module 13: Vulnerabilities in Systems – Identify the Attack Vectors of a USB Drive
+# Lab 12: Vulnerabilities in Systems – Identify the Attack Vectors of a USB Drive
 
 **Focus Area:** Physical Media Vulnerabilities | Social Engineering | USB Baiting Attacks  
-**Attack Type Analyzed:** USB Drive Baiting / Drop Attack  
-**Date:** [YYYY-MM-DD]  
+**Attack Type Analyzed:** USB Drive Baiting / Drop Attack   
 **Skills:** Attack Vector Identification | Attacker Mindset Analysis | Risk Assessment | Mitigation Strategy Development | Physical Security Controls  
 
----
+<br><br>
 
 ## Objective
 
 Assess the potential security risks of an unknown USB drive and analyze how sensitive information can be exploited by an attacker.
 
----
+<br><br>
 
 ## 1. Scenario Overview
 
@@ -3356,7 +3511,7 @@ A USB drive is found containing a mixture of personal and work-related files bel
 | **Organization** | Rhetorical Hospital |
 | **File types** | Personal (family/pet photos) + Work (new hire letters, employee shift schedules) |
 
----
+<br><br>
 
 ## 2. USB Drive Content Analysis
 
@@ -3376,22 +3531,17 @@ A USB drive is found containing a mixture of personal and work-related files bel
 | No encryption | Anyone with USB access can read all files |
 | No access controls | No password or authentication required |
 
-> ⚠️ **Critical observation:** Storing personal and sensitive work information on the same device significantly increases the risk of accidental exposure or exploitation.
+> **Critical observation:** Storing personal and sensitive work information on the same device significantly increases the risk of accidental exposure or exploitation.
 
----
+<br><br>
 
 ## 3. Attacker Mindset Analysis
 
-### How an Attacker Thinks
-Found USB Drive
-│
-▼
-┌─────────────────────────────────────────────────────┐
-│ "What information can I extract from this?" │
-│ "How can I use this to my advantage?" │
-│ "What systems can I access?" │
-│ "Who can I target with this information?" │
-└─────────────────────────────────────────────────────┘
+### How an Attacker Thinks after found an USB Drive
+- "What information can I extract from this?" 
+- "How can I use this to my advantage?" 
+- "What systems can I access?" 
+- "Who can I target with this information?" 
 
 
 ### Information Extraction – Work Documents
@@ -3420,18 +3570,19 @@ Found USB Drive
 | **Identity theft** | Extract PII from HR documents | Employees |
 | **Spear phishing** | Use personal info to craft convincing emails | Jorge or his family |
 
----
+<br><br>
 
 ## 4. USB Baiting Attack Chain
 
 ### How USB Drop Attacks Work
-┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-│ Attacker │ │ Attacker │ │ Curious │ │ Malware │ │ Network │
-│ prepares │ ─→ │ drops │ ─→ │ employee │ ─→ │ executes │ ─→ │ compromise │
-│ malicious │ │ USB in │ │ finds USB │ │ on PC │ │ │
-│ USB │ │ parking │ │ and plugs │ │ │ │ │
-│ │ │ lot/office│ │ it in │ │ │ │ │
-└─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘
+
+| Step | Actor | Action | Outcome | Security Control Missing |
+|------|-------|--------|---------|--------------------------|
+| 1 | Attacker | Prepares malicious USB | Malware ready | Device control / malware scanning |
+| 2 | Attacker | Drops USB in target location | Device discovered | Physical security awareness |
+| 3 | Employee | Picks up and inserts USB | Malware triggered | USB port restriction |
+| 4 | System | Executes malicious payload | System compromised | Endpoint detection (EDR) |
+| 5 | Network | Malware spreads | Full network compromise | Monitoring & incident response | 
 
 
 ### Why USB Baiting Works (Psychology)
@@ -3444,7 +3595,7 @@ Found USB Drive
 | **Convenience** | Need a USB for work, found one available |
 | **Lack of awareness** | "How dangerous can a USB be?" |
 
----
+<br><br>
 
 ## 5. Risk Assessment
 
@@ -3477,7 +3628,7 @@ Found USB Drive
 | **Identity theft** | Employee identities stolen | 🟠 High |
 | **Regulatory fines** | HIPAA violations possible | 🟠 High |
 
----
+<br><br>
 
 ## 6. Mitigation Strategies
 
@@ -3510,7 +3661,7 @@ Found USB Drive
 | Employee inserting unknown USB | USB port blocking | Reporting procedure | Security awareness training |
 | Malware spread | Antivirus, EDR | Network segmentation | Security policy enforcement |
 
----
+<br><br>
 
 ## 7. Data Protection Best Practices
 
@@ -3533,7 +3684,7 @@ Found USB Drive
 | **Use encrypted USBs for work** | Protects data if lost |
 | **Don't share USBs between people** | Maintains accountability |
 
----
+<br><br>
 
 ## 8. Incident Response – Found USB Drive
 
@@ -3549,14 +3700,14 @@ Found USB Drive
 
 ### What NOT to Do
 
-| ❌ Action | Why It's Dangerous |
+| Don't | Why It's Dangerous |
 |----------|-------------------|
 | Inserting into personal computer | No corporate protection |
 | Checking for owner info on work PC | Could infect network |
 | Sharing with colleagues | Multiplies exposure |
 | Throwing away | Evidence lost, no investigation |
 
----
+<br><br>
 
 ## 9. Reflection
 
@@ -3579,7 +3730,7 @@ This activity highlighted the dangers of seemingly harmless devices like USB dri
 
 **Demonstrates:** Attack vector identification, attacker mindset analysis, practical risk assessment, and layered mitigation strategies.
 
----
+<br><br>
 
 ## 10. Skills Demonstrated
 
@@ -3594,7 +3745,7 @@ This activity highlighted the dangers of seemingly harmless devices like USB dri
 | Incident response procedure | Outlined proper found USB handling |
 | Security control mapping | Mapped controls to threat categories |
 
----
+<br><br>
 
 ## 11. Tools and Concepts Used
 
@@ -3608,7 +3759,7 @@ This activity highlighted the dangers of seemingly harmless devices like USB dri
 | Encryption | Recommended for lost device protection |
 | Social engineering | Analyzed psychological exploitation |
 
----
+<br><br>
 
 ## 12. Appendix: Key Terminology
 
@@ -3624,7 +3775,7 @@ This activity highlighted the dangers of seemingly harmless devices like USB dri
 | **Keylogger** | Malware that records keystrokes |
 | **Ransomware** | Malware that encrypts files and demands payment |
 
----
+<br><br>
 
 ## 13. USB Security Quick Reference
 
@@ -3647,52 +3798,73 @@ This activity highlighted the dangers of seemingly harmless devices like USB dri
 | Reported lost USB | Proper procedure |
 
 ### Protection Checklist
-□ Disable AutoPlay on all company devices
-□ Implement USB device allowlisting
-□ Encrypt all company-issued USBs
-□ Employee security awareness training (including USB risks)
-□ Clear policy on personal USB use
-□ Lost & found procedure for found devices
-□ Regular antivirus scans
-□ Monitor USB usage logs
+- Disable AutoPlay on all company devices
+- Implement USB device allowlisting
+- Encrypt all company-issued USBs
+- Employee security awareness training (including USB risks)
+- Clear policy on personal USB use
+- Lost & found procedure for found devices
+- Regular antivirus scans
+- Monitor USB usage logs
 
-text
+
+<br><br>
+
+## 14. Attack Scenario – Complete Chain
+### USB Baiting Attack Chain
+
+#### Phase 1: Preparation
+Attacker creates a malicious USB containing:
+- AutoRun malware
+- Keylogger
+- Fake file (e.g., "employee_salaries.xlsx") as a lure
+
+#### Phase 2: Deployment
+Attacker places USB devices in:
+- Hospital parking lot
+- Employee break room
+
+#### Phase 3: Discovery
+Employee finds USB:
+> "Someone lost this, maybe I can find owner info"
+
+#### Phase 4: Insertion
+Employee plugs USB into work PC → AutoPlay executes malware
+
+#### Phase 5: Compromise
+- Keylogger captures credentials
+- Backdoor establishes attacker connection
+- Malware spreads across the network
+
+#### Phase 6: Impact
+- Patient records stolen
+- Ransomware deployed
+- Hospital operations disrupted
+
+
+**Attack Type:** Social Engineering (Physical)  
+**MITRE ATT&CK Techniques:**
+- Initial Access: Removable Media
+- Credential Access: Keylogging
+- Lateral Movement: Network propagation
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
 
 ---
 
-## 14. Attack Scenario – Complete Chain
-USB BAITING ATTACK CHAIN
-
-Phase 1: PREPARATION
-─────────────────────────────────────────────────────────────
-Attacker creates malicious USB with:
-• AutoRun malware
-• Keylogger
-• Fake "employee_salaries.xlsx" as lure
-
-Phase 2: DEPLOYMENT
-─────────────────────────────────────────────────────────────
-Attacker drops USB in hospital parking lot and employee break room
-
-Phase 3: DISCOVERY
-─────────────────────────────────────────────────────────────
-Employee finds USB → "Someone lost this, maybe I can find owner info"
-
-Phase 4: INSERTION
-─────────────────────────────────────────────────────────────
-Employee plugs USB into work PC → AutoPlay executes malware
-
-Phase 5: COMPROMISE
-─────────────────────────────────────────────────────────────
-• Keylogger captures passwords
-• Backdoor opens connection to attacker
-• Malware spreads across network
-
-Phase 6: IMPACT
-─────────────────────────────────────────────────────────────
-• Patient records stolen
-• Ransomware deployed
-• Hospital operations disrupted
+<br><br><br><br>
 
 
 
@@ -3702,37 +3874,20 @@ Phase 6: IMPACT
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Module 14: Incident Investigation and Response
+# Lab 13: Incident Investigation and Response
 
 **Focus Area:** Incident Response | Threat Intelligence | Malware Analysis | Phishing Investigation  
 **Frameworks Applied:** NIST Incident Response Lifecycle | MITRE ATT&CK | Pyramid of Pain  
 **Tools Used:** VirusTotal  
-**Date:** [YYYY-MM-DD]  
 **Skills:** Malware Analysis | IoC Identification | Phishing Playbook Application | Incident Escalation | Security Reporting | Post-Incident Review  
 
----
+<br><br>
 
 ## Objective
 
 Develop practical skills in incident investigation, threat intelligence analysis, and incident response using industry-relevant tools and frameworks. This lab simulates real-world Security Operations Center (SOC) workflows including malware analysis, phishing investigation, and post-incident reporting.
 
----
+<br><br>
 
 ## 1. Lab Activities Summary
 
@@ -3742,7 +3897,7 @@ Develop practical skills in incident investigation, threat intelligence analysis
 | 2 | Phishing incident response | Phishing playbook, 5 W's framework | Standardized incident handling |
 | 3 | Incident report review | NIST Incident Response Lifecycle | Post-incident improvement |
 
----
+<br><br>
 
 ## 2. Tools and Frameworks Used
 
@@ -3754,7 +3909,7 @@ Develop practical skills in incident investigation, threat intelligence analysis
 | **NIST Incident Response Lifecycle** | 4-phase framework (Prepare → Detect → Respond → Recover) |
 | **MITRE ATT&CK** | Knowledge base of adversary tactics and techniques |
 
----
+<br><br>
 
 ## 3. Activity 1: Investigate a Suspicious File Hash
 
@@ -3798,41 +3953,22 @@ A suspicious file downloaded via an email attachment was submitted for analysis.
 ### Pyramid of Pain – IoC Classification
 
 The Pyramid of Pain categorizes IoCs by how difficult they are for attackers to change when defenders discover them.
-▲
-/█
-/ █
-/ █
-/ █
-/ █
-/ TTPs
-/ (C2)
-/──────────────
-/ Tools
-/ (Input capture)
-/────────────────────
-/ Network/Host
-/ Artifacts (HTTP)
-/────────────────────────────
-/ Domain Name
-/ (org.misecure.com)
-/──────────────────────────────────
-/ IP Address
-/ (207.148.109.242)
-/────────────────────────────────────────
-/ Hash Values
-/ (SHA256, MD5 - easiest to change)
-/──────────────────────────────────────────────\
 
-text
+| Pyramid Level      | Example IoC              | Attacker Difficulty | Defender Value |
+|-------------------|--------------------------|---------------------|----------------|
+| TTPs              | Command & Control (C2) | Very Hard (change attack methodology) | Very High      |
+| Tools             | Input capture software (keylogger) | Hard (develop new tool) | High           |
+| Network Artifacts | HTTP communication       | Moderate (change protocol slightly) | Medium         |
+| Domain Names      | org.misecure.com         | Moderate (register new domain) | Medium         |
+| IP Addresses      | 207.148.109.242          | Easy (use different C2 server) | Low–Medium     |
+| Hash Values       | SHA256, MD5              | Trivial (recompile malware) | Low            |
 
-| Pyramid Level | IoC | Attacker Difficulty to Change | Defender Value |
-|---------------|-----|------------------------------|----------------|
-| **Hash Values** | SHA256, MD5 | Trivial (recompile malware) | Low |
-| **IP Address** | 207.148.109.242 | Easy (use different C2 server) | Low-Medium |
-| **Domain Name** | org.misecure.com | Moderate (register new domain) | Medium |
-| **Network Artifact** | HTTP communication | Moderate (change protocol slightly) | Medium |
-| **Tool** | Input capture software | Hard (develop new tool) | High |
-| **TTP** | Command & Control | Very Hard (change attack methodology) | Very High |
+
+**Key Concept:**
+The higher you detect in the pyramid, the more costly it is for attackers to adapt.
+- Bottom (Hash/IP) → Easy for attacker to evade  
+- Top (TTPs) → Forces attacker to change behavior 🔥
+
 
 ### MITRE ATT&CK Mapping
 
@@ -3842,7 +3978,7 @@ text
 | Input Capture | T1056 | Credential harvesting via keylogging |
 | Unauthorized Process Execution | T1204 | User Execution |
 
----
+<br><br>
 
 ## 4. Activity 2: Phishing Incident Response
 
@@ -3874,36 +4010,26 @@ A phishing alert was triggered when an employee downloaded and opened a maliciou
 | **Why** | Attempt to deliver malware and compromise sensitive systems |
 
 ### Incident Response Playbook Steps
-Step 1: Triage
-│
-├──→ Verify alert legitimacy
-│
-▼
-Step 2: Analysis
-│
-├──→ Extract email headers, sender, attachments
-├──→ Verify file hash in VirusTotal (confirmed malicious)
-├──→ Identify phishing indicators
-│
-▼
-Step 3: Containment
-│
-├──→ Isolate affected workstation
-├──→ Block sender domain and IP
-│
-▼
-Step 4: Escalation
-│
-├──→ Document findings
-├──→ Escalate to Level 2 SOC analyst
-│
-▼
-Step 5: Post-Incident
-│
-├──→ User awareness reminder
-└──→ Update playbook if needed
 
-text
+## Incident Response Playbook Steps
+
+| Step | Phase | Actions | Objective | 
+|------|-------|---------|-----------|
+| 1 | Triage | Verify alert legitimacy | Validate alert | 
+| 2 | Analysis | Extract headers, analyze attachments, check hash (VirusTotal), identify phishing indicators | Investigate threat |
+| 3 | Containment | Isolate workstation, block malicious domain/IP | Limit damage | 
+| 4 | Escalation | Document findings, escalate to Level 2 SOC | Engage higher support | 
+| 5 | Post-Incident | User awareness training, update playbook | Improve security posture |
+
+
+**Tools Used:**
+- Email header analyzer
+- VirusTotal (hash verification)
+- SIEM / SOC monitoring tools
+
+**Attack Type:** Phishing → Malware Delivery  
+**Response Goal:** Detect, contain, and prevent lateral movement
+
 
 ### Response Actions Taken
 
@@ -3928,9 +4054,9 @@ text
 
 Based on investigation and evidence, the ticket was escalated to a Level 2 SOC analyst for further investigation, following the organization's phishing playbook. This ensures prompt containment and reduces risk of malware spreading across the network.
 
-**Final Decision:** ✅ Escalated
+**Final Decision:**  Escalated
 
----
+<br><br>
 
 ## 5. Activity 3: Review of Incident Final Report
 
@@ -3946,15 +4072,6 @@ Based on investigation and evidence, the ticket was escalated to a Level 2 SOC a
 | **Impact** | Customer data exposed |
 
 ### Incident Timeline
-Dec 22, 2022 Dec 28, 2022 Dec 28-31, 2022
-│ │ │
-▼ ▼ ▼
-Extortion email Second email Investigation
-received & received with conducted,
-ignored proof of breach vulnerability
-identified
-
-text
 
 | Date | Event |
 |------|-------|
@@ -3963,18 +4080,24 @@ text
 | Dec 28, 2022 | Incident reported to security team |
 | Dec 28–31, 2022 | Investigation conducted; vulnerability identified |
 
+**Key Observation:**
+- Delay between first and second email allowed attacker persistence
+- Late response increased impact
+
+**Risk Level:** High
+
+
 ### Attack Method – Forced Browsing Explained
-Normal Access:
-User → /order?id=12345 → Only sees own order
+#### Normal Access:
+- User → /order?id=12345 → Only sees own order
 
-Forced Browsing Attack:
-Attacker → /order?id=12346 → Sees another user's order
-Attacker → /order?id=12347 → Sees another user's order
-Attacker → /order?id=12348 → Sees another user's order
+#### Forced Browsing Attack (Sequential ID enumeration):
+- Attacker → /order?id=12346 → Sees another user's order
+- Attacker → /order?id=12347 → Sees another user's order
+- Attacker → /order?id=12348 → Sees another user's order
 
-(Sequential ID enumeration)
 
-text
+
 
 ### Response Actions Taken
 
@@ -3986,22 +4109,14 @@ text
 | Provided identity protection services | Mitigate customer impact |
 
 ### NIST Incident Response Lifecycle Mapping
-┌─────────────────────────────────────────────────────────────────┐
-│ NIST INCIDENT RESPONSE LIFECYCLE │
-├─────────────────────────────────────────────────────────────────┤
-│ │
-│ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
-│ │ Prepare │ ──→ │ Detect │ ──→ │ Respond │ ──→ │ Recover │
-│ └──────────┘ └──────────┘ └──────────┘ └──────────┘
-│ │ │ │ │
-│ ▼ ▼ ▼ ▼
-│ Vulnerability Forced browsing Log analysis Customer
-│ scanning detected Web app patch notification
-│ (Recommendation) (Dec 28) (Dec 28-31) Identity protection
-│ │
-└─────────────────────────────────────────────────────────────────┘
 
-text
+| Phase | Activity | What Happened | Gap Identified | Improvement | Description |
+|-------|----------|---------------|----------------|-------------|-------------|
+| Prepare | Vulnerability scanning | No preventive controls | Missing access control testing | Implement secure coding & audits | Preventive security measures         |
+| Detect | Forced browsing detected | Attack discovered late | Lack of monitoring | Deploy logging & alerting (SIEM) | Identify security incident (Dec 28) |
+| Respond | Log analysis, web app patching | Investigation + patching | Reactive response | Faster incident handling | Investigate and contain (Dec 28–31) |
+| Recover | Customer notification, identity protection | Customer notification | Reputational impact | Improve incident communication | Restore trust and operations |
+
 
 ### Recommendations
 
@@ -4020,7 +4135,7 @@ text
 | Strong access control prevents unauthorized access | URL allowlisting + authentication required |
 | Post-incident documentation improves security posture | Learn from incidents to prevent recurrence |
 
----
+<br><br>
 
 ## 6. NIST Incident Response Lifecycle – Quick Reference
 
@@ -4032,7 +4147,7 @@ text
 | **Recover** | Restore, monitor | Customer notifications, identity protection |
 | **Post-Incident** | Lessons learned, improve | Recommendations documented |
 
----
+<br><br>
 
 ## 7. Pyramid of Pain – Quick Reference
 
@@ -4047,7 +4162,7 @@ text
 
 **Key Insight:** Detecting TTPs (Tactics, Techniques, Procedures) forces attackers to change their entire methodology – the most valuable detection.
 
----
+<br><br>
 
 ## 8. MITRE ATT&CK Framework Mapping
 
@@ -4061,7 +4176,7 @@ text
 | Command & Control | Application Layer Protocol | T1071 | HTTP to malicious domain |
 | Exfiltration | Exfiltration Over C2 Channel | T1041 | Data sent to attacker |
 
----
+<br><br>
 
 ## 9. Skills Demonstrated
 
@@ -4076,7 +4191,7 @@ text
 | Post-incident review | Analyzed final report for root cause |
 | Recommendation development | Proposed vulnerability scanning, access controls |
 
----
+<br><br>
 
 ## 10. Reflection
 
@@ -4099,7 +4214,7 @@ This lab provided hands-on experience in analyzing real-world security incidents
 
 **Demonstrates:** Incident investigation methodology, threat intelligence application, and professional SOC documentation.
 
----
+<br><br>
 
 ## 11. Appendix: Key Terminology
 
@@ -4116,26 +4231,26 @@ This lab provided hands-on experience in analyzing real-world security incidents
 | **C2 (C&C)** | Command and Control – attacker communication channel |
 | **SOC** | Security Operations Center |
 
----
+<br><br>
 
 ## 12. Incident Response Quick Reference
 
 ### Phishing Email Checklist
-□ Check sender email address (domain mismatch?)
-□ Verify display name vs. actual sender
-□ Examine subject line (urgency, grammar errors?)
-□ Hover over links (do they match displayed text?)
-□ Check attachments (unexpected .exe, .zip, .js?)
-□ Look for urgency/pressure tactics
-□ Verify with sender via out-of-band communication
+| Check | Criteria | 
+|-------|----------|
+| () | Check sender email address (domain mismatch?) |
+| () | Verify display name vs. actual sender |
+| () | Examine subject line (urgency, grammar errors?) |
+| () | Hover over links (do they match displayed text?) |
+| () | Check attachments (unexpected .exe, .zip, .js?) |
+| () | Look for urgency/pressure tactics |
+| () | Verify with sender via out-of-band communication |
 
-text
+
 
 ### Pyramid of Pain (Difficulty for Attacker)
-Easiest to Change ──────────────────────────► Hardest to Change
-Hash < IP < Domain < Artifact < Tool < TTP
+Hash (Easiest to Change) < IP < Domain < Artifact < Tool < TTP (Hardest to Change)
 
-text
 
 ### NIST IR Lifecycle (4 Phases)
 Prepare → Detect & Analyze → Contain & Eradicate → Recover → (Post-Incident)
@@ -4151,36 +4266,39 @@ Prepare → Detect & Analyze → Contain & Eradicate → Recover → (Post-Incid
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Module 15: Network Monitoring and Analysis
-
-**Focus Area:** Network Traffic Analysis | Packet Capture | Protocol Analysis  
-**Tools Used:** Wireshark | tcpdump  
-**Date:** [YYYY-MM-DD]  
-**Skills:** Packet Inspection | Filter Application | Live Traffic Capture | Protocol Layering | Tool Comparison  
+<br><br><br><br>
 
 ---
+
+<br><br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Lab 14: Network Monitoring and Analysis
+
+**Focus Area:** Network Traffic Analysis | Packet Capture | Protocol Analysis  
+**Tools Used:** Wireshark | tcpdump 
+**Skills:** Packet Inspection | Filter Application | Live Traffic Capture | Protocol Layering | Tool Comparison  
+
+<br><br>
 
 ## Objective
 
 Analyze and monitor network traffic using industry-standard tools (Wireshark and tcpdump). This lab demonstrates packet analysis, packet capture, and tool comparison through three main activities.
 
----
+<br><br>
 
 ## 1. Lab Activities Summary
 
@@ -4190,31 +4308,24 @@ Analyze and monitor network traffic using industry-standard tools (Wireshark and
 | 2 | Capture live network traffic | tcpdump | Live capture, interface selection, file saving |
 | 3 | Compare network analyzers | Research | Tool evaluation, use case identification |
 
----
+<br><br>
 
 ## 2. Activity 1: Analyze Your First Packet (Wireshark)
 
 **Objective:** Use Wireshark to open and analyze a packet capture (.pcap) file, understanding packet structure, protocol layers, and applying filters.
 
 ### Packet Structure – OSI Model Layers
-┌─────────────────────────────────────────────────────────────┐
-│ Application Layer │
-│ (HTTP, DNS, HTTPS) - User data │
-├─────────────────────────────────────────────────────────────┤
-│ Transport Layer │
-│ (TCP, UDP) - Ports, sequence numbers, flags │
-├─────────────────────────────────────────────────────────────┤
-│ Network Layer │
-│ (IPv4, IPv6) - Source/destination IP addresses │
-├─────────────────────────────────────────────────────────────┤
-│ Data Link Layer │
-│ (Ethernet) - MAC addresses │
-├─────────────────────────────────────────────────────────────┤
-│ Physical Layer │
-│ (Frame) - Raw bits on wire │
-└─────────────────────────────────────────────────────────────┘
+## Packet Analysis – Wireshark (Security View)
 
-text
+| Layer | Example Data | Description | What to Look For in Wireshark | Security Insight |
+|-------|--------------|-------------|-------------------------------|------------------|
+| Application | HTTP, DNS, HTTPS request | User-level data | URLs, headers, payload | Detect phishing, data leaks |
+| Transport | TCP/UDP segments | Ports, sequencing, reliability | Ports, flags (SYN, ACK) | Identify scanning or floods |
+| Network | IP packets (IPv4, IPv6) | Source/destination IP addressing | Source/destination IP | Trace attacker origin |
+| Data Link | Ethernet frames | MAC addresses and frames | MAC addresses| Detect ARP spoofing |
+| Physical | Bits | Raw bits transmitted over medium | Raw capture data | Low-level transmission layer |
+
+
 
 ### Wireshark Filters Used
 
@@ -4290,7 +4401,7 @@ text
 | Identify potential intrusions | Detect scanning, exploitation attempts |
 | Investigate incidents | Forensic analysis of captured traffic |
 
----
+<br><br>
 
 ## 3. Activity 2: Capture Your First Packet (tcpdump)
 
@@ -4305,214 +4416,233 @@ ifconfig
 # List interfaces suitable for capture
 sudo tcpdump -D
 Selected interface: eth0 (primary Ethernet interface)
+```
 
-tcpdump Command Reference
-Command	Purpose
-sudo tcpdump -i eth0 -v -c5	Capture 5 packets from eth0 with verbose output
-sudo tcpdump -i eth0 -nn -c9 port 80 -w capture.pcap &	Capture 9 HTTP packets, save to file, run in background
-sudo tcpdump -nn -r capture.pcap -v	Read saved capture with verbose output
-sudo tcpdump -nn -r capture.pcap -X	Read saved capture with hex and ASCII output
-tcpdump Options Explained
-Option	Meaning	Security Relevance
--i eth0	Capture on interface eth0	Target specific network segment
--v	Verbose output	More packet details
--c5	Capture 5 packets then exit	Limit capture size
--nn	No name resolution	Prevents DNS leaks during capture
-port 80	Filter HTTP traffic	Focus on web traffic
--w capture.pcap	Write to file	Save for later analysis
--r capture.pcap	Read from file	Analyze saved capture
--X	Hex and ASCII output	Deep packet inspection
-&	Run in background	Simultaneous traffic generation
-Capture Process
-text
-Step 1: Start tcpdump in background
-        sudo tcpdump -i eth0 -nn -c9 port 80 -w capture.pcap &
-                    │
-                    ▼
-Step 2: Generate traffic while tcpdump runs
-        curl opensource.google.com
-                    │
-                    ▼
-Step 3: tcpdump captures 9 packets and exits
-                    │
-                    ▼
-Step 4: Verify capture file
-        ls -l capture.pcap
-                    │
-                    ▼
-Step 5: Analyze captured packets
-        sudo tcpdump -nn -r capture.pcap -v
-        sudo tcpdump -nn -r capture.pcap -X
-Key Findings
-Finding	Implication
-Successfully captured HTTP traffic (port 80)	Web traffic monitoring possible
-Observed TCP handshake (SYN, SYN-ACK, ACK)	Connection establishment visible
-Identified packet metadata (TTL, flags, sequence numbers)	Deep packet inspection possible
--nn option prevented name resolution	Secure capture (no DNS leaks)
-TCP Handshake Observed
-text
-Client                    Server
-  │                         │
-  │─────── SYN ────────────→│  (Sequence # = x)
-  │                         │
-  │←──── SYN-ACK ───────────│  (Sequence # = y, ACK = x+1)
-  │                         │
-  │─────── ACK ────────────→│  (ACK = y+1)
-  │                         │
-  │─────── HTTP GET ───────→│
-  │                         │
-  │←──── HTTP 200 OK ───────│
-4. Activity 3: Research Network Protocol Analyzers
+### tcpdump Command Reference
+| Command | Purpose |
+|---------|---------|
+| `sudo tcpdump -i eth0 -v -c5` | Capture 5 packets from eth0 with verbose output |
+| `sudo tcpdump -i eth0 -nn -c9 port 80 -w capture.pcap &` | Capture 9 HTTP packets, save to file, run in background |
+| `sudo tcpdump -nn -r capture.pcap -v` | Read saved capture with verbose output |
+| `sudo tcpdump -nn -r capture.pcap -X` | Read saved capture with hex and ASCII output |
+
+### tcpdump Options Explained
+| Option | Meaning | Security Relevance |
+|--------|---------|-------------------|
+| `-i eth0` | Capture on interface eth0 | Target specific network segment |
+| `-v` | Verbose output | More packet details |
+| `-c5` | Capture 5 packets then exit | Limit capture size |
+| `-nn` | No name resolution | Prevents DNS leaks during capture |
+| `port 80` | Filter HTTP traffic | Focus on web traffic |
+| `-w capture.pcap` | Write to file | Save for later analysis |
+| `-r capture.pcap` | Read from file | Analyze saved capture |
+| `-X` | Hex and ASCII output | Deep packet inspection |
+| `&` | Run in background | Simultaneous traffic generation |
+
+
+### Capture Process
+| Step | Action | Command |
+|------|--------|---------|
+| 1 | Start tcpdump in background | sudo tcpdump -i eth0 -nn -c9 port 80 -w capture.pcap & | 
+| 2 | Generate traffic while tcpdump runs | curl opensource.google.com | 
+| 3 | tcpdump captures 9 packets and exits | - |
+| 4 | Verify capture file | ls -l capture.pcap | 
+| 5 | Analyze captured packets | sudo tcpdump -nn -r capture.pcap -v, sudo tcpdump -nn -r capture.pcap -X|
+        
+
+### Key Findings
+| Finding | Implication |
+|---------|-------------|
+| Successfully captured HTTP traffic (port 80) | Web traffic monitoring possible |
+| Observed TCP handshake (SYN, SYN-ACK, ACK) | Connection establishment visible |
+| Identified packet metadata (TTL, flags, sequence numbers) | Deep packet inspection possible |
+| `-nn` option prevented name resolution | Secure capture (no DNS leaks) |
+
+
+### TCP Handshake Observed
+
+
+| Step | Stage | Client Action | Server Response | Description | Security Relevance |
+|------|-------|---------------|-----------------|-------------|--------------------|
+| 1 | SYN | SYN (Seq = x) | — | Connection request | Can be used in SYN flood attacks |
+| 2 | SYN-ACK | — | SYN-ACK (Seq = y, Ack = x+1) | Acknowledge request | Confirms open port |
+| 3 | ACK | ACK (Ack = y+1) | — | Connection established | Session begins |
+| 4 | HTTP GET | HTTP GET request | — | Client requests resource | May expose sensitive endpoints |
+| 5 | HTTP 200 OK | — | HTTP 200 OK | Server returns requested data    | Data returned to client |
+
+
+**Key Insight:**
+- TCP handshake establishes reliable communication before data transfer.
+- Attackers may abuse SYN packets for DoS attacks (SYN flood).
+
+
+
+## 4. Activity 3: Research Network Protocol Analyzers
 Objective: Compare Wireshark and tcpdump to understand differences, similarities, and appropriate use cases.
 
-Comparison Matrix
-Feature	Wireshark	tcpdump
-Interface	Graphical (GUI)	Command-line (CLI)
-Ease of learning	Easier for beginners	Steeper learning curve
-Filtering	Advanced (visual filter builder)	Basic (command-line expressions)
-Visualization	Color-coded, graphs, streams	Text-only output
-Resource usage	High (memory, CPU)	Low (lightweight)
-Remote capture	Limited (requires GUI access)	Excellent (SSH + tcpdump)
-Scriptable	Limited	Fully scriptable
-Output formats	Multiple (pcap, JSON, CSV, etc.)	pcap primarily
-Real-time analysis	Yes (with GUI)	Yes (text-based)
-Cost	Free (open source)	Free (open source)
-Similarities
-Similarity	Description
-Packet capture	Both capture live network traffic
-Filtering capability	Both support BPF (Berkeley Packet Filter) syntax
-Protocol analysis	Both analyze common protocols (TCP, UDP, HTTP, DNS)
-Open source	Both are free and community-supported
-pcap support	Both read/write .pcap files
-Limitations
-Tool	Limitation
-Wireshark	Requires GUI (X11 forwarding or local desktop); higher resource usage
-tcpdump	CLI-only; requires proficiency with command-line filters; no visual output
-Use Cases
-Scenario	Recommended Tool	Justification
-Deep protocol analysis	Wireshark	Visual packet dissection, follow TCP streams
-Quick capture on server	tcpdump	Lightweight, no GUI needed
-Automated capture script	tcpdump	Scriptable, can run in cron jobs
-Training/learning	Wireshark	Visual feedback helps understanding
-Remote forensic capture	tcpdump	SSH + tcpdump, transfer pcap for analysis
-Large capture analysis	Wireshark	Better navigation, filtering, search
-Low-bandwidth environment	tcpdump	Minimal overhead
-Workflow Integration
-text
-┌─────────────────────────────────────────────────────────────────┐
-│                    TYPICAL SOC WORKFLOW                         │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│   Remote Server              Analyst Workstation                │
-│   ┌─────────────┐           ┌─────────────┐                    │
-│   │  tcpdump    │ ──scp──→ │  Wireshark  │                    │
-│   │  (capture)  │           │  (analyze)  │                    │
-│   └─────────────┘           └─────────────┘                    │
-│                                                                  │
-│   "Capture on server, analyze locally"                          │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-5. Filter Pattern Library
-Common Wireshark/tcpdump Filters
-Filter	Protocol/Field	Use Case
-tcp.port == 80	HTTP	Web traffic analysis
-udp.port == 53	DNS	Domain resolution investigation
-icmp	ICMP	Ping flood detection
-tcp.flags.syn == 1	SYN packets	Port scanning detection
-tcp.analysis.flags	TCP analysis	Retransmissions, out-of-order
-http.request	HTTP requests	Web browsing analysis
-dns.qry.name contains "google"	DNS queries	Domain pattern matching
-ip.addr == 192.168.1.1	IP address	Single host traffic
-tcp contains "password"	Payload	Credential detection
-frame.len > 1500	Frame size	Jumbo frame detection
-tcpdump BPF Filters
-Filter	Meaning
-host 192.168.1.1	Traffic to/from IP
-src host 192.168.1.1	Traffic from IP
-dst host 192.168.1.1	Traffic to IP
-port 80	Traffic on port 80
-tcp port 80	TCP port 80 only
-udp port 53	UDP port 53 only
-net 192.168.1.0/24	Entire subnet
-tcp[tcpflags] & tcp-syn != 0	SYN packets only
-6. Wireshark vs tcpdump – Quick Decision Guide
-text
-Do you need a GUI?
-        │
-        ├── YES ──→ Wireshark (visual analysis, easier for beginners)
-        │
-        └── NO ──→ Is it a remote server?
-                    │
-                    ├── YES ──→ tcpdump (lightweight, scriptable)
-                    │
-                    └── NO ──→ Is this for learning?
-                                │
-                                ├── YES ──→ Wireshark (visual feedback)
-                                │
-                                └── NO ──→ Either (both capable)
-7. Skills Demonstrated
-Skill	Application in Lab
-Packet inspection	Analyzed DNS, TCP, ICMP packets in Wireshark
-Protocol layering understanding	Identified Frame, Ethernet, IP, TCP layers
-Filter application	Used IP, port, protocol, and payload filters
-Live traffic capture	Used tcpdump to capture HTTP traffic
-Interface management	Identified and selected eth0 for capture
-Capture file management	Saved, verified, and analyzed .pcap files
-Tool evaluation	Compared Wireshark vs tcpdump features
-Security best practices	Used -nn to disable name resolution
-8. Tools and Concepts Used
-Tool/Concept	Application
-Wireshark	Graphical packet analysis
-tcpdump	Command-line packet capture
-BPF filters	Berkeley Packet Filter syntax
-.pcap format	Standard packet capture format
-TCP handshake	Observed SYN, SYN-ACK, ACK sequence
-Protocol layering	Analyzed encapsulation
-HTTP (port 80)	Captured web traffic
-DNS (port 53)	Observed domain resolution
-ICMP	Observed connectivity checks
-9. Reflection
+### Comparison Matrix
+| Feature | Wireshark | tcpdump |
+|---------|-----------|---------|
+| Interface | Graphical (GUI) | Command-line (CLI) |
+| Ease of learning | Easier for beginners | Steeper learning curve |
+| Filtering | Advanced (visual filter builder) | Basic (command-line expressions) |
+| Visualization | Color-coded, graphs, streams | Text-only output |
+| Resource usage | High (memory, CPU) | Low (lightweight) |
+| Remote capture | Limited (requires GUI access) | Excellent (SSH + tcpdump) |
+| Scriptable | Limited | Fully scriptable |
+| Output formats | Multiple (pcap, JSON, CSV, etc.) | pcap primarily |
+| Real-time analysis | Yes (with GUI) | Yes (text-based) |
+| Cost | Free (open source) | Free (open source) |
+
+### Similarities
+| Similarity | Description |
+|------------|-------------|
+| Packet capture | Both capture live network traffic |
+| Filtering capability | Both support BPF (Berkeley Packet Filter) syntax |
+| Protocol analysis | Both analyze common protocols (TCP, UDP, HTTP, DNS) |
+| Open source | Both are free and community-supported |
+| pcap support | Both read/write .pcap files |
+
+### Limitations
+| Tool | Limitation |
+|------|-------------|
+| Wireshark | Requires GUI (X11 forwarding or local desktop); higher resource usage |
+| tcpdump | CLI-only; requires proficiency with command-line filters; no visual output |
+
+### Use Cases
+| Scenario | Recommended Tool | Justification |
+|----------|-----------------|---------------|
+| Deep protocol analysis | Wireshark | Visual packet dissection, follow TCP streams |
+| Quick capture on server | tcpdump | Lightweight, no GUI needed |
+| Automated capture script | tcpdump | Scriptable, can run in cron jobs |
+| Training/learning | Wireshark | Visual feedback helps understanding |
+| Remote forensic capture | tcpdump | SSH + tcpdump, transfer pcap for analysis |
+| Large capture analysis | Wireshark | Better navigation, filtering, search |
+| Low-bandwidth environment | tcpdump | Minimal overhead |
+
+
+### Workflow Integration - SOC Pipeline
+
+Remote Server (tcpdump capture)
+- Secure transfer (SCP / SFTP)
+- Analyst Workstation (Wireshark analysis)
+
+**Principle:** Capture on server, analyze locally
+
+
+| Stage              | Tool        | Purpose                          |
+|--------------------|------------|----------------------------------|
+| Packet Capture     | tcpdump     | Collect network traffic          |
+| Secure Transfer    | SCP / SFTP  | Move data safely                 |
+| Traffic Analysis   | Wireshark   | Inspect packets visually         |
+| Investigation      | Analyst     | Identify anomalies or threats    |
+
+
+## Security Insight
+- Capturing on the server reduces risk of data loss
+- Local analysis prevents performance impact on production systems
+- This workflow is commonly used in SOC Level 1–2 investigations
+
+
+
+## 5. Filter Pattern Library
+### Common Wireshark/tcpdump Filters
+| Filter | Protocol/Field | Use Case |
+|--------|---------------|----------|
+| `tcp.port == 80` | HTTP | Web traffic analysis |
+| `udp.port == 53` | DNS | Domain resolution investigation |
+| `icmp` | ICMP | Ping flood detection |
+| `tcp.flags.syn == 1` | SYN packets | Port scanning detection |
+| `tcp.analysis.flags` | TCP analysis | Retransmissions, out-of-order |
+| `http.request` | HTTP requests | Web browsing analysis |
+| `dns.qry.name contains "google"` | DNS queries | Domain pattern matching |
+| `ip.addr == 192.168.1.1` | IP address | Single host traffic |
+| `tcp contains "password"` | Payload | Credential detection |
+| `frame.len > 1500` | Frame size | Jumbo frame detection |
+
+
+### tcpdump BPF Filters
+| Filter | Meaning |
+|--------|---------|
+| `host 192.168.1.1` | Traffic to/from IP |
+| `src host 192.168.1.1` | Traffic from IP |
+| `dst host 192.168.1.1` | Traffic to IP |
+| `port 80` | Traffic on port 80 |
+| `tcp port 80` | TCP port 80 only |
+| `udp port 53` | UDP port 53 only |
+| `net 192.168.1.0/24` | Entire subnet |
+| `tcp[tcpflags] & tcp-syn != 0` | SYN packets only |
+
+
+## 6. Wireshark vs tcpdump – Quick Decision Guide
+- Need GUI? → Wireshark  
+- Remote server? → tcpdump  
+- Learning/network visualization? → Wireshark  
+- General use? → Either tool works
+
+
+## 7. Skills Demonstrated
+| Skill | Application in Lab |
+|-------|-------------------|
+| Packet inspection | Analyzed DNS, TCP, ICMP packets in Wireshark |
+| Protocol layering understanding | Identified Frame, Ethernet, IP, TCP layers |
+| Filter application | Used IP, port, protocol, and payload filters |
+| Live traffic capture | Used tcpdump to capture HTTP traffic |
+| Interface management | Identified and selected eth0 for capture |
+| Capture file management | Saved, verified, and analyzed .pcap files |
+| Tool evaluation | Compared Wireshark vs tcpdump features |
+| Security best practices | Used `-nn` to disable name resolution |
+
+
+## 8. Tools and Concepts Used
+| Tool/Concept | Application |
+|--------------|-------------|
+| Wireshark | Graphical packet analysis |
+| tcpdump | Command-line packet capture |
+| BPF filters | Berkeley Packet Filter syntax |
+| .pcap format | Standard packet capture format |
+| TCP handshake | Observed SYN, SYN-ACK, ACK sequence |
+| Protocol layering | Analyzed encapsulation |
+| HTTP (port 80) | Captured web traffic |
+| DNS (port 53) | Observed domain resolution |
+| ICMP | Observed connectivity checks |
+
+
+## 9. Reflection
 This lab significantly improved my understanding of how network traffic operates and how security analysts investigate it.
 
-Activity 1 takeaways:
+### Activity 1 takeaways:
+- Packet analysis was initially overwhelming due to protocol complexity
+- Wireshark filters make traffic analysis manageable
+- Protocol layering (Ethernet → IP → TCP/UDP → Application) is consistent across packets
 
-Packet analysis was initially overwhelming due to protocol complexity
+### Activity 2 takeaways:
+- tcpdump is lightweight and ideal for remote/server captures
+- The -nn option is critical for secure captures (prevents DNS leaks)
+- Saving captures to .pcap enables later analysis in Wireshark
 
-Wireshark filters make traffic analysis manageable
-
-Protocol layering (Ethernet → IP → TCP/UDP → Application) is consistent across packets
-
-Activity 2 takeaways:
-
-tcpdump is lightweight and ideal for remote/server captures
-
-The -nn option is critical for secure captures (prevents DNS leaks)
-
-Saving captures to .pcap enables later analysis in Wireshark
-
-Activity 3 takeaways:
-
-Wireshark and tcpdump complement each other
-
-Master both: tcpdump for capture, Wireshark for analysis
-
-Use case determines the right tool
+### Activity 3 takeaways:
+- Wireshark and tcpdump complement each other
+- Master both: tcpdump for capture, Wireshark for analysis
+- Use case determines the right tool
 
 Demonstrates: Network traffic analysis proficiency, tool familiarity, and investigative methodology.
 
-10. Appendix: Key Terminology
-Term	Meaning
-Packet capture	Recording network traffic for analysis
-.pcap	Standard file format for captured packets
-BPF	Berkeley Packet Filter – syntax for filtering packets
-Encapsulation	Wrapping data with protocol headers at each layer
-TCP handshake	SYN, SYN-ACK, ACK – connection establishment
-TTL	Time To Live – hop limit for packets
-Sequence number	TCP field for packet ordering
-Name resolution	Converting IP addresses to hostnames (can leak in captures)
-11. Command Quick Reference
-tcpdump Common Commands
-bash
+## 10. Appendix: Key Terminology
+| Term | Meaning |
+|------|---------|
+| Packet capture | Recording network traffic for analysis |
+| .pcap | Standard file format for captured packets |
+| BPF | Berkeley Packet Filter – syntax for filtering packets |
+| Encapsulation | Wrapping data with protocol headers at each layer |
+| TCP handshake | SYN, SYN-ACK, ACK – connection establishment |
+| TTL | Time To Live – hop limit for packets |
+| Sequence number | TCP field for packet ordering |
+| Name resolution | Converting IP addresses to hostnames (can leak in captures) |
+
+## 11. Command Quick Reference
+### tcpdump Common Commands
+```bash
 # List interfaces
 sudo tcpdump -D
 
@@ -4534,7 +4664,6 @@ sudo tcpdump -i eth0 src host 192.168.1.1
 # Capture traffic to specific port
 sudo tcpdump -i eth0 dst port 443
 Wireshark Display Filters
-text
 ip.addr == 192.168.1.1          # Traffic to/from IP
 tcp.port == 443                 # HTTPS traffic
 http.request                    # HTTP GET/POST requests
@@ -4542,14 +4671,35 @@ dns.qry.name contains "example" # DNS queries for domain
 tcp.flags.syn == 1              # SYN packets only
 frame.len > 1500                # Large frames
 tcp.analysis.retransmission     # Retransmitted packets
-12. Security Best Practices for Packet Capture
-Practice	Why It Matters
-Use -nn in tcpdump	Prevents DNS lookups that could leak information
-Capture to file, analyze later	Minimizes time spent capturing live
-Use filters to limit capture	Reduces storage and focuses on relevant traffic
-Secure .pcap files	May contain sensitive data (passwords, PII)
-Run with least privilege	Use sudo only when necessary
-Document capture context	Timestamps, interfaces, filters used
+```
+
+## 12. Security Best Practices for Packet Capture
+| Practice | Why It Matters |
+|----------|----------------|
+| Use `-nn` in tcpdump | Prevents DNS lookups that could leak information |
+| Capture to file, analyze later | Minimizes time spent capturing live |
+| Use filters to limit capture | Reduces storage and focuses on relevant traffic |
+| Secure .pcap files | May contain sensitive data (passwords, PII) |
+| Run with least privilege | Use sudo only when necessary |
+| Document capture context | Timestamps, interfaces, filters used |
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br>
+
+---
+
+<br><br><br><br>
 
 
 
@@ -4566,6 +4716,512 @@ Document capture context	Timestamps, interfaces, filters used
 
 
 
+# Lab 15: Network Traffic and Logs using IDS and SIEM Tools
+
+**Focus Area:** Intrusion Detection | SIEM | Log Analysis | Threat Detection  
+**Tools Used:** Suricata | Splunk | Wazuh | Google Chronicle | jq  
+**Skills:** IDS Rule Writing | PCAP Analysis | SPL Queries | Log Correlation | Cloud SIEM | JSON Parsing  
+
+<br><br>
+
+## Objective
+
+Monitor, analyze, and query network traffic and logs using IDS (Suricata) and SIEM tools (Splunk, Wazuh, and Google Chronicle). Understand how security analysts detect, investigate, and correlate security events using different log sources and detection systems.
+
+<br><br>
+
+## 1. Lab Activities Summary
+
+| Activity | Tool | Focus | Key Skills |
+|----------|------|-------|------------|
+| 1 | Suricata (IDS) | Custom rules, PCAP analysis, alert generation | Rule writing, jq parsing |
+| 2 | Splunk Cloud (SIEM) | Log upload, SPL queries, authentication monitoring | SPL, log filtering |
+| 3 | Wazuh (SIEM) | SSH brute-force investigation | Field filtering, anomaly detection |
+| 4 | Google Chronicle (Cloud SIEM) | Structured security searches | Cloud SIEM, query language |
+
+<br><br>
+
+## 2. Tools Overview
+
+| Tool | Type | Purpose | Key Feature |
+|------|------|---------|-------------|
+| **Suricata** | IDS/IPS | Network traffic inspection | Rule-based detection, high performance |
+| **Splunk** | SIEM | Centralized log analysis | SPL query language, dashboards |
+| **Wazuh** | SIEM | Security monitoring | Open source, integrated with Elastic |
+| **Chronicle** | Cloud SIEM | Enterprise threat detection | Google-scale, cloud-native |
+| **jq** | CLI tool | JSON parsing | Lightweight, scriptable |
+
+---
+
+## 3. Activity 1: Explore Signatures and Logs with Suricata
+
+**Objective:** Use Suricata as an IDS to create custom rules, analyze network traffic, and generate alerts from a packet capture file.
+
+### Suricata Rule Structure
+Action → Protocol → Source IP → Source Port → Destination IP → Destination Port → Options
+
+#### Example:
+alert icmp any any → any any (msg:"ICMP traffic detected")
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| Action | What to do | alert |
+| Protocol | Network protocol | icmp |
+| Source IP | Origin of traffic | any |
+| Source Port | Source port | any |
+| Destination IP | Target system | any |
+| Destination Port | Target port | any |
+| Options | Rule metadata / message | msg:"alert" |
+
+
+### Security Insight
+- Suricata is an IDS/IPS engine used for network threat detection
+- Rules define what traffic should trigger alerts
+- "any any → any any" is commonly used for broad detection testing
+
+
+### Custom Rules Created
+
+| Action | Protocol | Source | Destination | Message | SID |
+|--------|----------|--------|-------------|---------|-----|
+| alert | icmp | any any | any any | "ICMP Ping Detected" | 1000001 |
+| alert | http | any any | any 80 | "HTTP GET Request Detected" | 1000002 |
+| alert | tcp | any any | any 22 | "SSH Connection Attempt" | 1000003 |
+
+### Rule Components Explained
+
+| Component | Example | Purpose |
+|-----------|---------|---------|
+| **Action** | `alert` | What to do when rule matches (alert, drop, reject, pass) |
+| **Protocol** | `icmp`, `http`, `tcp` | Which protocol to inspect |
+| **Source** | `any any` | Source IP and port (any = wildcard) |
+| **Direction** | `->` | Traffic direction (-> = to, <> = both ways) |
+| **Destination** | `any any` | Destination IP and port |
+| **Message** | `msg:"..."` | Alert text displayed |
+| **SID** | `sid:1000001` | Unique rule identifier |
+| **Revision** | `rev:1` | Rule version number |
+
+### Lab Files Used
+
+| File | Purpose |
+|------|---------|
+| `custom.rules` | Suricata detection rules |
+| `sample.pcap` | Network traffic capture (Wireshark sample) |
+| `fast.log` | Suricata alert log (quick summary) |
+| `eve.json` | Structured Suricata event logs (JSON format) |
+
+### Suricata Workflow
+
+| Stage | Input/Output | Description | Example | 
+|-------|--------------|-------------|---------|
+| Rule Definition | custom.rules | Defines detection logic | (rules file) | 
+| Traffic Input | sample.pcap | Packet capture for analysis | (traffic) | 
+| Processing | Suricata Engine | Matches traffic against rules | Engine | 
+| Alert Output | fast.log | Human-readable alerts | "ICMP Ping Detected" |
+| Structured Logs | eve.json | Machine-readable event data (JSON) | {"timestamp":"...", "src_ip":"...", "alert":{...}} |
+
+
+## Security Insight
+- `fast.log` is used for quick alert visibility
+- `eve.json` is used for SIEM integration (Splunk, ELK)
+- Suricata acts as both IDS and IPS depending on configuration
+
+
+### Sample eve.json Output
+```json
+{
+  "timestamp": "2026-04-21T10:15:01",
+  "src_ip": "192.168.1.10",
+  "dest_ip": "8.8.8.8",
+  "proto": "ICMP",
+  "alert": {
+    "signature": "ICMP Ping Detected"
+  },
+  "flow_id": 1111
+}
+```
+
+
+### jq Parsing Commands
+```bash
+# Extract all alerts
+jq '.alert' eve.json
+
+# Extract specific fields
+jq '{timestamp, src_ip, dest_ip, proto, alert_signature: .alert.signature}' eve.json
+
+# Filter by protocol
+jq 'select(.proto == "ICMP")' eve.json
+
+# Count alerts by signature
+jq -r '.alert.signature' eve.json | sort | uniq -c
+```
+
+
+### Skills Developed – Activity 1
+| Skill | Application |
+|-------|-------------|
+| IDS rule creation | Wrote custom rules for ICMP, HTTP, SSH |
+| Rule interpretation | Understood action, header, options structure |
+| Network traffic analysis | Applied rules to sample.pcap |
+| JSON log parsing | Used jq to extract fields from eve.json |
+| Event correlation | Used flow_id to track related events |
+
+
+### Security Relevance
+Suricata helps detect malicious or suspicious traffic in real time by applying rule-based inspection on network packets. Benefits include:
+- Real-time detection of known attack patterns
+- Custom rule creation for organization-specific threats
+- Structured logging (eve.json) for SIEM integration
+
+### Reflection – Activity 1
+This activity improved my understanding of how IDS tools inspect network traffic and generate alerts. I learned how to create rules, analyze structured logs, and use jq to extract specific fields for investigation.
+
+
+## 4. Activity 2: Perform a Query with Splunk
+Objective: Use Splunk Cloud to upload log data and perform searches using SPL (Search Processing Language).
+
+### Sample Log Data
+```
+2026-04-21 10:20:05 user=root action=ssh_login status=failure src_ip=192.168.1.15
+2026-04-21 10:20:10 user=guest action=login status=success src_ip=192.168.1.20
+2026-04-21 10:20:15 user=admin action=ssh_login status=failure src_ip=203.0.113.50
+2026-04-21 10:20:20 user=admin action=ssh_login status=failure src_ip=203.0.113.50
+2026-04-21 10:20:25 user=admin action=ssh_login status=success src_ip=203.0.113.50
+```
+
+### SPL Query Examples
+| Query | Purpose |
+|-------|---------|
+| `status=failure` | All failed authentication events |
+| `status=failure AND user=root` | Failed logins for root user |
+| `user=admin status=failure` | Failed logins for admin user |
+| `src_ip=192.168.1.15` | Activity from specific IP |
+| `action=ssh_login status=failure` | Failed SSH logins only |
+
+
+### Splunk Workflow
+## Splunk Log Analysis Workflow
+
+| Stage | Action | Purpose |
+|-------|--------|---------|
+| Data Ingestion | Upload log file | Import raw event data |
+| Query Execution | SPL search | Extract relevant events |
+| Filtering | Refine results | Remove noise, focus on anomalies |
+| Analysis | Identify suspicious activity | Detect threats or anomalies |
+
+
+### Skills Developed – Activity 2
+| Skill | Application |
+|-------|-------------|
+| SPL query construction | Built searches using field-value pairs |
+| Log filtering | Isolated authentication failures |
+| Dashboard navigation | Explored Splunk Cloud interface |
+
+
+### Security Relevance
+Splunk enables centralized log analysis to detect authentication failures and abnormal user behavior across enterprise systems.
+
+### Reflection – Activity 2
+This activity helped me understand how SIEM tools like Splunk can quickly filter large datasets to identify security-relevant events. The field-value pair syntax makes searching intuitive once you understand the log structure.
+
+
+
+## 5. Activity 3: Perform a Query with Wazuh
+Objective: Use Wazuh SIEM to investigate SSH brute-force attempts on a mail server.
+
+### Sample Wazuh Logs
+```
+Apr 21 10:30:01 mailsv sshd: Failed password for root from 192.168.1.10
+Apr 21 10:30:05 mailsv sshd: Failed password for root from 192.168.1.11
+Apr 21 10:30:09 mailsv sshd: Failed password for root from 192.168.1.12
+Apr 21 10:30:13 mailsv sshd: Failed password for root from 192.168.1.10
+Apr 21 10:30:17 mailsv sshd: Failed password for root from 192.168.1.11
+```
+
+### Query Used
+```
+host.keyword: mailsv AND (fail* OR failed) AND root
+```
+
+#### Query Breakdown
+| Component | Meaning | Purpose |
+|-----------|---------|---------|
+| `host.keyword: mailsv` | Filter by hostname | Focus on mail server |
+| `fail*` | Wildcard match | Catches "fail", "failed", "failure" |
+| `OR failed` | Alternative term | Ensures coverage |
+| `AND root` | Combine conditions | Target root user specifically |
+
+
+### Findings
+| Finding | Value |
+|---------|-------|
+| Total failed root SSH login attempts | 376 |
+| Multiple IP addresses involved | Yes (distributed brute-force) |
+| Sensitive data identified | vendor_sales logs in mail server |
+| Attack pattern | Credential brute-force |
+
+
+### Wazuh Investigation Workflow
+
+| Stage | Action | Result |
+|-------|--------|--------|
+| Detection | Identify suspicious host | mailsv flagged |
+| Query Execution | host:mailsv AND fail* | Log filtering applied |
+| Analysis | Review logs | Failed login patterns found |
+| Count Events | Aggregate failures | 376 attempts detected |
+| Source Analysis | Identify IPs | Multiple source IPs involved |
+
+
+### Skills Developed – Activity 3
+| Skill | Application |
+|-------|-------------|
+| SIEM threat investigation | Identified brute-force pattern |
+| Field-based filtering | Used `host.keyword` for precise filtering |
+| Log correlation | Linked multiple failed attempts |
+| Anomaly detection | Recognized 376 failures as abnormal |
+
+
+### Security Relevance
+Wazuh helps detect brute-force attacks and unauthorized access attempts in real time. The open-source nature allows customization for specific organizational needs.
+
+
+### Reflection – Activity 3
+This activity demonstrated how SIEM systems help security analysts investigate attack patterns such as brute-force login attempts. The ability to count and correlate failed attempts across multiple source IPs is essential for identifying distributed attacks.
+
+
+
+## 6. Activity 4: Perform a Query with Chronicle
+Objective: Use Google Chronicle as a cloud-based SIEM platform to perform structured security searches on ingested logs.
+
+### Chronicle Query Language
+| Query Type | Syntax | Purpose |
+|------------|--------|---------|
+| Event type filter | `metadata.event_type = "NETWORK_CONNECTION"` | Focus on network events |
+| Port filter | `target.port = 22` | SSH traffic only |
+| Action filter | `security_result.action = "FAIL"` | Failed actions only |
+| Combined | `target.port = 22 AND security_result.action = "FAIL"` | Failed SSH attempts |
+
+### Example Queries
+```
+-- All network connections
+metadata.event_type = "NETWORK_CONNECTION"
+
+-- SSH connection attempts
+target.port = 22
+
+-- Failed SSH attempts
+target.port = 22 AND security_result.action = "FAIL"
+
+-- Failed attempts from specific IP
+target.port = 22 AND security_result.action = "FAIL" AND principal.ip = "192.168.1.10"
+```
+
+
+### Chronicle vs Traditional SIEM
+| Feature | Chronicle (Cloud) | Traditional SIEM |
+|---------|-------------------|------------------|
+| Scalability | Google-scale (unlimited) | Hardware-limited |
+| Query speed | Sub-second on petabytes | Minutes to hours |
+| Maintenance | Zero (cloud-managed) | Significant |
+| Cost model | Consumption-based | Hardware + licensing |
+| Retention | Extended (years) | Limited (months) |
+
+
+### Skills Developed – Activity 4
+| Skill | Application |
+|-------|-------------|
+| Cloud SIEM navigation | Explored Chronicle interface |
+| Structured query language | Used field-based queries |
+| Security event investigation | Correlated network events |
+
+
+### Security Relevance
+Chronicle provides scalable cloud-based log analysis for enterprise-level threat detection, enabling rapid investigation across massive datasets.
+
+### Reflection – Activity 4
+This activity introduced cloud-based security monitoring and showed how large-scale log analysis is performed in modern SOC environments. The structured query language is intuitive once you understand the data schema.
+
+
+
+
+## 7. IDS vs SIEM – Comparison
+| Feature | IDS (Suricata) | SIEM (Splunk/Wazuh/Chronicle) |
+|---------|----------------|-------------------------------|
+| Data source | Network traffic | Logs (multiple sources) |
+| Scope | Network layer | Enterprise-wide |
+| Detection | Rule-based signatures | Correlation, analytics |
+| Alert type | Packet-level | Event-level |
+| Primary use | Real-time threat detection | Investigation, compliance |
+| Typical deployment | Network perimeter | Centralized logging |
+
+
+### How They Work Together
+
+| Step | Tool | Type | Function | Output | Workflow Role |
+|------|------|------|----------|--------|---------------|
+| 1 | Suricata | IDS | Detects network threats/intrusions | eve.json alerts | Initial detection of suspicious activity |
+| 2 | Splunk | SIEM | Log aggregation & correlation | Search results, dashboards | Correlates events across data sources |
+| 3 | Chronicle | Cloud SIEM | Large-scale threat analysis | Cloud analytics | Deep analysis and threat investigation |
+| 4 | SOC Analyst | Human | Investigates and responds | Incident reports, actions taken  | Final review, response, and decision-making |
+
+
+## 8. SOC Analyst Workflow – Complete Picture
+
+| Stage | Process | Output / Action |
+|-------|---------|-----------------|
+| Detection | Suricata IDS | ICMP scan detected |
+| Alerting | eve.json logs | Structured alert generated |
+| Ingestion | SIEM (Splunk/Wazuh) | Centralized log storage |
+| Investigation| Query & analysis | Identify related activity (Same source IP?, Other failed attempts?, Timeline of activity?) |
+| Correlation | Cross-log analysis | Multi-stage attack linked (Link IDS alerts with authentication logs, ICMP scan followed by SSH brute-force)|
+| Response | SOC containment | IP blocked, host isolated |
+
+
+
+## 9. Multi-SIEM Comparison
+| Feature | Splunk | Wazuh | Chronicle |
+|---------|--------|-------|-----------|
+| Deployment | Cloud or on-prem | On-prem (open source) | Cloud-only |
+| Query language | SPL | Lucene/KQL | YARA-L (custom) |
+| Learning curve | Moderate | Moderate | Low (structured) |
+| Cost | Commercial ($$$) | Free (open source) | Consumption-based |
+| Best for | Enterprise SOC | Budget-conscious teams | Google ecosystem |
+| Integration | Extensive | Elastic stack | Google Cloud |
+
+
+### When to Use Each
+| Scenario | Recommended Tool |
+|----------|------------------|
+| Deep packet inspection | Suricata (IDS) |
+| Enterprise log aggregation | Splunk |
+| Budget-conscious SOC | Wazuh |
+| Google Cloud environment | Chronicle |
+| Automated parsing | jq |
+
+
+## 10. Skills Demonstrated
+| Skill | Application in Lab |
+|-------|-------------------|
+| IDS rule writing | Created custom Suricata rules for ICMP, HTTP, SSH |
+| PCAP analysis | Applied rules to sample.pcap traffic capture |
+| JSON parsing | Used jq to extract fields from eve.json |
+| SPL queries | Searched Splunk for authentication failures |
+| SIEM investigation | Used Wazuh to identify SSH brute-force (376 attempts) |
+| Cloud SIEM | Queried Chronicle for network connections |
+| Log correlation | Linked events across multiple tools |
+| Tool comparison | Evaluated IDS vs SIEM, Splunk vs Wazuh vs Chronicle |
+
+
+## 11. Tool-Specific Query Reference
+### Suricata (jq)
+```bash
+# Extract all alerts
+jq '.alert' eve.json
+
+# Filter by protocol
+jq 'select(.proto == "ICMP")' eve.json
+
+# Show timestamp and signature only
+jq '{time: .timestamp, alert: .alert.signature}' eve.json
+```
+
+### Splunk (SPL)
+```spl
+# Basic search
+status=failure
+
+# Field-specific
+user=root status=failure
+
+# Time-based
+earliest=-24h status=failure
+
+# Statistical
+status=failure | stats count by user
+```
+
+
+### Wazuh (KQL)
+```kql
+host.keyword: mailsv AND (fail* OR failed) AND root
+Chronicle (YARA-L)
+yara
+metadata.event_type = "NETWORK_CONNECTION"
+target.port = 22
+security_result.action = "FAIL"
+```
+
+
+## 12. Overall Reflection
+This lab provided hands-on experience with IDS and SIEM tools used in real-world cybersecurity operations.
+
+Key takeaways by activity:
+
+| Activity | Key Insight |
+|----------|--------------|
+| Suricata | IDS provides packet-level visibility; custom rules enable organization-specific detection |
+| Splunk | SPL makes log analysis efficient; field-value pairs are intuitive |
+| Wazuh | Open-source SIEM is powerful; 376 failed attempts clearly indicates brute-force |
+| Chronicle | Cloud SIEM scales infinitely; structured queries enable rapid investigation |
+
+
+### Complete workflow understanding:
+- Suricata provides low-level network visibility (packets)
+- SIEM tools enable high-level event correlation (logs)
+- Together, they form the core of SOC monitoring
+
+Demonstrates: Practical proficiency with industry-standard IDS and SIEM tools, essential for SOC analyst roles.
+
+## 13. Appendix: Key Terminology
+| Term | Meaning |
+|------|---------|
+| IDS | Intrusion Detection System – monitors network traffic for threats |
+| IPS | Intrusion Prevention System – IDS that can block traffic |
+| SIEM | Security Information and Event Management – centralized logging |
+| SPL | Search Processing Language – Splunk's query language |
+| PCAP | Packet Capture – recorded network traffic |
+| eve.json | Suricata's structured JSON log format |
+| jq | Command-line JSON processor |
+| SID | Signature ID – unique rule identifier |
+| Brute-force | Repeated login attempts to guess credentials |
+| Flow ID | Unique identifier for a network flow (connection) |
+
+
+## 14. Quick Reference – Tool Commands
+### Suricata
+```bash
+# Run Suricata on PCAP
+suricata -r sample.pcap -S custom.rules
+
+# Read fast.log
+cat fast.log
+
+# Parse eve.json with jq
+jq '.' eve.json
+```
+
+
+### Splunk
+```spl
+# Search syntax
+field=value
+field=value AND field2=value2
+```
+
+
+### Wazuh
+```kql
+field.keyword: value AND (term1 OR term2)
+```
+
+
+### Chronicle
+```yara
+metadata.event_type = "TYPE"
+field = "value"
+field = "value" AND other_field = "value"
+```
 
 
 
@@ -4573,20 +5229,39 @@ Document capture context	Timestamps, interfaces, filters used
 
 
 
-# Module 16: Automate Cybersecurity Tasks with Python
+
+
+
+<br><br><br><br>
+
+---
+
+<br><br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+# Lab 16: Automate Cybersecurity Tasks with Python
 
 **Focus Area:** Security Automation | Scripting | Log Analysis | File Processing  
 **Tools Used:** Python 3  
-**Date:** [YYYY-MM-DD]  
 **Skills:** Functions | Conditional Logic | Loops | File Operations | Regular Expressions | Data Parsing  
 
----
+<br><br>
 
 ## Objective
 
 Demonstrate understanding and practical application of Python concepts for cybersecurity, including automation, data parsing, conditional logic, iterative statements, and file operations – essential skills for log analysis, threat detection, and system monitoring.
 
----
+<br><br>
 
 ## 1. Module Structure
 
@@ -4597,7 +5272,7 @@ Demonstrate understanding and practical application of Python concepts for cyber
 | 3 | String/list methods, regex, concatenation | Log parsing, pattern matching |
 | 4 | File operations, parsing | Allow list updates, log processing |
 
----
+<br><br>
 
 ## 2. Section 1: Python Fundamentals
 
@@ -4607,20 +5282,23 @@ Demonstrate understanding and practical application of Python concepts for cyber
 
 ```python
 # Single-line comment - explains code purpose
-
 """
 Multi-line comment / Docstring
 Used for function documentation
 """
-Conditional Statements (if, elif, else)
-Keyword	Purpose	Cybersecurity Use Case
-if	Execute if condition true	Check if login attempts exceeded limit
-elif	Else-if chain	Multi-condition user role checks
-else	Execute if no conditions true	Default deny access
-and	Both conditions true	Username AND IP match
-or	At least one condition true	Admin OR manager access
-not	Negate condition	NOT on blocklist
-python
+```
+
+### Conditional Statements (if, elif, else)
+| Keyword | Purpose | Cybersecurity Use Case |
+|---------|---------|----------------------|
+| `if` | Execute if condition true | Check if login attempts exceeded limit |
+| `elif` | Else-if chain | Multi-condition user role checks |
+| `else` | Execute if no conditions true | Default deny access |
+| `and` | Both conditions true | Username AND IP match |
+| `or` | At least one condition true | Admin OR manager access |
+| `not` | Negate condition | NOT on blocklist |
+
+```python
 # Login validation example
 if username == "bmoreno" and login_attempts < 5:
     print("Access granted")
@@ -4628,13 +5306,18 @@ elif status == 500:
     print("Server error - log this incident")
 else:
     print("Access denied - unauthorized user")
-Iterative Statements (for, while)
-Loop Type	Use Case	Example
-for	Iterate through known sequence	Process list of users
-while	Loop until condition changes	Retry login attempts
-break	Exit loop early	Stop after finding threat
-continue	Skip to next iteration	Skip whitelisted IPs
-python
+```
+
+
+### Iterative Statements (for, while)
+| Loop Type | Use Case | Example |
+|-----------|----------|---------|
+| `for` | Iterate through known sequence | Process list of users |
+| `while` | Loop until condition changes | Retry login attempts |
+| `break` | Exit loop early | Stop after finding threat |
+| `continue` | Skip to next iteration | Skip whitelisted IPs |
+
+```python
 # Iterate through user list
 for user in ["bmoreno", "tshah", "elarson"]:
     print(f"Checking logs for: {user}")
@@ -4643,8 +5326,10 @@ for user in ["bmoreno", "tshah", "elarson"]:
 while login_attempts < 5:
     login_attempts += 1
     print(f"Attempt {login_attempts} of 5")
-User-Defined Functions
-python
+```
+
+### User-Defined Functions
+```python
 def calculate_fails(total_attempts, failed_attempts):
     """Calculate failure percentage for security metrics"""
     fail_percentage = failed_attempts / total_attempts
@@ -4653,16 +5338,21 @@ def calculate_fails(total_attempts, failed_attempts):
 # Function call
 failure_rate = calculate_fails(50, 5)
 print(f"Failure rate: {failure_rate * 100}%")
-Built-in Functions
-Function	Purpose	Example	Output
-print()	Display output	print("Alert!")	Alert!
-type()	Get data type	type(True)	<class 'bool'>
-range()	Generate sequence	range(1, 10)	1-9
-max()	Find maximum	max(10, 15, 5)	15
-min()	Find minimum	min(10, 15, 5)	5
-sorted()	Sort sequence	sorted([10, 15, 5])	[5, 10, 15]
-Importing Modules
-python
+```
+
+
+### Built-in Functions
+| Function | Purpose | Example | Output |
+|----------|---------|---------|--------|
+| `print()` | Display output | `print("Alert!")` | Alert! |
+| `type()` | Get data type | `type(True)` | `<class 'bool'>` |
+| `range()` | Generate sequence | `range(1, 10)` | 1-9 |
+| `max()` | Find maximum | `max(10, 15, 5)` | 15 |
+| `min()` | Find minimum | `min(10, 15, 5)` | 5 |
+| `sorted()` | Sort sequence | `sorted([10, 15, 5])` | [5, 10, 15] |
+
+### Importing Modules
+```python
 # Import entire module
 import statistics
 
@@ -4673,17 +5363,23 @@ from statistics import mean, median
 data = [10, 20, 30, 40, 50]
 print(mean(data))    # 30
 print(median(data))  # 30
-3. Section 2: Functions and Modules
+```
+
+
+## 3. Section 2: Functions and Modules
 Concepts: User-defined Functions, Built-in Functions, Importing Modules
 
-Function Design Pattern
-python
+### Function Design Pattern
+```python
 def function_name(parameters):
     """Docstring describing function"""
     # Function body
     return output_value
-Cybersecurity Function Examples
-python
+```
+
+
+### Cybersecurity Function Examples
+```python
 # Validate login credentials
 def validate_login(username, password_hash, attempts):
     if attempts >= 5:
@@ -4696,42 +5392,58 @@ def validate_login(username, password_hash, attempts):
 # Calculate threat score
 def calculate_threat_score(failed_logins, suspicious_ports, anomaly_score):
     return (failed_logins * 2) + (suspicious_ports * 3) + (anomaly_score * 5)
-4. Section 3: Strings, Lists, and Regular Expressions
+```
+
+
+## 4. Section 3: Strings, Lists, and Regular Expressions
 Concepts: String Methods, List Methods, Regular Expressions, Advanced Syntax
 
-String Methods
-Method	Purpose	Example	Output
-.upper()	Convert to uppercase	"security".upper()	"SECURITY"
-.lower()	Convert to lowercase	"SECURITY".lower()	"security"
-.index()	Find position	"security".index("c")	2
-List Methods
-Method	Purpose	Example
-.append()	Add to end	username_list.append("btang")
-.insert()	Insert at index	username_list.insert(2, "wjaffrey")
-.remove()	Remove first match	username_list.remove("elarson")
-.index()	Find position	username_list.index("tshah")
-python
+### String Methods
+| Method | Purpose | Example | Output |
+|--------|---------|---------|--------|
+| `.upper()` | Convert to uppercase | `"security".upper()` | `"SECURITY"` |
+| `.lower()` | Convert to lowercase | `"SECURITY".lower()` | `"security"` |
+| `.index()` | Find position | `"security".index("c")` | 2 |
+
+### List Methods
+| Method | Purpose | Example |
+|--------|---------|---------|
+| `.append()` | Add to end | `username_list.append("btang")` |
+| `.insert()` | Insert at index | `username_list.insert(2, "wjaffrey")` |
+| `.remove()` | Remove first match | `username_list.remove("elarson")` |
+| `.index()` | Find position | `username_list.index("tshah")` |
+
+
+```python
 # User list management (access control)
 username_list = ["elarson", "fgarcia", "tshah"]
 username_list.insert(2, "wjaffrey")  # Add new hire
 username_list.remove("elarson")      # Remove departed employee
 username_list.append("btang")        # Add contractor
 print(username_list.index("tshah"))  # Find user position
-String and List Operations
-Operation	Syntax	Example	Result
-Concatenation	+	"IT" + "nwp12"	"ITnwp12"
-Bracket notation	[]	users[2]	Third element
-Slicing	[start:end]	"security"[0:4]	"secu"
-Regular Expressions (re module)
-Pattern	Meaning	Example Match
-\w	Word character (a-z, A-Z, 0-9, _)	a, Z, 9, _
-\d	Digit (0-9)	0, 1, 2
-.	Any character (except newline)	a, , !
-\s	Whitespace	space, tab, newline
-+	One or more	\w+ = one or more word chars
-*	Zero or more	\d* = zero or more digits
-{}	Exact count	\d{3} = exactly 3 digits
-python
+```
+
+### String and List Operations
+| Operation | Syntax | Example | Result |
+|-----------|--------|---------|--------|
+| Concatenation | `+` | `"IT" + "nwp12"` | `"ITnwp12"` |
+| Bracket notation | `[]` | `users[2]` | Third element |
+| Slicing | `[start:end]` | `"security"[0:4]` | `"secu"` |
+
+
+### Regular Expressions (re module)
+| Pattern | Meaning | Example Match |
+|---------|---------|---------------|
+| `\w` | Word character (a-z, A-Z, 0-9, _) | a, Z, 9, _ |
+| `\d` | Digit (0-9) | 0, 1, 2 |
+| `.` | Any character (except newline) | a, , ! |
+| `\s` | Whitespace | space, tab, newline |
+| `+` | One or more | `\w+` = one or more word chars |
+| `*` | Zero or more | `\d*` = zero or more digits |
+| `{}` | Exact count | `\d{3}` = exactly 3 digits |
+
+
+```python
 import re
 
 # Extract words from log entry
@@ -4746,16 +5458,21 @@ print(digits)  # ['5', '3', '3', '2']
 log_line = "Failed login from 192.168.1.100"
 ip_addresses = re.findall(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", log_line)
 print(ip_addresses)  # ['192.168.1.100']
-5. Section 4: File Operations and Parsing
+```
+
+
+## 5. Section 4: File Operations and Parsing
 Concepts: File Operations, Parsing (.split(), .join())
 
-File Operations
-Mode	Description	Use Case
-"r"	Read (default)	Read log files
-"w"	Write (overwrites)	Create allow list
-"a"	Append (adds to end)	Add to audit log
-"x"	Exclusive creation	Create new file
-python
+| Mode | Description | Use Case |
+|------|-------------|----------|
+| `"r"` | Read (default) | Read log files |
+| `"w"` | Write (overwrites) | Create allow list |
+| `"a"` | Append (adds to end) | Add to audit log |
+| `"x"` | Exclusive creation | Create new file |
+
+
+```python
 # Reading a file
 with open("login_attempts.txt", "r") as file:
     file_text = file.read()
@@ -4768,11 +5485,17 @@ with open("access_log.txt", "a") as file:
 # Writing a new allow list
 with open("allow_list.txt", "w") as file:
     file.write("elarson,bmoreno,tshah")
-Parsing with .split() and .join()
-Method	Purpose	Example
-.split()	String → List	"a,b,c".split(",") → ['a','b','c']
-.join()	List → String	",".join(['a','b','c']) → "a,b,c"
-python
+```
+
+
+### Parsing with .split() and .join()
+| Method | Purpose | Example |
+|--------|---------|---------|
+| `.split()` | String → List | `"a,b,c".split(",")` → `['a','b','c']` |
+| `.join()` | List → String | `",".join(['a','b','c'])` → `"a,b,c"` |
+
+
+```python
 # Parse comma-separated allow list
 approved_users = "elarson,bmoreno,tshah".split(",")
 print(approved_users)  # ['elarson', 'bmoreno', 'tshah']
@@ -4784,9 +5507,12 @@ print(removed_users)  # ['wjaffrey', 'jsoto', 'abernard']
 # Rebuild allow list as string
 approved_users_string = ",".join(["elarson", "bmoreno", "tshah"])
 print(approved_users_string)  # "elarson,bmoreno,tshah"
-6. Cybersecurity Script Examples
+```
+
+
+## 6. Cybersecurity Script Examples
 Example 1: Update Allow List
-python
+```python
 # Remove IP addresses from allow list
 def update_allow_list(allow_list_file, remove_list_file):
     # Read current allow list
@@ -4810,8 +5536,11 @@ def update_allow_list(allow_list_file, remove_list_file):
 
 # Usage
 updated_list = update_allow_list("allow_list.txt", "remove_list.txt")
-Example 2: Analyze Login Attempts
-python
+```
+
+
+### Example 2: Analyze Login Attempts
+```python
 # Analyze failed login attempts from log file
 def analyze_failed_logins(log_file, threshold=5):
     failed_attempts = {}
@@ -4835,8 +5564,11 @@ def analyze_failed_logins(log_file, threshold=5):
 # Usage
 suspicious_accounts = analyze_failed_logins("auth.log", threshold=5)
 print(f"Suspicious accounts: {suspicious_accounts}")
-Example 3: Parse HTTP Log
-python
+```
+
+
+### Example 3: Parse HTTP Log
+```python
 # Extract IP addresses and status codes from web log
 def parse_web_log(log_file):
     import re
@@ -4868,33 +5600,41 @@ def parse_web_log(log_file):
 # Usage
 stats = parse_web_log("access.log")
 print(f"Error rate: {stats['error_rate'] * 100}%")
-7. Python-Cybersecurity Mapping
-Python Concept	Cybersecurity Application
-Conditional statements	Access control decisions, alert thresholds
-Loops (for, while)	Processing log files, iterating through user lists
-Functions	Reusable threat detection modules
-File operations	Reading/writing allow lists, audit logs
-Regular expressions	Extracting IPs, usernames, timestamps from logs
-String methods	Normalizing log entries (.upper(), .lower())
-List methods	Managing user/IP allow/block lists
-.split() / .join()	Parsing CSV logs, formatting output
-8. Skills Demonstrated
-Skill	Application
-Conditional logic	Login validation, access control decisions
-Iterative processing	Looping through user lists, log entries
-Function creation	Reusable security analysis tools
-File I/O	Reading/writing allow lists, audit logs
-Regular expressions	Pattern matching in log files
-Data parsing	Splitting/joining strings for data extraction
-Module imports	Using statistics, re modules
-9. How to Run Python Scripts
-Prerequisites
-Python 3 installed (python --version to verify)
+```
 
-Script files in same directory as input files
 
-Execution Commands
-bash
+## 7. Python-Cybersecurity Mapping
+| Python Concept | Cybersecurity Application |
+|----------------|--------------------------|
+| Conditional statements | Access control decisions, alert thresholds |
+| Loops (for, while) | Processing log files, iterating through user lists |
+| Functions | Reusable threat detection modules |
+| File operations | Reading/writing allow lists, audit logs |
+| Regular expressions | Extracting IPs, usernames, timestamps from logs |
+| String methods | Normalizing log entries (`.upper()`, `.lower()`) |
+| List methods | Managing user/IP allow/block lists |
+| `.split()` / `.join()` | Parsing CSV logs, formatting output |
+
+
+## 8. Skills Demonstrated
+| Skill | Application |
+|-------|-------------|
+| Conditional logic | Login validation, access control decisions |
+| Iterative processing | Looping through user lists, log entries |
+| Function creation | Reusable security analysis tools |
+| File I/O | Reading/writing allow lists, audit logs |
+| Regular expressions | Pattern matching in log files |
+| Data parsing | Splitting/joining strings for data extraction |
+| Module imports | Using statistics, re modules |
+
+
+## 9. How to Run Python Scripts
+### Prerequisites
+- Python 3 installed (python --version to verify)
+- Script files in same directory as input files
+
+### Execution Commands
+```bash
 # Basic execution
 python filename.py
 
@@ -4913,92 +5653,117 @@ python update_allow_list.py
 
 # Run log analysis script
 python analyze_failed_logins.py
-10. Python Quick Reference Card
-Conditionals
-python
+```
+
+
+## 10. Python Quick Reference Card
+### Conditionals
+```python
 if condition:
     action
 elif other_condition:
     other_action
 else:
     default_action
-Loops
-python
+```
+
+
+### Loops
+```python
 for item in sequence:
     process(item)
 
 while condition:
     action
     update_condition
-Functions
-python
+```
+
+
+### Functions
+```python
 def function_name(param1, param2):
     result = param1 + param2
     return result
-File Operations
-python
+```
+
+
+### File Operations
+```python
 with open("file.txt", "r") as f:
     content = f.read()
 
 with open("file.txt", "w") as f:
     f.write("data")
-Regex Patterns
-python
+```
+
+
+### Regex Patterns
+```python
 import re
 re.findall(r"\d+", text)     # All digits
 re.findall(r"\w+", text)     # All words
 re.findall(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", text)  # IP addresses
-String/List Operations
-python
+```
+
+
+### String/List Operations
+```python
 text.upper()                 # Uppercase
 text.lower()                 # Lowercase
 text.split(",")              # Split by comma
 ",".join(list)               # Join with comma
 list.append(item)            # Add to end
 list.remove(item)            # Remove item
-11. Reflection
+```
+
+
+## 11. Reflection
 This module helped consolidate fundamental Python concepts while applying them to cybersecurity-related scenarios.
 
-Key takeaways:
+### Key takeaways:
 
-Concept	Insight
-Conditional logic	Essential for access control and alert thresholds
-Loops	Enable processing of large log files efficiently
-Functions	Promote code reuse for security tools
-File operations	Critical for updating allow lists and audit logs
-Regular expressions	Most powerful tool for log parsing
-String/list methods	Simplify data normalization and management
-Confidence gained:
+| Concept | Insight |
+|---------|---------|
+| Conditional logic | Essential for access control and alert thresholds |
+| Loops | Enable processing of large log files efficiently |
+| Functions | Promote code reuse for security tools |
+| File operations | Critical for updating allow lists and audit logs |
+| Regular expressions | Most powerful tool for log parsing |
+| String/list methods | Simplify data normalization and management |
 
-Automating routine security tasks
 
-Building scripts for incident response
-
-Parsing logs to extract Indicators of Compromise (IoCs)
+### Confidence gained:
+- Automating routine security tasks
+- Building scripts for incident response
+- Parsing logs to extract Indicators of Compromise (IoCs)
 
 Demonstrates: Python proficiency for security automation, log analysis, and operational efficiency.
 
-12. Appendix: Key Terminology
-Term	Meaning
-Syntax	Rules governing code structure
-Function	Reusable block of code
-Parameter	Input passed to function
-Return value	Output from function
-Conditional	Code that executes based on conditions (if/else)
-Iteration	Repeating code (loops)
-List	Ordered, mutable collection
-String	Sequence of characters
-Regex	Pattern matching language
-Parse	Extract information from data
-File I/O	Reading from/writing to files
-13. Next Steps for Python in Cybersecurity
-Skill Area	Learning Path
-Log analysis	Parse syslog, auth.log, web server logs
-Network automation	Use socket library for port scanning
-API integration	Query VirusTotal, Shodan via REST APIs
-Forensics	Parse PCAP files with scapy
-Incident response	Build automated triage scripts
-Threat hunting	Process large datasets with pandas
+## 12. Appendix: Key Terminology
+| Term | Meaning |
+|------|---------|
+| Syntax | Rules governing code structure |
+| Function | Reusable block of code |
+| Parameter | Input passed to function |
+| Return value | Output from function |
+| Conditional | Code that executes based on conditions (if/else) |
+| Iteration | Repeating code (loops) |
+| List | Ordered, mutable collection |
+| String | Sequence of characters |
+| Regex | Pattern matching language |
+| Parse | Extract information from data |
+| File I/O | Reading from/writing to files |
+
+
+## 13. Next Steps for Python in Cybersecurity
+| Skill Area | Learning Path |
+|------------|---------------|
+| Log analysis | Parse syslog, auth.log, web server logs |
+| Network automation | Use socket library for port scanning |
+| API integration | Query VirusTotal, Shodan via REST APIs |
+| Forensics | Parse PCAP files with scapy |
+| Incident response | Build automated triage scripts |
+| Threat hunting | Process large datasets with pandas |
 
 
 
@@ -5017,33 +5782,37 @@ Threat hunting	Process large datasets with pandas
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Module 17: Put It to Work – Prepare for Cybersecurity Jobs
-
-**Focus Area:** Professional Development | Log Analysis | Threat Detection | Generative AI  
-**Tools Used:** SIEM Concepts | TCREI Prompting Framework  
-**Date:** [YYYY-MM-DD]  
-**Skills:** Log Analysis | Risk Assessment | Professional Networking | AI Prompt Engineering | Security Awareness Training  
+<br><br><br><br>
 
 ---
+
+<br><br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Lab 17: Put It to Work – Prepare for Cybersecurity Jobs
+
+**Focus Area:** Professional Development | Log Analysis | Threat Detection | Generative AI  
+**Tools Used:** SIEM Concepts | TCREI Prompting Framework   
+**Skills:** Log Analysis | Risk Assessment | Professional Networking | AI Prompt Engineering | Security Awareness Training  
+
+<br><br>
 
 ## Objective
 
 Simulate real-world responsibilities of a junior cybersecurity analyst, including log analysis, professional development through security organizations, and leveraging generative AI for security awareness.
 
----
+<br><br>
 
 ## 1. Lab Activities Summary
 
@@ -5053,7 +5822,7 @@ Simulate real-world responsibilities of a junior cybersecurity analyst, includin
 | 2 | Explore cybersecurity organizations | Career planning, professional development |
 | 3 | Use generative AI for security awareness | Prompt engineering, content creation |
 
----
+<br><br>
 
 ## 2. Activity 1: Analyze Event Logs
 
@@ -5094,40 +5863,18 @@ Simulate real-world responsibilities of a junior cybersecurity analyst, includin
 | **Medium** | Implement alerting for repeated login failures | SIEM Engineer |
 
 ### SOC Investigation Workflow
-Log Entry Received
-│
-▼
-┌─────────────────────────────────────┐
-│ Initial Triage │
-│ - Identify abnormal patterns │
-│ - Categorize event type │
-└─────────────────────────────────────┘
-│
-▼
-┌─────────────────────────────────────┐
-│ Risk Assessment │
-│ - Evaluate likelihood & impact │
-│ - Assign priority level │
-└─────────────────────────────────────┘
-│
-▼
-┌─────────────────────────────────────┐
-│ Investigation │
-│ - Correlate with other logs │
-│ - Check historical activity │
-└─────────────────────────────────────┘
-│
-▼
-┌─────────────────────────────────────┐
-│ Response & Documentation │
-│ - Execute containment │
-│ - Document findings │
-│ - Escalate if needed │
-└─────────────────────────────────────┘
 
-text
+| Stage | Objective | Key Activities / Actions |
+|-------|-----------|--------------------------|
+| Log Entry Received | Detect event | Event detected in system logs |
+| Initial Triage | Identify suspicious logs | Identify abnormal patterns, classify event type |
+| Risk Assessment | Determine severity | Evaluate impact and likelihood, assign priority level |
+| Investigation | Confirm incident details | Correlate logs, analyze behavior, timeline analysis, check historical activity |
+| Response | Mitigate threat | Execute containment, block IoCs |
+| Documentation | Record findings | Document incident, report, escalate if needed |
 
----
+
+<br><br>
 
 ## 3. Activity 2: Explore Cybersecurity Organizations
 
@@ -5161,22 +5908,21 @@ text
 | **Cost** | Moderate | Moderate | High |
 
 ### Career Pathway Mapping
-Entry Level Mid Level Senior Level
-─────────────────────────────────────────────────────────────────────────────────
 
-SOC Analyst ──────────────────→ Incident Responder ─────────→ IR Manager
-│ │ │
-├── (ISC)² SSCP ├── SANS/GIAC ├── (ISC)² CISSP
-└── SANS SEC401 └── ISACA CISA └── ISACA CISM
+#### SOC Track
+SOC Analyst → Incident Responder → IR Manager  
+- SOC Analyst: (ISC)² SSCP, SANS SEC401  
+- Incident Responder: GIAC, ISACA CISA  
+- IR Manager: (ISC)² CISSP, ISACA CISM  
 
-Security Analyst ──────────────→ Security Engineer ──────────→ Security Architect
-│ │ │
-├── CompTIA Security+ ├── SANS/GIAC ├── (ISC)² CISSP
-└── ISACA CSX └── ISACA CRISC └── SANS MGT
+#### Security Engineering Track
+Security Analyst → Security Engineer → Security Architect  
+- Security Analyst: CompTIA Security+, ISACA CSX  
+- Security Engineer: SANS/GIAC, ISACA CRISC  
+- Security Architect: (ISC)² CISSP, SANS MGT
 
-text
 
----
+<br><br>
 
 ## 4. Activity 3: Use Generative AI for Security Awareness
 
@@ -5206,28 +5952,15 @@ text
 > *"As a cybersecurity analyst, create a clear and comprehensive reference guide on identifying phishing emails and malware threats for non-technical employees. Include common phishing indicators, malware warning signs, real-world examples, and best practices for detection and prevention. Format the guide using bullet points and ensure the tone is simple and easy to understand."*
 
 ### Generated Output Structure
-PHISHING & MALWARE AWARENESS GUIDE
-├── Common Phishing Indicators
-│ ├── Suspicious sender addresses
-│ ├── Urgent or threatening language
-│ ├── Mismatched URLs
-│ └── Unexpected attachments
-├── Malware Warning Signs
-│ ├── Slow system performance
-│ ├── Unexpected pop-ups
-│ ├── Unusual network activity
-│ └── File changes or encryption
-├── Real-World Examples
-│ ├── Fake invoice scam
-│ ├── CEO fraud (whaling)
-│ └── Credential harvesting
-└── Best Practices
-├── Verify before clicking
-├── Report suspicious emails
-├── Keep software updated
-└── Use MFA when available
+#### PHISHING & MALWARE AWARENESS GUIDE
 
-text
+| Section | Key Points |
+|---------|------------|
+| Phishing Indicators | Suspicious sender addresses, Urgent or threatening language, Mismatched URLs, Unexpected attachments | 
+| Malware Warning Signs | Slow system performance, Unexpected pop-ups, Unusual network activity, File changes or encryption |
+| Real-World Examples | Fake invoice scam, CEO fraud (whaling), Credential harvesting |
+| Prevention Techniques | Verify before clicking, Use MFA available, Report suspicious emails, Keep software updated |
+
 
 ### AI Prompt Engineering Best Practices
 
@@ -5239,7 +5972,7 @@ text
 | **Request examples** | "Include real-world examples" |
 | **Set tone** | "Simple and easy to understand" |
 
----
+<br><br>
 
 ## 5. Skills Demonstrated
 
@@ -5252,7 +5985,7 @@ text
 | AI prompt engineering | Applied TCREI framework for iterative improvement |
 | Content creation | Generated security awareness guide for non-technical audience |
 
----
+<br><br>
 
 ## 6. Junior SOC Analyst – Role Breakdown
 
@@ -5275,7 +6008,7 @@ text
 | **Communication** | Documentation, training content | Activity 3 guide |
 | **Professional** | Continuous learning, certifications | Organization research |
 
----
+<br><br>
 
 ## 7. Security Certification Pathway
 
@@ -5303,60 +6036,32 @@ text
 | CISM | ISACA | Information security management | GRC Manager |
 | GPEN | SANS/GIAC | Penetration testing | Pen Tester |
 
----
+<br><br>
 
 ## 8. TCREI Framework – Quick Reference
-┌─────────────────────────────────────────────────────────────────┐
-│ TCREI PROMPTING FRAMEWORK │
-├─────────────────────────────────────────────────────────────────┤
-│ │
-│ T - Task : What do you want the AI to do? │
-│ "Create a guide", "Summarize", "Explain" │
-│ │
-│ C - Context : What background info does the AI need? │
-│ "For non-technical employees" │
-│ │
-│ R - Role : Who is the AI acting as? │
-│ "As a cybersecurity analyst" │
-│ │
-│ E - Evaluate : Is the output good? What's missing? │
-│ Check clarity, accuracy, completeness │
-│ │
-│ I - Iterate : Refine and try again │
-│ Add specifics, adjust tone, request format │
-│ │
-└─────────────────────────────────────────────────────────────────┘
+### TCREI Prompting Framework (Unified Guide)
 
-text
+| Component | Step | Purpose | Meaning / Key Question | Example |
+|-----------|------|---------|------------------------|---------|
+| T – Task | Task | Define objective | What should the AI do? | "Explain phishing attacks" |
+| C – Context | Context | Provide background | What does the AI need to know? | "For beginners in cybersecurity" |
+| R – Role | Role | Assign persona | Who should the AI act as? | "Act as a SOC analyst" |
+| E – Evaluate | Evaluate | Assess output | Is it accurate, clear, and useful? | Check accuracy, clarity, completeness |
+| I – Iterate | Iterate | Improve prompt | How can it be refined? | Add details, adjust tone, re-run prompt |
 
----
+#### Example Prompt Using TCREI
 
-## 9. Job Application Checklist
+**T:** Explain phishing attacks  
+**C:** For non-technical employees  
+**R:** Act as a cybersecurity trainer  
+**E:** Ensure clarity and real-world examples  
+**I:** Simplify language and add examples if needed
 
-### Portfolio Readiness
 
-| Item | Status | Lab Module |
-|------|--------|------------|
-| Security audit documentation | ✅ | Module 2 |
-| Network analysis (tcpdump) | ✅ | Module 3 |
-| Attack analysis (Wireshark) | ✅ | Module 4 |
-| OS hardening | ✅ | Module 5 |
-| Incident response (NIST CSF) | ✅ | Module 6 |
-| Network hardening | ✅ | Module 7 |
-| SQL for security | ✅ | Module 8 |
-| Linux commands | ✅ | Module 9 |
-| Asset security | ✅ | Module 10 |
-| Data protection | ✅ | Module 11 |
-| Threat analysis | ✅ | Module 12 |
-| USB attack vectors | ✅ | Module 13 |
-| Incident investigation | ✅ | Module 14 |
-| Network monitoring | ✅ | Module 15 |
-| Python automation | ✅ | Module 16 |
-| Professional preparation | ✅ | Module 17 |
+<br><br>
 
----
 
-## 10. Reflection
+## 9. Reflection
 
 This lab strengthened my ability to perform core cybersecurity tasks and prepare for professional roles.
 
@@ -5377,9 +6082,9 @@ This lab strengthened my ability to perform core cybersecurity tasks and prepare
 
 **Demonstrates:** SOC analysis skills, professional development awareness, and modern AI tool application.
 
----
+<br><br>
 
-## 11. Appendix: Key Terminology
+## 10. Appendix: Key Terminology
 
 | Term | Meaning |
 |------|---------|
@@ -5394,11 +6099,11 @@ This lab strengthened my ability to perform core cybersecurity tasks and prepare
 | **CISSP** | Certified Information Systems Security Professional |
 | **Brute-force** | Repeated login attempts to guess credentials |
 
----
+<br><br>
 
-## 12. Professional Development Plan Template
+## 11. Professional Development Plan Template
 
-```markdown
+```
 ## My Cybersecurity Career Plan
 
 **Target Role:** SOC Analyst / Cybersecurity Analyst
@@ -5417,515 +6122,16 @@ This lab strengthened my ability to perform core cybersecurity tasks and prepare
 - [ ] Earn CISSP or CISM
 - [ ] Specialize in incident response or threat hunting
 - [ ] Mentor junior analysts
-13. Quick Reference – Security Organizations
-Organization	Website	Best For	Entry Certification
-ISACA	isaca.org	Governance, risk, audit	CISA
-(ISC)²	isc2.org	Broad security knowledge	SSCP
-SANS	sans.org	Hands-on technical skills	GIAC (GSEC)
-CompTIA	comptia.org	Foundational IT security	Security+
-EC-Council	eccouncil.org	Ethical hacking	CEH
+```
+
+<br><br>
+
+## 12. Quick Reference – Security Organizations
+| Organization | Website | Best For | Entry Certification |
+|--------------|---------|----------|---------------------|
+| ISACA | isaca.org | Governance, risk, audit | CISA |
+| (ISC)² | isc2.org | Broad security knowledge | SSCP |
+| SANS | sans.org | Hands-on technical skills | GIAC (GSEC) |
+| CompTIA | comptia.org | Foundational IT security | Security+ |
+| EC-Council | eccouncil.org | Ethical hacking | CEH |
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Module 18: Network Traffic and Logs using IDS and SIEM Tools
-
-**Focus Area:** Intrusion Detection | SIEM | Log Analysis | Threat Detection  
-**Tools Used:** Suricata | Splunk | Wazuh | Google Chronicle | jq  
-**Date:** [YYYY-MM-DD]  
-**Skills:** IDS Rule Writing | PCAP Analysis | SPL Queries | Log Correlation | Cloud SIEM | JSON Parsing  
-
----
-
-## Objective
-
-Monitor, analyze, and query network traffic and logs using IDS (Suricata) and SIEM tools (Splunk, Wazuh, and Google Chronicle). Understand how security analysts detect, investigate, and correlate security events using different log sources and detection systems.
-
----
-
-## 1. Lab Activities Summary
-
-| Activity | Tool | Focus | Key Skills |
-|----------|------|-------|------------|
-| 1 | Suricata (IDS) | Custom rules, PCAP analysis, alert generation | Rule writing, jq parsing |
-| 2 | Splunk Cloud (SIEM) | Log upload, SPL queries, authentication monitoring | SPL, log filtering |
-| 3 | Wazuh (SIEM) | SSH brute-force investigation | Field filtering, anomaly detection |
-| 4 | Google Chronicle (Cloud SIEM) | Structured security searches | Cloud SIEM, query language |
-
----
-
-## 2. Tools Overview
-
-| Tool | Type | Purpose | Key Feature |
-|------|------|---------|-------------|
-| **Suricata** | IDS/IPS | Network traffic inspection | Rule-based detection, high performance |
-| **Splunk** | SIEM | Centralized log analysis | SPL query language, dashboards |
-| **Wazuh** | SIEM | Security monitoring | Open source, integrated with Elastic |
-| **Chronicle** | Cloud SIEM | Enterprise threat detection | Google-scale, cloud-native |
-| **jq** | CLI tool | JSON parsing | Lightweight, scriptable |
-
----
-
-## 3. Activity 1: Explore Signatures and Logs with Suricata
-
-**Objective:** Use Suricata as an IDS to create custom rules, analyze network traffic, and generate alerts from a packet capture file.
-
-### Suricata Rule Structure
-┌─────────────────────────────────────────────────────────────────────────────┐
-│ SURICATA RULE STRUCTURE │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ │
-│ Action Protocol Source IP Source Port → Dest IP Dest Port Options │
-│ │ │ │ │ │ │ │ │
-│ ▼ ▼ ▼ ▼ ▼ ▼ ▼ │
-│ alert icmp any any → any any (msg... │
-│ │
-└─────────────────────────────────────────────────────────────────────────────┘
-
-text
-
-### Custom Rules Created
-
-| Action | Protocol | Source | Destination | Message | SID |
-|--------|----------|--------|-------------|---------|-----|
-| alert | icmp | any any | any any | "ICMP Ping Detected" | 1000001 |
-| alert | http | any any | any 80 | "HTTP GET Request Detected" | 1000002 |
-| alert | tcp | any any | any 22 | "SSH Connection Attempt" | 1000003 |
-
-### Rule Components Explained
-
-| Component | Example | Purpose |
-|-----------|---------|---------|
-| **Action** | `alert` | What to do when rule matches (alert, drop, reject, pass) |
-| **Protocol** | `icmp`, `http`, `tcp` | Which protocol to inspect |
-| **Source** | `any any` | Source IP and port (any = wildcard) |
-| **Direction** | `->` | Traffic direction (-> = to, <> = both ways) |
-| **Destination** | `any any` | Destination IP and port |
-| **Message** | `msg:"..."` | Alert text displayed |
-| **SID** | `sid:1000001` | Unique rule identifier |
-| **Revision** | `rev:1` | Rule version number |
-
-### Lab Files Used
-
-| File | Purpose |
-|------|---------|
-| `custom.rules` | Suricata detection rules |
-| `sample.pcap` | Network traffic capture (Wireshark sample) |
-| `fast.log` | Suricata alert log (quick summary) |
-| `eve.json` | Structured Suricata event logs (JSON format) |
-
-### Suricata Workflow
-┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
-│ custom.rules │ │ sample.pcap │ │ Suricata │
-│ (rules file) │ │ (traffic) │ ──→ │ Engine │
-└─────────────────┘ └─────────────────┘ └─────────────────┘
-│
-▼
-┌─────────────────────────┐
-│ fast.log │
-│ "ICMP Ping Detected" │
-└─────────────────────────┘
-│
-▼
-┌─────────────────────────┐
-│ eve.json │
-│ {"timestamp":"...", │
-│ "src_ip":"...", │
-│ "alert":{...}} │
-└─────────────────────────┘
-
-text
-
-### Sample eve.json Output
-
-```json
-{
-  "timestamp": "2026-04-21T10:15:01",
-  "src_ip": "192.168.1.10",
-  "dest_ip": "8.8.8.8",
-  "proto": "ICMP",
-  "alert": {
-    "signature": "ICMP Ping Detected"
-  },
-  "flow_id": 1111
-}
-jq Parsing Commands
-bash
-# Extract all alerts
-jq '.alert' eve.json
-
-# Extract specific fields
-jq '{timestamp, src_ip, dest_ip, proto, alert_signature: .alert.signature}' eve.json
-
-# Filter by protocol
-jq 'select(.proto == "ICMP")' eve.json
-
-# Count alerts by signature
-jq -r '.alert.signature' eve.json | sort | uniq -c
-Skills Developed – Activity 1
-Skill	Application
-IDS rule creation	Wrote custom rules for ICMP, HTTP, SSH
-Rule interpretation	Understood action, header, options structure
-Network traffic analysis	Applied rules to sample.pcap
-JSON log parsing	Used jq to extract fields from eve.json
-Event correlation	Used flow_id to track related events
-Security Relevance
-Suricata helps detect malicious or suspicious traffic in real time by applying rule-based inspection on network packets. Benefits include:
-
-Real-time detection of known attack patterns
-
-Custom rule creation for organization-specific threats
-
-Structured logging (eve.json) for SIEM integration
-
-Reflection – Activity 1
-This activity improved my understanding of how IDS tools inspect network traffic and generate alerts. I learned how to create rules, analyze structured logs, and use jq to extract specific fields for investigation.
-
-4. Activity 2: Perform a Query with Splunk
-Objective: Use Splunk Cloud to upload log data and perform searches using SPL (Search Processing Language).
-
-Sample Log Data
-text
-2026-04-21 10:20:05 user=root action=ssh_login status=failure src_ip=192.168.1.15
-2026-04-21 10:20:10 user=guest action=login status=success src_ip=192.168.1.20
-2026-04-21 10:20:15 user=admin action=ssh_login status=failure src_ip=203.0.113.50
-2026-04-21 10:20:20 user=admin action=ssh_login status=failure src_ip=203.0.113.50
-2026-04-21 10:20:25 user=admin action=ssh_login status=success src_ip=203.0.113.50
-SPL Query Examples
-Query	Purpose
-status=failure	All failed authentication events
-status=failure AND user=root	Failed logins for root user
-user=admin status=failure	Failed logins for admin user
-src_ip=192.168.1.15	Activity from specific IP
-action=ssh_login status=failure	Failed SSH logins only
-Splunk Workflow
-text
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│  Upload Log     │     │  Search with    │     │  Filter         │
-│  File           │ ──→ │  SPL Query      │ ──→ │  Results        │
-│  (splunk_sample │     │                 │     │                 │
-│   .log)         │     │                 │     │                 │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-                                                         │
-                                                         ▼
-                                          ┌─────────────────────────┐
-                                          │  Identify Suspicious    │
-                                          │  Activity               │
-                                          └─────────────────────────┘
-Skills Developed – Activity 2
-Skill	Application
-SPL query construction	Built searches using field-value pairs
-Log filtering	Isolated authentication failures
-Dashboard navigation	Explored Splunk Cloud interface
-Security Relevance
-Splunk enables centralized log analysis to detect authentication failures and abnormal user behavior across enterprise systems.
-
-Reflection – Activity 2
-This activity helped me understand how SIEM tools like Splunk can quickly filter large datasets to identify security-relevant events. The field-value pair syntax makes searching intuitive once you understand the log structure.
-
-5. Activity 3: Perform a Query with Wazuh
-Objective: Use Wazuh SIEM to investigate SSH brute-force attempts on a mail server.
-
-Sample Wazuh Logs
-text
-Apr 21 10:30:01 mailsv sshd: Failed password for root from 192.168.1.10
-Apr 21 10:30:05 mailsv sshd: Failed password for root from 192.168.1.11
-Apr 21 10:30:09 mailsv sshd: Failed password for root from 192.168.1.12
-Apr 21 10:30:13 mailsv sshd: Failed password for root from 192.168.1.10
-Apr 21 10:30:17 mailsv sshd: Failed password for root from 192.168.1.11
-Query Used
-text
-host.keyword: mailsv AND (fail* OR failed) AND root
-Query Breakdown
-Component	Meaning	Purpose
-host.keyword: mailsv	Filter by hostname	Focus on mail server
-fail*	Wildcard match	Catches "fail", "failed", "failure"
-OR failed	Alternative term	Ensures coverage
-AND root	Combine conditions	Target root user specifically
-Findings
-Finding	Value
-Total failed root SSH login attempts	376
-Multiple IP addresses involved	Yes (distributed brute-force)
-Sensitive data identified	vendor_sales logs in mail server
-Attack pattern	Credential brute-force
-Wazuh Investigation Workflow
-text
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│  Identify       │     │  Run Query      │     │  Analyze        │
-│  Suspicious     │ ──→ │  host: mailsv   │ ──→ │  Results        │
-│  Host (mailsv)  │     │  AND fail*      │     │                 │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-                                                         │
-                                                         ▼
-                                          ┌─────────────────────────┐
-                                          │  Count Failed Attempts  │
-                                          │  376 attempts detected  │
-                                          └─────────────────────────┘
-                                                         │
-                                                         ▼
-                                          ┌─────────────────────────┐
-                                          │  Identify Source IPs    │
-                                          │  Multiple IPs involved  │
-                                          └─────────────────────────┘
-Skills Developed – Activity 3
-Skill	Application
-SIEM threat investigation	Identified brute-force pattern
-Field-based filtering	Used host.keyword for precise filtering
-Log correlation	Linked multiple failed attempts
-Anomaly detection	Recognized 376 failures as abnormal
-Security Relevance
-Wazuh helps detect brute-force attacks and unauthorized access attempts in real time. The open-source nature allows customization for specific organizational needs.
-
-Reflection – Activity 3
-This activity demonstrated how SIEM systems help security analysts investigate attack patterns such as brute-force login attempts. The ability to count and correlate failed attempts across multiple source IPs is essential for identifying distributed attacks.
-
-6. Activity 4: Perform a Query with Chronicle
-Objective: Use Google Chronicle as a cloud-based SIEM platform to perform structured security searches on ingested logs.
-
-Chronicle Query Language
-Query Type	Syntax	Purpose
-Event type filter	metadata.event_type = "NETWORK_CONNECTION"	Focus on network events
-Port filter	target.port = 22	SSH traffic only
-Action filter	security_result.action = "FAIL"	Failed actions only
-Combined	target.port = 22 AND security_result.action = "FAIL"	Failed SSH attempts
-Example Queries
-sql
--- All network connections
-metadata.event_type = "NETWORK_CONNECTION"
-
--- SSH connection attempts
-target.port = 22
-
--- Failed SSH attempts
-target.port = 22 AND security_result.action = "FAIL"
-
--- Failed attempts from specific IP
-target.port = 22 AND security_result.action = "FAIL" AND principal.ip = "192.168.1.10"
-Chronicle vs Traditional SIEM
-Feature	Chronicle (Cloud)	Traditional SIEM
-Scalability	Google-scale (unlimited)	Hardware-limited
-Query speed	Sub-second on petabytes	Minutes to hours
-Maintenance	Zero (cloud-managed)	Significant
-Cost model	Consumption-based	Hardware + licensing
-Retention	Extended (years)	Limited (months)
-Skills Developed – Activity 4
-Skill	Application
-Cloud SIEM navigation	Explored Chronicle interface
-Structured query language	Used field-based queries
-Security event investigation	Correlated network events
-Security Relevance
-Chronicle provides scalable cloud-based log analysis for enterprise-level threat detection, enabling rapid investigation across massive datasets.
-
-Reflection – Activity 4
-This activity introduced cloud-based security monitoring and showed how large-scale log analysis is performed in modern SOC environments. The structured query language is intuitive once you understand the data schema.
-
-7. IDS vs SIEM – Comparison
-Feature	IDS (Suricata)	SIEM (Splunk/Wazuh/Chronicle)
-Data source	Network traffic	Logs (multiple sources)
-Scope	Network layer	Enterprise-wide
-Detection	Rule-based signatures	Correlation, analytics
-Alert type	Packet-level	Event-level
-Primary use	Real-time threat detection	Investigation, compliance
-Typical deployment	Network perimeter	Centralized logging
-How They Work Together
-text
-                    ┌─────────────────────────────────────────┐
-                    │              SOC WORKFLOW                │
-                    └─────────────────────────────────────────┘
-                                      │
-        ┌─────────────────────────────┼─────────────────────────────┐
-        │                             │                             │
-        ▼                             ▼                             ▼
-┌───────────────┐             ┌───────────────┐             ┌───────────────┐
-│    Suricata   │             │    Splunk     │             │   Chronicle   │
-│     (IDS)     │             │    (SIEM)     │             │  (Cloud SIEM) │
-└───────────────┘             └───────────────┘             └───────────────┘
-       │                             │                             │
-       │  Packet alerts              │  Log aggregation            │  Cloud-scale
-       │  eve.json                   │  Correlation                │  investigation
-       │                             │                             │
-       └─────────────────────────────┼─────────────────────────────┘
-                                     │
-                                     ▼
-                    ┌─────────────────────────────────────────┐
-                    │          Unified Investigation          │
-                    │  Correlate IDS alerts with SIEM logs    │
-                    └─────────────────────────────────────────┘
-8. SOC Analyst Workflow – Complete Picture
-text
-Step 1: Detection (IDS)
-        Suricata detects ICMP ping sweep
-                │
-                ▼
-Step 2: Alert Generation
-        eve.json created with alert details
-                │
-                ▼
-Step 3: Log Ingest (SIEM)
-        Splunk/Wazuh/Chronicle ingests logs
-                │
-                ▼
-Step 4: Investigation
-        Analyst queries SIEM for related events
-        - Same source IP?
-        - Other failed attempts?
-        - Timeline of activity?
-                │
-                ▼
-Step 5: Correlation
-        Link IDS alerts with authentication logs
-        - ICMP scan followed by SSH brute-force
-                │
-                ▼
-Step 6: Response
-        Block source IP, isolate affected host
-9. Multi-SIEM Comparison
-Feature	Splunk	Wazuh	Chronicle
-Deployment	Cloud or on-prem	On-prem (open source)	Cloud-only
-Query language	SPL	Lucene/KQL	YARA-L (custom)
-Learning curve	Moderate	Moderate	Low (structured)
-Cost	Commercial ($$$)	Free (open source)	Consumption-based
-Best for	Enterprise SOC	Budget-conscious teams	Google ecosystem
-Integration	Extensive	Elastic stack	Google Cloud
-When to Use Each
-Scenario	Recommended Tool
-Deep packet inspection	Suricata (IDS)
-Enterprise log aggregation	Splunk
-Budget-conscious SOC	Wazuh
-Google Cloud environment	Chronicle
-Automated parsing	jq
-10. Skills Demonstrated
-Skill	Application in Lab
-IDS rule writing	Created custom Suricata rules for ICMP, HTTP, SSH
-PCAP analysis	Applied rules to sample.pcap traffic capture
-JSON parsing	Used jq to extract fields from eve.json
-SPL queries	Searched Splunk for authentication failures
-SIEM investigation	Used Wazuh to identify SSH brute-force (376 attempts)
-Cloud SIEM	Queried Chronicle for network connections
-Log correlation	Linked events across multiple tools
-Tool comparison	Evaluated IDS vs SIEM, Splunk vs Wazuh vs Chronicle
-11. Tool-Specific Query Reference
-Suricata (jq)
-bash
-# Extract all alerts
-jq '.alert' eve.json
-
-# Filter by protocol
-jq 'select(.proto == "ICMP")' eve.json
-
-# Show timestamp and signature only
-jq '{time: .timestamp, alert: .alert.signature}' eve.json
-Splunk (SPL)
-spl
-# Basic search
-status=failure
-
-# Field-specific
-user=root status=failure
-
-# Time-based
-earliest=-24h status=failure
-
-# Statistical
-status=failure | stats count by user
-Wazuh (KQL)
-kql
-host.keyword: mailsv AND (fail* OR failed) AND root
-Chronicle (YARA-L)
-yara
-metadata.event_type = "NETWORK_CONNECTION"
-target.port = 22
-security_result.action = "FAIL"
-12. Overall Reflection
-This lab provided hands-on experience with IDS and SIEM tools used in real-world cybersecurity operations.
-
-Key takeaways by activity:
-
-Activity	Key Insight
-Suricata	IDS provides packet-level visibility; custom rules enable organization-specific detection
-Splunk	SPL makes log analysis efficient; field-value pairs are intuitive
-Wazuh	Open-source SIEM is powerful; 376 failed attempts clearly indicates brute-force
-Chronicle	Cloud SIEM scales infinitely; structured queries enable rapid investigation
-Complete workflow understanding:
-
-Suricata provides low-level network visibility (packets)
-
-SIEM tools enable high-level event correlation (logs)
-
-Together, they form the core of SOC monitoring
-
-Demonstrates: Practical proficiency with industry-standard IDS and SIEM tools, essential for SOC analyst roles.
-
-13. Appendix: Key Terminology
-Term	Meaning
-IDS	Intrusion Detection System – monitors network traffic for threats
-IPS	Intrusion Prevention System – IDS that can block traffic
-SIEM	Security Information and Event Management – centralized logging
-SPL	Search Processing Language – Splunk's query language
-PCAP	Packet Capture – recorded network traffic
-eve.json	Suricata's structured JSON log format
-jq	Command-line JSON processor
-SID	Signature ID – unique rule identifier
-Brute-force	Repeated login attempts to guess credentials
-Flow ID	Unique identifier for a network flow (connection)
-14. Quick Reference – Tool Commands
-Suricata
-bash
-# Run Suricata on PCAP
-suricata -r sample.pcap -S custom.rules
-
-# Read fast.log
-cat fast.log
-
-# Parse eve.json with jq
-jq '.' eve.json
-Splunk
-spl
-# Search syntax
-field=value
-field=value AND field2=value2
-Wazuh
-kql
-field.keyword: value AND (term1 OR term2)
-Chronicle
-yara
-metadata.event_type = "TYPE"
-field = "value"
-field = "value" AND other_field = "value"
-15. SOC Analyst Job-Ready Skills Checklist
-Skill	Demonstrated in Lab
-IDS rule writing	✅ Activity 1
-PCAP analysis	✅ Activity 1
-JSON log parsing	✅ Activity 1 (jq)
-SPL querying	✅ Activity 2
-SIEM investigation	✅ Activity 3 (Wazuh)
-Cloud SIEM	✅ Activity 4 (Chronicle)
-Brute-force detection	✅ Activity 3
-Multi-tool correlation	✅ All activities
-
-
-
-
-
-
-
-
-
----
-
-## ✅ End of Labs Module 2 & 3
-
-*More labs available upon request.*
